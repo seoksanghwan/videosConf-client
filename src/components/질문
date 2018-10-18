@@ -1,0 +1,37 @@
+redux - how to [ref] select in [mapDispatchToProps]
+
+I'm currently working on [react] using [redux], but I don't know how to get [refs] from [mapDispatchToProps] inside [component].
+
+my component event function code
+
+    this.webrtc.attachStream(stream ,this.remoteVideos[peer.id]);
+
+my component render code
+
+    <video ref={(v) => this.remoteVideos[data.id] = v} playsInline />
+
+
+container code(mapDispatchToProps)
+
+    rtc.on('videoAdded', (stream, peer) => {
+       dispatch({
+          type : ADD_MEDIA ,
+          peer,
+          stream
+        });
+     })
+
+The code I'm trying to do
+
+    rtc.on('videoAdded', (stream, peer) => {
+       dispatch({
+          type : ADD_MEDIA ,
+          peer,
+          stream : rtc.attachStream(stream ,this.remoteVideos[peer.id]);
+        });
+     })
+
+but fail.. code 
+I must select [ref] from within [mapDispatchToProps] called [this.remoteVideos]
+
+When I asked the question, I turned the translator around and asked the question. I'm sorry the sentence isn't smooth. I turned the translator.
