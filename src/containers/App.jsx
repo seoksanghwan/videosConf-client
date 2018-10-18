@@ -5,7 +5,6 @@ import LioWebRTC from 'liowebrtc';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import createHistory from 'history/createBrowserHistory';
-import freeice from 'freeice'
 import {
   IS_LOGIN_USER,
   IS_LOGGED_IN_DATA,
