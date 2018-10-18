@@ -7,7 +7,7 @@ import Rooms from './Rooms.jsx';
 import RoomsDetails from './RoomsDetails.jsx';
 import axios from 'axios';
 
-const localHostIp = 'http://localhost:8000/';
+const localHostIp = 'http://videos.ap-northeast-2.elasticbeanstalk.com/';
 
 export default class Home extends React.Component {
   constructor(props) {

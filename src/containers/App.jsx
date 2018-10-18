@@ -20,7 +20,7 @@ import {
 import App from "../components/App.jsx";
 
 let rtc;
-const localHostIp = 'http://localhost:8000/api/auth/';
+const localHostIp = 'http://videos.ap-northeast-2.elasticbeanstalk.com/api/auth/';
 const provider = new firebase.auth.GoogleAuthProvider();
 const history = createHistory()
 
@@ -88,7 +88,7 @@ const mapDispatchToProps = (dispatch) => {
       });
     }, 1000),
     channelData: () => {
-      axios.get(`http://localhost:8000/`).then(({ data }) => {
+      axios.get(`http://videos.ap-northeast-2.elasticbeanstalk.com/`).then(({ data }) => {
         dispatch({
           type: ROOMS_DATA,
           data

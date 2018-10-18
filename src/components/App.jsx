@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import axios from 'axios';
 import Home from './Home.jsx';
 
-const localHostIp = 'http://localhost:8000/';
+const localHostIp = 'http://videos.ap-northeast-2.elasticbeanstalk.com/';
 
 export default class App extends React.Component {
   constructor(props) {
