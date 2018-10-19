@@ -1,77 +1,38 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import LioWebRTC from 'liowebrtc';
+import { ADD_MEDIA, REMOVE_VIDEO } from '../actions';
+import { debounce } from "lodash";
 
 class RoomsDetails extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      peers: [],
-      mutedPeerIds: [],
-      inRoom: false,
-      muted: false
-    };
     this.remoteVideos = {};
-    this.roonName = this.props.match.params.room_name;
     window.onpopstate = e => {
-      this.webrtc.stopLocalVideo();
       this.webrtc.leaveRoom();
+      this.webrtc.stopLocalVideo();
     }
   }
 
   componentDidMount() {
-    this.webrtc = new LioWebRTC({
-      url: 'https://sandbox.simplewebrtc.com:443/',
-      localVideoEl: this.localVid,
-      nick: `${this.props.email},${this.props.url}`,
-      debug: true,
-      dataOnly: false,
-      network: {
-        maxPeers: 2,
-        minPeers: 4
-      }
+    this.webrtc = this.props.webrtc;
+    this.webrtc.config.localVideoEl = this.localVid;
+    this.webrtc.startLocalVideo()
+    this.webrtc.on('videoAdded', (stream,peer) => {
+      this.props.store.dispatch({ type: ADD_MEDIA, peer })
+      this.props.webrtc.attachStream(stream, this.remoteVideos[peer.id])
+    })
+    this.webrtc.on('videoRemoved', (peer) => {
+      //this.props.peers.filter(p => !p.closed)
     });
-    this.addListeners();
-    this.webrtc.startLocalVideo();
+    this.webrtc.on('readyToCall', this.readyToCall.bind(this));
   }
 
-  addListeners = () => {
-    this.vidset = this.props.vidset;
-    this.webrtc.on('videoAdded', this.addVideo);
-    this.webrtc.on('videoRemoved', this.removeVideo);
-    this.webrtc.on('readyToCall', this.readyToCall);
+  readyToCall() {
+    const room_name = this.props.match.params.room_name;
+    if ( room_name ) { this.webrtc.joinRoom(room_name); }
   }
 
-  addVideo = (stream, peer) => {
-    this.setState({ peers: [...this.state.peers, peer] }, () => {
-      this.webrtc.attachStream(stream, this.remoteVideos[peer.id]);
-    });
-    console.log(this.remoteVideos[peer.id])
-  }
-
-  removeVideo = (peer) => {
-    this.setState({
-      peers: this.state.peers.filter(p => !p.closed)
-    });
-  }
-
-  readyToCall = () => {
-    this.webrtc.joinRoom(this.roonName, (err, desc) => {
-      this.setState({ inRoom: true });
-    });
-  }
-
-  handleSelfMute = (e) => {
-    const muted = this.state.muted;
-    if (muted) {
-      this.webrtc.unmute();
-    } else {
-      this.webrtc.mute();
-    }
-    this.setState({ muted: !muted });
-  }
-
-  disconnect = () => {
+  disconnect() {
     this.props.history.push('/rooms');
     this.webrtc.stopLocalVideo();
     this.webrtc.leaveRoom();
@@ -79,22 +40,23 @@ class RoomsDetails extends Component {
   }
 
   render() {
-    const { peers } = this.state;
+    const { peers, email, url, ref } = this.props;
     return (
       <div className="details-box">
         <div className="sidebar local">
           <h2>
-            {this.roonName}
+            {this.props.match.params.room_name}
             <em><i className="far fa-user"></i> {peers.length + 1}</em>
           </h2>
           <div className="localBox">
-            <video id = 'localVideo' autoPlay={true} ref={(vid) => this.localVid = vid} />
+            <video id='localVideo' ref={(vid) => this.localVid = vid} />
             <div className="nick">
-              <p> {this.props.email} </p>
+              <p>{email}</p>
             </div>
           </div>
           <div className="buttons">
-            <button onClick={this.handleSelfMute.bind(this)}>
+            {/*onClick={this.handleSelfMute.bind(this)}onClick={this.disconnect.bind(this)}*/}
+            <button>
               <i className="fas fa-volume-off"></i>
             </button>
             <button onClick={this.disconnect.bind(this)}>
@@ -104,25 +66,34 @@ class RoomsDetails extends Component {
           <div className="remotePeerList">
             <h3>Member</h3>
             <ul>
-              <li> <img src={this.props.url} alt=""/> <p>{this.props.email}</p></li>
+              <li>
+                <img src={url} alt="" />
+                <p>{email}</p>
+              </li>
               {
-                peers.map( name => <li key={name.id}> <img src={name.nick.split(',')[1]} alt=""/> <p>{name.nick.split(',')[0]}</p></li> )
+                peers.map(name =>
+                  <li key={name.id}>
+                    <img src={name.nick.split(',')[1]} alt="" />
+                    <p>{name.nick.split(',')[0]}</p>
+                  </li>
+                )
               }
             </ul>
           </div>
         </div>
-        <div className="remotevideo">
-         { 
-           peers.map( data => (
-            <div className="vidContainer" key={data.id} id={`${this.webrtc.getContainerId(data)}`}>
-              <video id={this.webrtc.getId(data)} ref={(v) => this.remoteVideos[data.id] = v} playsInline />
-              <div className="nick">
-                <p>{data.nick.split(',')[0]}</p>
+        <div className="remotevideo" id="remotevideo">
+          {
+            peers.map(data => (
+              <div className="vidContainer" key={data.id} id={`container_${this.webrtc.getId(data)}`}>
+                <video id={this.webrtc.getId(data)} ref={(v) => this.remoteVideos[data.id] = v} playsInline autoPlay />
+                <div className="nick">
+                  <p>{data.nick.split(',')[0]}</p>
+                </div>
               </div>
-            </div>
-           ))
-         }
+            ))
+          }
         </div>
+
       </div>
     );
   };

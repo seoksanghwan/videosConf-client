@@ -6261,6 +6261,11 @@ lodash.clonedeep@^4.3.2:
   resolved "https://registry.yarnpkg.com/lodash.clonedeep/-/lodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
   integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
 
+lodash.curry@^4.1.1:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/lodash.curry/-/lodash.curry-4.1.1.tgz#248e36072ede906501d75966200a86dab8b23170"
+  integrity sha1-JI42By7ekGUB11lmIAqG2riyMXA=
+
 lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
@@ -8440,6 +8445,13 @@ react-redux@^5.0.7:
     lodash-es "^4.17.5"
     loose-envify "^1.1.0"
     prop-types "^15.6.0"
+
+react-ref-helper@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/react-ref-helper/-/react-ref-helper-0.3.1.tgz#4692855e01863283dfae70775c1a31d638522ef2"
+  integrity sha1-RpKFXgGGMoPfrnB3XBox1jhSLvI=
+  dependencies:
+    lodash.curry "^4.1.1"
 
 react-router-dom@^4.3.1:
   version "4.3.1"

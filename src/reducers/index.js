@@ -10,7 +10,7 @@ import {
   RTC_SETTING,
   ADD_MEDIA,
   REMOVE_VIDEO,
-  READY_TO_CALL
+	READY_TO_CALL
 } from '../actions';
 
 const initialState = {
@@ -85,24 +85,19 @@ export default function productReducer(state = initialState, action) {
 		let peerCopy = [...state.peers, action.peer];
 		return {
 			...state,
-			peers : peerCopy,
-			localStream : action.stream
+			peers : peerCopy
 		};
 
 		case REMOVE_VIDEO:
-		/*console.log(action.peer)
-		console.log(state.peers)*/
 		return {
 			...state,
 			peers : state.peers.filter(p => !p.closed)
 		};
 
 		case READY_TO_CALL:
-		let rtc = action.rtc
 		return {
 			...state,
-			inroom : true,
-			roomname : rtc.joinRoom(action.roomName)
+			inroom : true
 		};
 	
 		case GET_ERRORS :

@@ -350,7 +350,7 @@ video{width: 200px;height: 100px;}
 }
 
 .sidebar.local{
-  width: 18%;
+  width: 20%;
   height: 100%;
   float: left;
   margin-right: 1%;
@@ -411,7 +411,7 @@ video{width: 200px;height: 100px;}
 
 .remotevideo{
   margin-top: 30px;
-  width: 80%;
+  width: 78%;
   float: left;
 }
 

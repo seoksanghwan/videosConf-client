@@ -13,33 +13,13 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
   }
-  
-  saveFormData(event) {
-    event.preventDefault();
-    const { isLoggedIn, items } = this.props;
-    const rgExp = /[^A-Za-z]/;
-    const rgExp02 = /[A-Za-z]/;
-    const title = this.inputNode.value;
-    if (isLoggedIn) {
-      if (title.length > 1 && title.length < 11) {
-        axios.post(`${localHostIp}rooms`, {
-          title,
-          userName: items.name,
-          userMail: items.email
-        });
-        this.props.history.push(`/rooms/${title}`);
-      } else {
-        alert('회의방 제목은 2글자 이상 10글자 미만이에요.\n다시 한번 작성해주세요');
-        this.inputNode.value = '';
-      }
-    } else {
-      this.signAlertMessage();
-      this.inputNode.value = '';
-    }
+
+  componentDidMount() {
+    console.log(this.props)
   }
 
   render() {
-    const { isLoggedIn, items, isroom, webrtc, peers, inroom } = this.props;
+    const { isLoggedIn, items, isroom, init, peers, inroom, webrtc, saveFormData, store } = this.props;
     return (
       <div id="app" className="container">
         <Navbar
@@ -55,7 +35,7 @@ export default class Home extends React.Component {
               <Main
                 {...props}
                 isLoggedIn={isLoggedIn}
-                saveFormData={this.saveFormData.bind(this)}
+                saveFormData={saveFormData}
                 inputRef={value => this.inputNode = value}
               />
             );
@@ -77,10 +57,12 @@ export default class Home extends React.Component {
                 ?
                 <RoomsDetails
                   {...props}
+                  store={store}
+                  init={init}
                   email={email}
                   url={items.url}
-                  webrtc={webrtc}
                   peers={peers} 
+                  webrtc={webrtc}
                   inroom={inroom} />
                 : null
             );

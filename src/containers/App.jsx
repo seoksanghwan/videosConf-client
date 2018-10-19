@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import React, { Component } from 'react';
 import { debounce } from "lodash";
 import * as firebase from 'firebase';
 import LioWebRTC from 'liowebrtc';
@@ -17,11 +18,12 @@ import {
   READY_TO_CALL
 } from '../actions';
 import App from "../components/App.jsx";
+import { refAs, refWith } from 'react-ref-helper';
 
 let rtc;
 const localHostIp = 'http://videos.ap-northeast-2.elasticbeanstalk.com/api/auth/';
 const provider = new firebase.auth.GoogleAuthProvider();
-const history = createHistory()
+const history = createHistory();
 
 const setAuthToken = token => {
   if (token) {
@@ -101,21 +103,21 @@ const mapDispatchToProps = (dispatch) => {
       let user = JSON.parse(localStorage.getItem('user'));
       let email = (user !== null) ? `${user.email},${user.url}` : 'Not user';
       rtc = new LioWebRTC({
-        url: 'https://sandbox.simplewebrtc.com:443/',
+        url: 'https://sm1.lio.app:443/',
         localVideoEl: '',
+        dataOnly: false,
         network: {
-          minPeers: 2,
-          maxPeers: 2
+          maxPeers: 8,
+          minPeers: 4
         },
         debug: true,
         nick: email
       });
-      //attachStream
-        rtc.on('videoAdded', (stream, peer) => {
+      /*rtc
+        .on('videoAdded', (stream, peer) => {
           dispatch({
             type: ADD_MEDIA,
-            peer,
-            stream
+            peer
           });
         })
         .on('videoRemoved', (peer) => {
@@ -123,17 +125,18 @@ const mapDispatchToProps = (dispatch) => {
             type: REMOVE_VIDEO,
             peer
           });
-        })
-        .on('readyToCall', () => {
-          dispatch({
-            type : READY_TO_CALL,
-            rtc,
-            roomName
-          })
-        });
+        });*/
       dispatch({ type: RTC_SETTING, payload: rtc });
     }
   };
 };
+
+class Apps extends Component {
+  render () {
+    return (
+      <App store={this.props.store}/>
+    ) 
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps, null, { withref: true })(App);
