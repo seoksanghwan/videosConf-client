@@ -9,6 +9,8 @@ export const RTC_SETTING = 'RTC_SETTING';
 export const ADD_MEDIA = 'ADD_MEDIA';
 export const REMOVE_VIDEO = 'REMOVE_VIDEO';
 export const READY_TO_CALL = 'READY_TO_CALL';
+export const LOCAL_VIDEO = 'LOCAL_VDIEO';
+export const CONNECTED_LOCAL = 'CONNECTED_LOCAL';
 
 export const isLogoutData = () => ({
 	type: IS_LOGOUT_DATA
@@ -51,3 +53,12 @@ export const removeVideo = products => ({
 export const readyToCall = products => ({
   type: READY_TO_CALL
 });
+
+export const localVideo = products => ({
+  type: LOCAL_VIDEO
+});
+
+export const connectedLocal = products => ({
+  type: CONNECTED_LOCAL
+});
+

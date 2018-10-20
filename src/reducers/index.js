@@ -7,7 +7,9 @@ import {
   IS_LOGOUT_DATA,
   GET_ERRORS,
   ROOMS_DATA,
-  RTC_SETTING,
+	RTC_SETTING,
+	CONNECTED_LOCAL,
+	LOCAL_VIDEO,
   ADD_MEDIA,
   REMOVE_VIDEO,
 	READY_TO_CALL
@@ -98,6 +100,16 @@ export default function productReducer(state = initialState, action) {
 		return {
 			...state,
 			inroom : true
+		};
+
+		case LOCAL_VIDEO:
+		return {
+			...state
+		};
+
+		case CONNECTED_LOCAL:
+		return {
+			...state
 		};
 	
 		case GET_ERRORS :

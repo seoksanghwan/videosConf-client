@@ -7,15 +7,25 @@ import Rooms from './Rooms.jsx';
 import RoomsDetails from './RoomsDetails.jsx';
 import axios from 'axios';
 
-const localHostIp = 'http://videos.ap-northeast-2.elasticbeanstalk.com/';
-
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
   }
 
+  componentDidMount() {
+    if (this.props.webrtc !== null) {
+      this.props.webrtc.connection.disconnect();
+    }
+  }
+
+  disconnect() {
+    this.props.history.push('/rooms');
+    this.props.webrtc.stopLocalVideo();
+    this.props.webrtc.leaveRoom();
+  }
+
   render() {
-    const { isLoggedIn, items, isroom, init, peers, inroom, webrtc, saveFormData, localRef, AddpeerVideo } = this.props;
+    const { isLoggedIn, items, isroom, init, peers, inroom, webrtc, saveFormData, AddpeerVideo, joinChat, startLoclaVideo } = this.props;
     return (
       <div id="app" className="container">
         <Navbar
@@ -59,8 +69,10 @@ export default class Home extends React.Component {
                   peers={peers}
                   webrtc={webrtc}
                   inroom={inroom}
-                  localRef={localRef}
+                  startLoclaVideo={startLoclaVideo}
                   AddpeerVideo={AddpeerVideo}
+                  joinChat={joinChat}
+                  disconnect={this.disconnect.bind(this)}
                 />
                 : null
             );

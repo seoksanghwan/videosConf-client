@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { ADD_MEDIA, REMOVE_VIDEO } from '../actions';
 import { debounce } from "lodash";
 
 class RoomsDetails extends Component {
@@ -14,73 +13,59 @@ class RoomsDetails extends Component {
   }
 
   componentDidMount() {
+    const { room_name } = this.props.match.params;
     this.webrtc = this.props.webrtc;
-    //this.webrtc.config.localVideoEl = this.props.localRef.current;
-    console.log(this.webrtc.config.localVideoEl)
-    this.webrtc.startLocalVideo();
+    //this.props.startLoclaVideo(this.localVideo);
     this.props.AddpeerVideo(this.remoteVideos);
-    this.webrtc.on('readyToCall', this.readyToCall.bind(this));
+    this.props.joinChat(room_name);
   }
 
-  readyToCall() {
-    const room_name = this.props.match.params.room_name;
-    if (room_name) { this.webrtc.joinRoom(room_name); }
-  }
-
-  disconnect() {
-    this.props.history.push('/rooms');
-    this.webrtc.stopLocalVideo();
-    this.webrtc.leaveRoom();
-    this.webrtc.disconnect();
+  startlocal() {
+    this.props.startLoclaVideo(this.localVideo);
   }
 
   render() {
-    const { peers, email, url, localRef } = this.props;
+    const { peers, email, url, AddpeerVideo, webrtc, disconnect } = this.props;
+    const { room_name } = this.props.match.params;
     return (
       <div className="details-box">
         <div className="sidebar local">
           <h2>
-            {this.props.match.params.room_name}
+            {room_name}
             <em><i className="far fa-user"></i> {peers.length + 1}</em>
           </h2>
           <div className="localBox">
-            <video id='localVideo' ref={localRef}/>
+            <video id='localVideo' autoPlay={true} ref={(vid) => this.localVideo = vid} />
             <div className="nick">
-              <p>{email}</p>
+              <p> {email} </p>
             </div>
           </div>
           <div className="buttons">
-            {/*onClick={this.handleSelfMute.bind(this)}onClick={this.disconnect.bind(this)}*/}
-            <button>
+            <button onClick={this.startlocal.bind(this)}>
+              <i className="fas fa-video"></i>
+            </button>
+            <button onClick={this.startlocal.bind(this)}>
               <i className="fas fa-volume-off"></i>
             </button>
-            <button onClick={this.disconnect.bind(this)}>
+            <button onClick={disconnect}>
               <i className="fas fa-sign-out-alt"></i>
             </button>
           </div>
           <div className="remotePeerList">
             <h3>Member</h3>
             <ul>
-              <li>
-                <img src={url} alt="" />
-                <p>{email}</p>
-              </li>
+              <li> <img src={url} alt="" /> <p>{email}</p></li>
               {
-                peers.map(name =>
-                  <li key={name.id}>
-                    <img src={name.nick.split(',')[1]} alt="" />
-                    <p>{name.nick.split(',')[0]}</p>
-                  </li>
-                )
+                peers.map(name => <li key={name.id}> <img src={name.nick.split(',')[1]} alt="" /> <p>{name.nick.split(',')[0]}</p></li>)
               }
             </ul>
           </div>
         </div>
-        <div className="remotevideo" id="remotevideo">
+        <div className="remotevideo" >
           {
             peers.map(data => (
-              <div className="vidContainer" key={data.id} id={`container_${this.webrtc.getContainerId(data)}`}>
-                <video id={this.webrtc.getId(data)} ref={(v) => this.remoteVideos[data.id] = v} playsInline />
+              <div className="vidContainer" key={data.id} id={`${webrtc.getContainerId(data)}`} >
+                <video id={webrtc.getId(data)} autoPlay={true} ref={(vid) => this.remoteVideos[data.id] = vid} playsInline />
                 <div className="nick">
                   <p>{data.nick.split(',')[0]}</p>
                 </div>
@@ -88,7 +73,6 @@ class RoomsDetails extends Component {
             ))
           }
         </div>
-
       </div>
     );
   };

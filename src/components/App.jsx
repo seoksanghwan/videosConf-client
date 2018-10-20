@@ -7,17 +7,17 @@ import Home from './Home.jsx';
 const localHostIp = 'http://videos.ap-northeast-2.elasticbeanstalk.com/';
 
 export default class App extends React.Component {
+  myRef: { current: null | HTMLDivElement }
+
   constructor(props) {
     super(props);
     this.history = createHistory();
-    this.localvideo = React.createRef();
   }
 
   componentDidMount() {
     this.props.usingUserData();
     this.props.channelData();
-    console.log(this.localvideo.current)
-    this.props.init(this.localvideo.current);
+    this.props.init();
   }
 
   signAlertMessage() {
@@ -60,7 +60,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { isLoggedIn, items, isroom, init, peers, inroom, webrtc, saveFormData, AddpeerVideo } = this.props;
+    const { isLoggedIn, items, isroom, peers, inroom, webrtc, saveFormData, joinChat, AddpeerVideo, startLoclaVideo } = this.props;
     return (
       <Router>
         <Route
@@ -70,7 +70,7 @@ export default class App extends React.Component {
               isLoggedIn={isLoggedIn}
               items={items}
               isroom={isroom}
-              saveFormData = {this.saveFormData.bind(this)}
+              saveFormData={this.saveFormData.bind(this)}
               roomDelete={this.roomDelete.bind(this)}
               onLoginButtonClick={this.props.loginUser}
               onLogoutButtonClick={this.props.userlogout}
@@ -78,8 +78,9 @@ export default class App extends React.Component {
               webrtc={webrtc}
               peers={peers}
               inroom={inroom}
-              localRef={this.localvideo}
+              startLoclaVideo={startLoclaVideo}
               AddpeerVideo={AddpeerVideo}
+              joinChat={joinChat}
             />)
           }}
         />

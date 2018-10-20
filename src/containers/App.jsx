@@ -13,6 +13,8 @@ import {
   IS_LOGOUT_DATA,
   GET_ERRORS,
   ROOMS_DATA,
+  CONNECTED_LOCAL,
+  LOCAL_VIDEO,
   RTC_SETTING,
   ADD_MEDIA,
   REMOVE_VIDEO,
@@ -99,13 +101,12 @@ const mapDispatchToProps = (dispatch, getState) => {
         dispatch({ type: GET_ERRORS, error });
       });
     },
-    init: ( localele ) => {
-      let roomName = history.location.pathname.split('/rooms/')[1];
+    init: (localele) => {
       let user = JSON.parse(localStorage.getItem('user'));
       let email = (user !== null) ? `${user.email},${user.url}` : 'Not user';
       rtc = new LioWebRTC({
         url: 'https://sm1.lio.app:443/',
-        localVideoEl: localele,
+        localVideoEl: '',
         dataOnly: false,
         network: {
           maxPeers: 8,
@@ -114,19 +115,44 @@ const mapDispatchToProps = (dispatch, getState) => {
         debug: true,
         nick: email
       });
-      rtc.on('videoRemoved', (peer) => {
-        dispatch({
-          type: REMOVE_VIDEO,
-          peer
+      rtc
+        .on('connectionReady', (sessionId) => {
+          dispatch({
+            type: CONNECTED_LOCAL,
+            sessionId
+          });
+        })
+        .on('videoRemoved', (peer) => {
+          dispatch({
+            type: REMOVE_VIDEO,
+            peer
+          });
         });
-      });
       dispatch({ type: RTC_SETTING, payload: rtc });
+    },
+    startLoclaVideo: (localvideo) => {
+      dispatch({ type: LOCAL_VIDEO, start: rtc.startLocalVideo() });
+      if (localvideo) {
+        rtc.config.localVideoEl = localvideo;
+      } else {
+        rtc.config.localVideoEl = '';
+      }
     },
     AddpeerVideo: (targetremote) => {
       rtc.on('videoAdded', (stream, peer) => {
-        if(targetremote) {
+        if (targetremote) {
           dispatch({ type: ADD_MEDIA, peer });
-          rtc.attachStream(stream, targetremote[peer.id], { autoplay : true });
+          rtc.attachStream(stream, targetremote[peer.id], { autoplay: true });
+        }
+      })
+    },
+    joinChat: (roomname) => {
+      rtc.on('readyToCall', () => {
+        if (roomname) {
+          dispatch({
+            type: READY_TO_CALL,
+            joinroom: rtc.joinRoom(roomname)
+          });
         }
       })
     }
