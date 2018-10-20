@@ -15,21 +15,16 @@ class RoomsDetails extends Component {
 
   componentDidMount() {
     this.webrtc = this.props.webrtc;
-    this.webrtc.config.localVideoEl = this.localVid;
-    this.webrtc.startLocalVideo()
-    this.webrtc.on('videoAdded', (stream,peer) => {
-      this.props.store.dispatch({ type: ADD_MEDIA, peer })
-      this.props.webrtc.attachStream(stream, this.remoteVideos[peer.id])
-    })
-    this.webrtc.on('videoRemoved', (peer) => {
-      //this.props.peers.filter(p => !p.closed)
-    });
+    //this.webrtc.config.localVideoEl = this.props.localRef.current;
+    console.log(this.webrtc.config.localVideoEl)
+    this.webrtc.startLocalVideo();
+    this.props.AddpeerVideo(this.remoteVideos);
     this.webrtc.on('readyToCall', this.readyToCall.bind(this));
   }
 
   readyToCall() {
     const room_name = this.props.match.params.room_name;
-    if ( room_name ) { this.webrtc.joinRoom(room_name); }
+    if (room_name) { this.webrtc.joinRoom(room_name); }
   }
 
   disconnect() {
@@ -40,7 +35,7 @@ class RoomsDetails extends Component {
   }
 
   render() {
-    const { peers, email, url, ref } = this.props;
+    const { peers, email, url, localRef } = this.props;
     return (
       <div className="details-box">
         <div className="sidebar local">
@@ -49,7 +44,7 @@ class RoomsDetails extends Component {
             <em><i className="far fa-user"></i> {peers.length + 1}</em>
           </h2>
           <div className="localBox">
-            <video id='localVideo' ref={(vid) => this.localVid = vid} />
+            <video id='localVideo' ref={localRef}/>
             <div className="nick">
               <p>{email}</p>
             </div>
@@ -84,8 +79,8 @@ class RoomsDetails extends Component {
         <div className="remotevideo" id="remotevideo">
           {
             peers.map(data => (
-              <div className="vidContainer" key={data.id} id={`container_${this.webrtc.getId(data)}`}>
-                <video id={this.webrtc.getId(data)} ref={(v) => this.remoteVideos[data.id] = v} playsInline autoPlay />
+              <div className="vidContainer" key={data.id} id={`container_${this.webrtc.getContainerId(data)}`}>
+                <video id={this.webrtc.getId(data)} ref={(v) => this.remoteVideos[data.id] = v} playsInline />
                 <div className="nick">
                   <p>{data.nick.split(',')[0]}</p>
                 </div>

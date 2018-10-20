@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import { bindActionCreators } from 'redux'
 import React, { Component } from 'react';
 import { debounce } from "lodash";
 import * as firebase from 'firebase';
@@ -48,7 +49,7 @@ const mapStateToProps = state => ({
   func: state.func
 });
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, getState) => {
   return {
     loginUser: (user) => {
       firebase.auth().signInWithPopup(provider).then(result => {
@@ -98,13 +99,13 @@ const mapDispatchToProps = (dispatch) => {
         dispatch({ type: GET_ERRORS, error });
       });
     },
-    init: (cfg) => {
+    init: ( localele ) => {
       let roomName = history.location.pathname.split('/rooms/')[1];
       let user = JSON.parse(localStorage.getItem('user'));
       let email = (user !== null) ? `${user.email},${user.url}` : 'Not user';
       rtc = new LioWebRTC({
         url: 'https://sm1.lio.app:443/',
-        localVideoEl: '',
+        localVideoEl: localele,
         dataOnly: false,
         network: {
           maxPeers: 8,
@@ -113,30 +114,23 @@ const mapDispatchToProps = (dispatch) => {
         debug: true,
         nick: email
       });
-      /*rtc
-        .on('videoAdded', (stream, peer) => {
-          dispatch({
-            type: ADD_MEDIA,
-            peer
-          });
-        })
-        .on('videoRemoved', (peer) => {
-          dispatch({
-            type: REMOVE_VIDEO,
-            peer
-          });
-        });*/
+      rtc.on('videoRemoved', (peer) => {
+        dispatch({
+          type: REMOVE_VIDEO,
+          peer
+        });
+      });
       dispatch({ type: RTC_SETTING, payload: rtc });
+    },
+    AddpeerVideo: (targetremote) => {
+      rtc.on('videoAdded', (stream, peer) => {
+        if(targetremote) {
+          dispatch({ type: ADD_MEDIA, peer });
+          rtc.attachStream(stream, targetremote[peer.id], { autoplay : true });
+        }
+      })
     }
   };
 };
-
-class Apps extends Component {
-  render () {
-    return (
-      <App store={this.props.store}/>
-    ) 
-  }
-}
 
 export default connect(mapStateToProps, mapDispatchToProps, null, { withref: true })(App);

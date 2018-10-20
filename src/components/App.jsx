@@ -10,12 +10,14 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.history = createHistory();
+    this.localvideo = React.createRef();
   }
 
   componentDidMount() {
     this.props.usingUserData();
     this.props.channelData();
-    this.props.init();
+    console.log(this.localvideo.current)
+    this.props.init(this.localvideo.current);
   }
 
   signAlertMessage() {
@@ -58,7 +60,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const { isLoggedIn, items, isroom, init, peers, inroom, webrtc, saveFormData, store } = this.props;
+    const { isLoggedIn, items, isroom, init, peers, inroom, webrtc, saveFormData, AddpeerVideo } = this.props;
     return (
       <Router>
         <Route
@@ -76,7 +78,8 @@ export default class App extends React.Component {
               webrtc={webrtc}
               peers={peers}
               inroom={inroom}
-              store={store}
+              localRef={this.localvideo}
+              AddpeerVideo={AddpeerVideo}
             />)
           }}
         />

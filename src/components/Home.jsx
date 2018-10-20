@@ -14,12 +14,8 @@ export default class Home extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    console.log(this.props)
-  }
-
   render() {
-    const { isLoggedIn, items, isroom, init, peers, inroom, webrtc, saveFormData, store } = this.props;
+    const { isLoggedIn, items, isroom, init, peers, inroom, webrtc, saveFormData, localRef, AddpeerVideo } = this.props;
     return (
       <div id="app" className="container">
         <Navbar
@@ -57,13 +53,15 @@ export default class Home extends React.Component {
                 ?
                 <RoomsDetails
                   {...props}
-                  store={store}
                   init={init}
                   email={email}
                   url={items.url}
-                  peers={peers} 
+                  peers={peers}
                   webrtc={webrtc}
-                  inroom={inroom} />
+                  inroom={inroom}
+                  localRef={localRef}
+                  AddpeerVideo={AddpeerVideo}
+                />
                 : null
             );
           }} />
