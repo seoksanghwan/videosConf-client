@@ -18,7 +18,8 @@ import {
   RTC_SETTING,
   ADD_MEDIA,
   REMOVE_VIDEO,
-  READY_TO_CALL
+  READY_TO_CALL,
+  AUDIO_CHECK
 } from '../actions';
 import App from "../components/App.jsx";
 
@@ -27,7 +28,9 @@ const simpLioRTC = 'https://sm1.lio.app:443/';
 const localHostIp = 'http://videos.ap-northeast-2.elasticbeanstalk.com/';
 const localHostIpApi = 'http://videos.ap-northeast-2.elasticbeanstalk.com/api/auth/';
 const provider = new firebase.auth.GoogleAuthProvider();
-const history = createHistory();
+const history = createHistory({
+  forceRefresh: true
+});
 
 const setAuthToken = token => {
   if (token) {
@@ -45,14 +48,11 @@ const mapStateToProps = state => ({
   isroom: state.isroom,
   isroom: state.isroom,
   peers: state.peers,
-  id: state.id,
   webrtc: state.webrtc,
-  localStream: state.localStream,
-  ready: state.ready,
-  func: state.func
+  mute : state.mute
 });
 
-const mapDispatchToProps = (dispatch, getState) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     loginUser: (user) => {
       firebase.auth().signInWithPopup(provider).then(result => {
@@ -64,7 +64,7 @@ const mapDispatchToProps = (dispatch, getState) => {
           url: users.photoURL,
           email: users.email
         }
-        axios.post(`${localHostIp}login`, loginUser).then(res => {
+        axios.post(`${localHostIpApi}login`, loginUser).then(res => {
           const { token } = res.data;
           setAuthToken(token);
           const decoded = jwt_decode(token);
@@ -87,9 +87,14 @@ const mapDispatchToProps = (dispatch, getState) => {
     },
     userlogout: debounce(() => {
       let userRemove = localStorage.removeItem('user');
-      dispatch({
-        type: IS_LOGOUT_DATA,
-        data: userRemove
+      firebase.auth().signOut().then( () => {
+        history.push('/');
+        dispatch({
+          type: IS_LOGOUT_DATA,
+          data: userRemove
+        });
+      }).catch(error => {
+        dispatch({ type: GET_ERRORS, error });
       });
     }, 1000),
     channelData: () => {
@@ -149,13 +154,20 @@ const mapDispatchToProps = (dispatch, getState) => {
     },
     joinChat: (roomname) => {
       rtc.on('readyToCall', () => {
-        if (roomname) {
+        if ( roomname !== undefined ) {
           dispatch({
             type: READY_TO_CALL,
             joinroom: rtc.joinRoom(roomname)
           });
         }
       })
+    },
+    handleSelfMute : (e) => {
+      console.log(ownProps.mute)
+      dispatch({
+        type : AUDIO_CHECK,
+        func : rtc
+      });
     }
   };
 };

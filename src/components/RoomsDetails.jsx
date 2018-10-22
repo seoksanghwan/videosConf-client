@@ -1,31 +1,22 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { debounce } from "lodash";
 
-class RoomsDetails extends Component {
+export default class RoomsDetails extends Component {
   constructor(props) {
     super(props);
     this.remoteVideos = {};
-    window.onpopstate = e => {
-      this.webrtc.leaveRoom();
-      this.webrtc.stopLocalVideo();
-    }
   }
 
   componentDidMount() {
-    const { room_name } = this.props.match.params;
     this.webrtc = this.props.webrtc;
-    //this.props.startLoclaVideo(this.localVideo);
+    const { room_name } = this.props.match.params;
+    this.props.startLoclaVideo(this.localVideo);
     this.props.AddpeerVideo(this.remoteVideos);
     this.props.joinChat(room_name);
   }
 
-  startlocal() {
-    this.props.startLoclaVideo(this.localVideo);
-  }
-
   render() {
-    const { peers, email, url, AddpeerVideo, webrtc, disconnect } = this.props;
+    const { peers, email, url, AddpeerVideo, webrtc, disconnect, handleSelfMute, mute, connectVideo } = this.props;
     const { room_name } = this.props.match.params;
     return (
       <div className="details-box">
@@ -41,11 +32,15 @@ class RoomsDetails extends Component {
             </div>
           </div>
           <div className="buttons">
-            <button onClick={this.startlocal.bind(this)}>
+            <button onClick={connectVideo}>
               <i className="fas fa-video"></i>
             </button>
-            <button onClick={this.startlocal.bind(this)}>
-              <i className="fas fa-volume-off"></i>
+            <button onClick={handleSelfMute}>
+              {
+                (mute) ?
+                  <i className="fas fa-volume-up"></i> :
+                  <i className="fas fa-volume-mute"></i>
+              }
             </button>
             <button onClick={disconnect}>
               <i className="fas fa-sign-out-alt"></i>
@@ -63,7 +58,7 @@ class RoomsDetails extends Component {
         </div>
         <div className="remotevideo" >
           {
-            peers.map(data => (
+            webrtc && peers.map(data => (
               <div className="vidContainer" key={data.id} id={`${webrtc.getContainerId(data)}`} >
                 <video id={webrtc.getId(data)} autoPlay={true} ref={(vid) => this.remoteVideos[data.id] = vid} playsInline />
                 <div className="nick">
@@ -77,5 +72,3 @@ class RoomsDetails extends Component {
     );
   };
 };
-
-export default RoomsDetails;

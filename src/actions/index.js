@@ -11,6 +11,8 @@ export const REMOVE_VIDEO = 'REMOVE_VIDEO';
 export const READY_TO_CALL = 'READY_TO_CALL';
 export const LOCAL_VIDEO = 'LOCAL_VDIEO';
 export const CONNECTED_LOCAL = 'CONNECTED_LOCAL';
+export const DISCONNECTED_WEBCAM = 'DISCONNECTED_WEBCAM';
+export const AUDIO_CHECK = 'AUDIO_CHECK';
 
 export const isLogoutData = () => ({
 	type: IS_LOGOUT_DATA
@@ -60,5 +62,13 @@ export const localVideo = products => ({
 
 export const connectedLocal = products => ({
   type: CONNECTED_LOCAL
+});
+
+export const disconnectedWebcam = products => ({
+  type: DISCONNECTED_WEBCAM
+});
+
+export const audioCheck = products => ({
+  type: AUDIO_CHECK
 });
 

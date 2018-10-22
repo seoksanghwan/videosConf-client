@@ -3,29 +3,51 @@ import ReactDOM from 'react-dom';
 import { Switch, Route, Redirect } from "react-router-dom";
 import Main from './Main.jsx';
 import Navbar from './Navbar.jsx';
+import About from './About.jsx';
 import Rooms from './Rooms.jsx';
 import RoomsDetails from './RoomsDetails.jsx';
-import axios from 'axios';
+
 
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
   }
 
-  componentDidMount() {
+  componentDidUpdate() {
     if (this.props.webrtc !== null) {
-      this.props.webrtc.connection.disconnect();
+      if (!this.props.location.pathname.split('/rooms/')[1]) {
+        console.log('연결해제')
+        this.props.webrtc.connection.disconnect();
+        this.props.webrtc.stopLocalVideo();
+        this.props.webrtc.leaveRoom();
+      }
     }
+  }
+
+  connectVideo() {
+    this.props.history.go(0);
   }
 
   disconnect() {
     this.props.history.push('/rooms');
-    this.props.webrtc.stopLocalVideo();
-    this.props.webrtc.leaveRoom();
   }
 
   render() {
-    const { isLoggedIn, inputRef, items, isroom, init, peers, inroom, webrtc, saveFormData, AddpeerVideo, joinChat, startLoclaVideo } = this.props;
+    const {
+      isLoggedIn,
+      inputRef,
+      items,
+      isroom,
+      init,
+      peers,
+      inroom,
+      webrtc,
+      saveFormData,
+      AddpeerVideo,
+      joinChat,
+      startLoclaVideo,
+      handleSelfMute,
+      mute } = this.props;
     return (
       <div id="app" className="container">
         <Navbar
@@ -46,21 +68,31 @@ export default class Home extends React.Component {
               />
             );
           }} />
-          <Route exact path="/rooms" render={props => {
+          <Route exact path="/about" render={props => {
             return (
-              <Rooms
-                roomData={isroom}
-                roomDelete={this.props.roomDelete}
+              <About
+                {...props}
               />
             );
           }} />
+          <Route exact path="/rooms" render={props => {
+            if (isLoggedIn) {
+              return (
+                <Rooms
+                  roomData={isroom}
+                  roomDelete={this.props.roomDelete}
+                />
+              );
+            } else {
+              return <Redirect to="/" />;
+            }
+          }} />
           <Route exact path="/rooms/:room_name" render={props => {
             var title_len = props.match.params.room_name;
-            var isLanguageValid = (isroom) ? isroom.some(item => item.title === title_len) : console.log('no');
-            var email = items.email ? items.email : 'not';
-            return (
-              (items.email)
-                ?
+            var isRoomValid = isroom.some(item => item.title === title_len);
+            var email = items.email ? items.email : 'null';
+            if (isLoggedIn) {
+              return (
                 <RoomsDetails
                   {...props}
                   init={init}
@@ -72,10 +104,15 @@ export default class Home extends React.Component {
                   startLoclaVideo={startLoclaVideo}
                   AddpeerVideo={AddpeerVideo}
                   joinChat={joinChat}
+                  mute={mute}
+                  connectVideo={this.connectVideo.bind(this)}
                   disconnect={this.disconnect.bind(this)}
+                  handleSelfMute={handleSelfMute}
                 />
-                : null
-            );
+              );
+            } else {
+              return <span>Loading...</span>;
+            }
           }} />
           <Route render={() => <Redirect to="/" />} />
         </Switch>

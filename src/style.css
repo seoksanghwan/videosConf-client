@@ -1,67 +1,160 @@
 @charset "utf-8";
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 @import url('https://fonts.googleapis.com/css?family=Roboto');
+body, div, p, ul, li, ol, dl, dt, dd, h1, h2, h3, h4, h5, h6, table, td, th, header, article, footer, nav, section, input, select, a, button, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  color: #474b53;
+  font-size: 14px;
+  font-family: 'NanumGothic', 'Nanum Gothic';
+  line-height: 160%;
+}
 
-body,div,p,ul,li,ol,dl,dt,dd,h1,h2,h3,h4,h5,h6,table,td,th,header,article,footer,nav,section,input,select,a,button, video{ margin:0;padding:0; border:0; color:#474b53;font-size:14px;font-family:'NanumGothic','Nanum Gothic';line-height:160%;}
-div,p,ul,li,ol,dl,dt,dd,h1,h2,h3,h4,h5,h6,span,header,article,footer,nav,section,img,a, video{position:relative;*zoom:1;}
+div, p, ul, li, ol, dl, dt, dd, h1, h2, h3, h4, h5, h6, span, header, article, footer, nav, section, img, a, video {
+  position: relative;
+  *zoom: 1;
+}
 
-html{overflow-y:scroll;}
-ul , li { list-style:none; padding:0; margin:0;}
-img { border:0; padding:0; border:0;}
-caption { display: none;}
-i웃put{background:#fff;margin:0;padding:0;vertical-align: middle;border:1px solid #eee;}
-input[type=text]{border:1px solid #d2d2d2;}
-input[type= tel]{border:1px solid #d2d2d2;}
-input[type= email]{border:1px solid #d2d2d2;}
-input[type=checkbox]{border:none;}
-input[type=password]{border:1px solid #d2d2d2;}
-select{border:1px solid #d2d2d2;}
-hr{display:none;}
-a{ border:0; padding:0; margin:0; text-decoration:none; outline:none; color:#474b53;}
+html {
+  overflow-y: scroll;
+}
 
-fieldset {margin:0; padding:0; border:0;}
-legend {display:none; padding:0;  margin:0;}
-label{vertical-align:middle;}
+ul, li {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
 
-.img { border:0; padding:0;}
-.check2 { border:0; padding:0; background: #EFEFEF; }
+img {
+  border: 0;
+  padding: 0;
+  border: 0;
+}
 
-.justify {  text-align: justify;}
-.b { font-weight:bold;}
+caption {
+  display: none;
+}
 
-div:after,li:after,ul:after,dl:after,dd:after,div:before,li:before,dl:before,ul:before,dd:before{clear:both;content:"";display:block;}
+i웃put {
+  background: #fff;
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
+  border: 1px solid #eee;
+}
 
-body{
+input[type=text] {
+  border: 1px solid #d2d2d2;
+}
+
+input[type=tel] {
+  border: 1px solid #d2d2d2;
+}
+
+input[type=email] {
+  border: 1px solid #d2d2d2;
+}
+
+input[type=checkbox] {
+  border: none;
+}
+
+input[type=password] {
+  border: 1px solid #d2d2d2;
+}
+
+select {
+  border: 1px solid #d2d2d2;
+}
+
+hr {
+  display: none;
+}
+
+a {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+  outline: none;
+  color: #474b53;
+}
+
+fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+legend {
+  display: none;
+  padding: 0;
+  margin: 0;
+}
+
+label {
+  vertical-align: middle;
+}
+
+.img {
+  border: 0;
+  padding: 0;
+}
+
+.check2 {
+  border: 0;
+  padding: 0;
+  background: #EFEFEF;
+}
+
+.justify {
+  text-align: justify;
+}
+
+.b {
+  font-weight: bold;
+}
+
+div:after, li:after, ul:after, dl:after, dd:after, div:before, li:before, dl:before, ul:before, dd:before {
+  clear: both;
+  content: "";
+  display: block;
+}
+
+body {
   width: 100%;
   min-width: 1200px;
-  margin:0 auto;
+  margin: 0 auto;
   height: -webkit-fill-available;
 }
 
 body::before {
   content: "";
   position: absolute;
-  top: 0; 
+  top: 0;
   left: 0;
   width: 100%;
   height: -webkit-fill-available;
   z-index: -1;
-  opacity: .2; 
-  background: url('http://simpleicon.com/wp-content/uploads/webcam.png') no-repeat;
-  background-size:1000px; 
-  background-position:118% 134%;
+  opacity: .2;
+  background: url('https://github.com/seoksanghwan/videosConf---client/blob/master/src/img/webcam.png?raw=true') no-repeat;
+  background-size: 37%;
+  background-position: right bottom;
 }
 
-body>#root,
-body>#root>#app{
+body>#root, body>#root>#app {
   width: 100%;
   height: -webkit-fill-available;
   position: relative;
 }
 
-video{width: 200px;height: 100px;}
+video {
+  width: 200px;
+  height: 100px;
+}
 
-.login-page{
+.login-page {
   width: 300px;
   height: 150px;
   position: absolute;
@@ -69,28 +162,27 @@ video{width: 200px;height: 100px;}
   left: 0;
   right: 0;
   bottom: 0;
-  margin:auto;
+  margin: auto;
 }
 
 .login-page * {
-  color:#222;
+  color: #222;
   text-align: center;
 }
 
-.login-page h1,
-.login-page h2{
+.login-page h1, .login-page h2 {
   margin-bottom: 10px;
 }
 
 .login-page button {
-  background:none;
+  background: none;
   cursor: pointer;
-  background:#2196f3;
+  background: #2196f3;
   width: 170px;
   height: 40px;
   display: block;
   margin: 0 auto;
-  outline:none;
+  outline: none;
 }
 
 .container {
@@ -111,25 +203,23 @@ video{width: 200px;height: 100px;}
   float: left;
 }
 
-.container .navbar-start .nav-content .nav-menu dl dt{
+.container .navbar-start .nav-content .nav-menu dl dt {
   margin-right: 40px !important;
 }
 
-.container .navbar-start .nav-content .nav-menu dl dt,
-.container .navbar-start .nav-content .nav-menu dl dd {
+.container .navbar-start .nav-content .nav-menu dl dt, .container .navbar-start .nav-content .nav-menu dl dd {
   float: left;
   line-height: 80px;
   margin-right: 18px;
 }
 
 .container .navbar-start .nav-content .nav-menu dl dt a {
-  font-size:55px;
+  font-size: 55px;
   font-weight: bold;
   font-family: 'Roboto', sans-serif;
 }
 
-.container .navbar-start .nav-content .nav-menu dl dd p,
-.container .navbar-start .nav-content .nav-menu dl dd a {
+.container .navbar-start .nav-content .nav-menu dl dd p, .container .navbar-start .nav-content .nav-menu dl dd a {
   display: block;
   font-size: 20px;
   padding-top: 30px;
@@ -144,8 +234,8 @@ video{width: 200px;height: 100px;}
 
 .container .navbar-start .nav-content .user-info-nav p {
   line-height: 80px;
-  color:#222;
-  font-size:20px;
+  color: #222;
+  font-size: 20px;
   vertical-align: middle;
 }
 
@@ -156,20 +246,20 @@ video{width: 200px;height: 100px;}
   border-radius: 5px;
 }
 
-.container .nav-content .btnLogOut{
+.container .nav-content .btnLogOut {
   line-height: 22px;
-  color:#fff;
-  background:#222;
+  color: #fff;
+  background: #222;
   font-weight: bold;
   box-sizing: border-box;
-  padding:7px 15px;
-  font-size:17px;
+  padding: 7px 15px;
+  font-size: 17px;
 }
 
-.rooms-list{
+.rooms-list {
   width: 95%;
   margin: 0 auto 100px auto;
-  padding:20px;
+  padding: 20px;
   padding-top: 0;
 }
 
@@ -184,27 +274,27 @@ video{width: 200px;height: 100px;}
   line-height: 40px;
 }
 
-.title{
+.title {
   text-align: right;
-  font-size:40px;
-  color:#333;
-  margin:20px 0 10px 0;
+  font-size: 40px;
+  color: #333;
+  margin: 20px 0 10px 0;
 }
 
-.title em{
+.title em {
   font-style: normal;
   display: block;
 }
 
-.title em{
-  font-size:20px;
+.title em {
+  font-size: 20px;
   position: relative;
   color: #3e3e3ecc;
 }
 
-.title em::after{
+.title em::after {
   content: '🐵';
-  font-size:30px;
+  font-size: 30px;
   animation: fade 2s infinite linear;
 }
 
@@ -212,42 +302,40 @@ video{width: 200px;height: 100px;}
   0% {
     content: '🙈';
   }
-
   50% {
     content: '🙉';
   }
-
   100% {
     content: '🙊';
   }
 }
 
-.navbar-item{
-  color:#fff;
+.navbar-item {
+  color: #fff;
 }
 
 .rooms-list dd {
   width: 24%;
   float: left;
-  margin : 0 0.5% 15px 0.5%;
+  margin: 0 0.5% 15px 0.5%;
   position: relative;
-  background:#fff;
+  background: #fff;
   border-radius: 2px;
   transition: 0.3s background ease-in-out;
-  box-shadow: 3px 3px 10px rgba(0,0,0,0.5);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
   cursor: pointer;
 }
 
-.rooms-list dd:hover{
-  background:#e6e6e6;
+.rooms-list dd:hover {
+  background: #e6e6e6;
 }
 
-.rooms-list dd a{
-  color:#222;
+.rooms-list dd a {
+  color: #222;
   padding: 15px;
   box-sizing: border-box;
   font-weight: 500;
-  font-size:35px;
+  font-size: 35px;
   line-height: 50px;
   display: block;
   width: 100%;
@@ -256,60 +344,60 @@ video{width: 200px;height: 100px;}
   border-bottom: 1px solid #dedee1;
 }
 
-.rooms-list dd button{
+.rooms-list dd button {
   float: right;
   cursor: pointer;
-  font-size:19px;
-  padding:4px 10px;
-  border-radius:5px;
-  background:#1d2329;
-  color:#fff;
-  outline:none;
-  margin:15px;
+  font-size: 19px;
+  padding: 4px 10px;
+  border-radius: 5px;
+  background: #1d2329;
+  color: #fff;
+  outline: none;
+  margin: 15px;
 }
 
-.rooms-list dd a p{
-  font-size:18px;
+.rooms-list dd a p {
+  font-size: 18px;
   text-align: right;
 }
 
 .meeting-room-create {
   height: 206px;
   width: 550px;
-  margin:auto auto;
+  margin: auto auto;
   position: absolute;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  font-size:0;
+  font-size: 0;
   text-align: center;
 }
 
-.meeting-room-create h1{
-  color:#555;
-  font-size:60px;
+.meeting-room-create h1 {
+  color: #555;
+  font-size: 60px;
   text-align: center;
   font-family: 'Roboto', sans-serif;
 }
 
-.meeting-room-create form{
+.meeting-room-create form {
   width: 100%;
 }
 
-.meeting-room-create input{
+.meeting-room-create input {
   width: 76%;
   height: 70px;
   border: none;
-  font-size:20px;
+  font-size: 20px;
   line-height: 70px;
   font-weight: bold;
   vertical-align: middle;
-  outline:none;
-  border-radius:0 !important;
+  outline: none;
+  border-radius: 0 !important;
   text-align: center;
   margin-bottom: 10px;
-  background:#f1f1f1;
+  background: #f1f1f1;
 }
 
 .meeting-room-create button {
@@ -317,75 +405,81 @@ video{width: 200px;height: 100px;}
   height: 70px;
   border: none;
   vertical-align: middle;
-  background:#1d2329;
-  color:#fff;
+  background: #1d2329;
+  color: #fff;
   margin-bottom: 10px;
-  font-size:25px;
+  font-size: 25px;
   font-weight: bold;
 }
 
 .meeting-room-create .navbar-item {
   font-size: 18px;
-  border:1px solid #333;
-  padding:3px 7px;
-  border-radius:4px;
-  color:#333;
+  border: 1px solid #333;
+  padding: 3px 7px;
+  border-radius: 4px;
+  color: #333;
 }
 
-.details-box{
+.details-box {
   width: 100%;
   height: -webkit-fill-available;
 }
 
 .details-box input[type=text] {
-  color:#222;
+  color: #222;
   width: 100%;
   height: 30px;
   line-height: 30px;
-  padding:0;
-  box-sizing:border-box;
+  padding: 0;
+  box-sizing: border-box;
   position: fixed;
   bottom: 60px;
   left: 0;
 }
 
-.sidebar.local{
+.sidebar.local {
   width: 20%;
   height: 100%;
   float: left;
   margin-right: 1%;
   height: -webkit-fill-available;
   position: relative;
-  background:rgba(255,255,255, 0.4);
+  background: rgba(255, 255, 255, 0.4);
 }
 
-.sidebar.local h2{
+.sidebar.local h2 {
   width: 80%;
-  font-size:30px;
+  font-size: 30px;
   text-align: left;
   font-weight: bold;
   margin: 20px auto 0 auto;
   position: relative;
 }
 
-.sidebar.local h2 em{
+.sidebar.local h2 em {
   position: absolute;
   right: 10px;
   bottom: 0;
-  font-size:17px;
+  font-size: 17px;
   font-style: normal;
   font-weight: normal;
 }
 
-.localBox{
+.localBox {
   width: 80%;
   height: 250px;
-  margin:10px auto 20px auto;
-  border-radius: 10px;
-  overflow: hidden; 
+  margin: 10px auto 20px auto;
+  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+  -webkit-transform: rotate(0.000001deg);
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  overflow: hidden;
+  background: url('http://rochdalepioneerspartnership.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png') no-repeat;
+  background-size: 100% 100%;
 }
 
-.localBox #localVideo{
+.localBox #localVideo {
   object-fit: fill;
   width: 100%;
   height: 100%;
@@ -393,8 +487,8 @@ video{width: 200px;height: 100px;}
   transform: scaleX(-1);
 }
 
-.localBox .nick{
-  background: rgba(0,0,0,0.5) !important;
+.localBox .nick {
+  background: rgba(0, 0, 0, 0.5) !important;
   position: absolute;
   height: 40px;
   bottom: 0;
@@ -403,43 +497,49 @@ video{width: 200px;height: 100px;}
   text-align: center;
 }
 
-.localBox .nick p{
+.localBox .nick p {
   line-height: 40px;
-  font-size:17px;
-  color:#fff;
+  font-size: 17px;
+  color: #fff;
 }
 
-.remotevideo{
+.remotevideo {
   margin-top: 30px;
   width: 78%;
   float: left;
 }
 
-.remotevideo .vidContainer{
+.remotevideo .vidContainer {
   float: left;
   width: 24%;
   height: 370px;
   margin-right: 1%;
   overflow: hidden;
+  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+  -webkit-transform: rotate(0.000001deg);
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
   border-radius: 20px;
+  background: url('http://rochdalepioneerspartnership.com/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png') no-repeat;
+  background-size: 100% 100%;
 }
 
-.remotevideo .vidContainer video{
+.remotevideo .vidContainer video {
   object-fit: fill;
   width: 100%;
   height: 100%;
   position: relative;
 }
 
-.remotePeerList{
+.remotePeerList {
   margin-top: 100px;
-  width:80%;
-  margin:100px auto 0 auto;
+  width: 80%;
+  margin: 100px auto 0 auto;
   text-align: center;
 }
 
-.remotevideo .nick{
-  background: rgba(0,0,0,0.5) !important;
+.remotevideo .nick {
+  background: rgba(0, 0, 0, 0.5) !important;
   position: absolute;
   height: 40px;
   bottom: 0;
@@ -448,41 +548,41 @@ video{width: 200px;height: 100px;}
   text-align: center;
 }
 
-.remotevideo .nick p{
+.remotevideo .nick p {
   line-height: 40px;
-  font-size:17px;
-  color:#fff;
+  font-size: 17px;
+  color: #fff;
 }
 
-.remotePeerList *{
-  color:#333;
+.remotePeerList * {
+  color: #333;
 }
 
-.remotePeerList h3{
-  font-size:30px;
+.remotePeerList h3 {
+  font-size: 30px;
   border-bottom: 1px solid rgb(206, 206, 206);
   margin-bottom: 10px;
   text-align: left;
 }
 
-.remotePeerList ul{
+.remotePeerList ul {
   width: 100%;
 }
 
-.remotePeerList ul li{
-  font-size:18px;
+.remotePeerList ul li {
+  font-size: 18px;
   text-align: left;
   font-weight: bold;
   margin-bottom: 7px;
 }
 
-.remotePeerList ul li p{
+.remotePeerList ul li p {
   display: inline-block;
   vertical-align: middle;
-  font-size:18px;
+  font-size: 18px;
 }
 
-.remotePeerList ul li img{
+.remotePeerList ul li img {
   width: 30px;
   height: 30px;
   display: inline-block;
@@ -495,19 +595,48 @@ video{width: 200px;height: 100px;}
   text-align: center;
 }
 
-.buttons button{
+.buttons button {
   display: inline-block;
-  font-size:18px;
+  font-size: 18px;
   background: #1d2329;
   text-align: center;
   width: 50px;
   height: 50px;
   border-radius: 100%;
-  margin:0 5px;
-  color:#fff;
+  margin: 0 5px;
+  color: #fff;
   outline: none;
 }
 
 .buttons button i {
   vertical-align: middle;
+}
+
+.about-content {
+  display: flex;
+  justify-content : space-between;
+  width: 1200px;
+  margin: 20px auto 0 auto;
+}
+
+.about-content .about-img {
+  width: 40%;
+}
+
+.about-content .about-img img {
+  width: 100%;
+}
+
+.about-content .about-info-text {
+  width: 37%;
+}
+
+.about-content .about-info-text h2 {
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  font-size:45px;
+}
+
+.about-content .about-info-text p {
+  font-size:25px;
 }
