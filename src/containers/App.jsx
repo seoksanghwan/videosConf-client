@@ -21,10 +21,11 @@ import {
   READY_TO_CALL
 } from '../actions';
 import App from "../components/App.jsx";
-import { refAs, refWith } from 'react-ref-helper';
 
 let rtc;
-const localHostIp = 'http://videos.ap-northeast-2.elasticbeanstalk.com/api/auth/';
+const simpLioRTC = 'https://sm1.lio.app:443/';
+const localHostIp = 'http://videos.ap-northeast-2.elasticbeanstalk.com/';
+const localHostIpApi = 'http://videos.ap-northeast-2.elasticbeanstalk.com/api/auth/';
 const provider = new firebase.auth.GoogleAuthProvider();
 const history = createHistory();
 
@@ -92,7 +93,7 @@ const mapDispatchToProps = (dispatch, getState) => {
       });
     }, 1000),
     channelData: () => {
-      axios.get(`http://videos.ap-northeast-2.elasticbeanstalk.com/`).then(({ data }) => {
+      axios.get(localHostIp).then(({ data }) => {
         dispatch({
           type: ROOMS_DATA,
           data
@@ -105,7 +106,7 @@ const mapDispatchToProps = (dispatch, getState) => {
       let user = JSON.parse(localStorage.getItem('user'));
       let email = (user !== null) ? `${user.email},${user.url}` : 'Not user';
       rtc = new LioWebRTC({
-        url: 'https://sm1.lio.app:443/',
+        url: simpLioRTC,
         localVideoEl: '',
         dataOnly: false,
         network: {

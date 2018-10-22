@@ -81,6 +81,7 @@ export default class App extends React.Component {
               startLoclaVideo={startLoclaVideo}
               AddpeerVideo={AddpeerVideo}
               joinChat={joinChat}
+              inputRef={value => this.inputNode = value}
             />)
           }}
         />

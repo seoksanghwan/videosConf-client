@@ -25,7 +25,7 @@ export default class Home extends React.Component {
   }
 
   render() {
-    const { isLoggedIn, items, isroom, init, peers, inroom, webrtc, saveFormData, AddpeerVideo, joinChat, startLoclaVideo } = this.props;
+    const { isLoggedIn, inputRef, items, isroom, init, peers, inroom, webrtc, saveFormData, AddpeerVideo, joinChat, startLoclaVideo } = this.props;
     return (
       <div id="app" className="container">
         <Navbar
@@ -42,7 +42,7 @@ export default class Home extends React.Component {
                 {...props}
                 isLoggedIn={isLoggedIn}
                 saveFormData={saveFormData}
-                inputRef={value => this.inputNode = value}
+                inputRef={inputRef}
               />
             );
           }} />
