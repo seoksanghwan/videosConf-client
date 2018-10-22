@@ -4,7 +4,6 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import createHistory from 'history/createBrowserHistory';
 import axios from 'axios';
 import Home from './Home.jsx';
-const localHostIp = 'http://videos.ap-northeast-2.elasticbeanstalk.com/';
 
 export default class App extends React.Component {
 
@@ -18,59 +17,37 @@ export default class App extends React.Component {
     this.props.channelData();
     this.props.init();
   }
-  
+
   signAlertMessage() {
     alert('로그인을 해주세요');
   }
 
-  saveFormData(event) {
+  saveFormDatas(event) {
     event.preventDefault();
-    const { isLoggedIn, items } = this.props;
-    const rgExp = /[^A-Za-z]/;
-    const rgExp02 = /[A-Za-z]/;
     const title = this.inputNode.value;
-    if (isLoggedIn) {
-      if (title.length > 1 && title.length < 11) {
-        axios.post(`${localHostIp}rooms`, {
-          title,
-          userName: items.name,
-          userMail: items.email
-        });
-        //this.history.push(`/rooms/${title}`, { some: 'state' });
-      } else {
-        alert('회의방 제목은 2글자 이상 10글자 미만이에요.\n다시 한번 작성해주세요');
-        this.inputNode.value = '';
-      }
-    } else {
-      this.signAlertMessage();
-      this.inputNode.value = '';
-    }
+    const { isLoggedIn, items } = this.props;
+    this.props.saveFormData(isLoggedIn, items, title);
   }
 
-  roomDelete(ev) {
-    const dataId = ev.target.dataset.id;
-    const dataMail = ev.target.dataset.mail;
+  roomDeletes(event) {
+    event.preventDefault();
+    const dataId = event.target.dataset.id;
+    const dataMail = event.target.dataset.mail;
     const { items } = this.props;
-    if (dataMail === items.email) {
-      axios.delete(`${localHostIp}rooms/dataId`, { data: { id: dataId } });
-      alert('회의실이 삭제되었습니다.');
-    } else {
-      alert('회의실 삭제 권한은 주최자에게만 있어요.');
-    }
+    this.props.roomDelete(dataId, dataMail, items.email);
   }
 
   render() {
-    const { 
-      isLoggedIn, 
-      items, 
-      isroom, 
-      peers, 
-      inroom, 
-      webrtc, 
-      saveFormData, 
-      joinChat, 
-      AddpeerVideo, 
-      startLoclaVideo, 
+    const {
+      isLoggedIn,
+      items,
+      isroom,
+      peers,
+      inroom,
+      webrtc,
+      joinChat,
+      AddpeerVideo,
+      startLoclaVideo,
       handleSelfMute,
       mute } = this.props;
     return (
@@ -79,27 +56,27 @@ export default class App extends React.Component {
           render={props => {
             return (
               (webrtc !== null) ?
-              <Home
-                {...props}
-                isLoggedIn={isLoggedIn}
-                items={items}
-                isroom={isroom}
-                saveFormData={this.saveFormData.bind(this)}
-                roomDelete={this.roomDelete.bind(this)}
-                onLoginButtonClick={this.props.loginUser}
-                onLogoutButtonClick={this.props.userlogout}
-                signAlert={this.signAlertMessage}
-                webrtc={webrtc}
-                peers={peers}
-                inroom={inroom}
-                startLoclaVideo={startLoclaVideo}
-                AddpeerVideo={AddpeerVideo}
-                mute = {mute}
-                handleSelfMute={handleSelfMute.bind(this)}
-                joinChat={joinChat}
-                inputRef={value => this.inputNode = value}
-              /> :
-              null
+                <Home
+                  {...props}
+                  isLoggedIn={isLoggedIn}
+                  items={items}
+                  isroom={isroom}
+                  saveFormData={this.saveFormDatas.bind(this)}
+                  roomDelete={this.roomDeletes.bind(this)}
+                  onLoginButtonClick={this.props.loginUser}
+                  onLogoutButtonClick={this.props.userlogout}
+                  signAlert={this.signAlertMessage}
+                  webrtc={webrtc}
+                  peers={peers}
+                  inroom={inroom}
+                  startLoclaVideo={startLoclaVideo}
+                  AddpeerVideo={AddpeerVideo}
+                  mute={mute}
+                  handleSelfMute={handleSelfMute.bind(this)}
+                  joinChat={joinChat}
+                  inputRef={value => this.inputNode = value}
+                /> :
+                null
             )
           }}
         />

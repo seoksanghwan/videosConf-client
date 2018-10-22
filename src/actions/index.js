@@ -1,4 +1,3 @@
-import LioWebRTC from 'liowebrtc';
 export const IS_LOGIN_USER = 'IS_LOGIN_USER';
 export const FETCH_PRODUCTS_BEGIN = 'FETCH_PRODUCTS_BEGIN';
 export const GET_ERRORS = 'GET_ERRORS';
@@ -13,6 +12,8 @@ export const LOCAL_VIDEO = 'LOCAL_VDIEO';
 export const CONNECTED_LOCAL = 'CONNECTED_LOCAL';
 export const DISCONNECTED_WEBCAM = 'DISCONNECTED_WEBCAM';
 export const AUDIO_CHECK = 'AUDIO_CHECK';
+export const ROOM_ADD = 'ROOM_ADD';
+export const ROOM_REMOVE = 'ROOM_REMOVE';
 
 export const isLogoutData = () => ({
 	type: IS_LOGOUT_DATA
@@ -71,4 +72,15 @@ export const disconnectedWebcam = products => ({
 export const audioCheck = products => ({
   type: AUDIO_CHECK
 });
+
+export const roomAdd = products => ({
+  type: ROOM_ADD
+});
+
+export const roomRemove = products => ({
+  type: ROOM_REMOVE
+});
+
+
+
 

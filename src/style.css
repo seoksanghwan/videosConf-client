@@ -362,16 +362,16 @@ video {
 }
 
 .meeting-room-create {
-  height: 206px;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  height: -webkit-fill-available;
+}
+
+.meeting-room-create .rooms_title {
+  margin-top: -266px;
+  height: 166px;
   width: 550px;
-  margin: auto auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  font-size: 0;
-  text-align: center;
 }
 
 .meeting-room-create h1 {
@@ -598,7 +598,6 @@ video {
 .buttons button {
   display: inline-block;
   font-size: 18px;
-  background: #1d2329;
   text-align: center;
   width: 50px;
   height: 50px;
@@ -606,10 +605,21 @@ video {
   margin: 0 5px;
   color: #fff;
   outline: none;
+  cursor: pointer;
+  overflow: hidden;
 }
 
 .buttons button i {
   vertical-align: middle;
+  background: #1d2329;
+  display: block;
+  width: 100%;
+  height: 100%;
+  line-height: 50px;
+}
+
+.buttons button i.fa-volume-up {
+  background: #11a736;
 }
 
 .about-content {

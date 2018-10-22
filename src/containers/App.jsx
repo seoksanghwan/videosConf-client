@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import io from 'socket.io-client';
 import { bindActionCreators } from 'redux'
 import React, { Component } from 'react';
 import { debounce } from "lodash";
@@ -6,7 +7,7 @@ import * as firebase from 'firebase';
 import LioWebRTC from 'liowebrtc';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
-import createHistory from 'history/createBrowserHistory';
+
 import {
   IS_LOGIN_USER,
   IS_LOGGED_IN_DATA,
@@ -19,19 +20,23 @@ import {
   ADD_MEDIA,
   REMOVE_VIDEO,
   READY_TO_CALL,
-  AUDIO_CHECK
+  AUDIO_CHECK,
+  ROOM_ADD,
+  ROOM_REMOVE
 } from '../actions';
 import App from "../components/App.jsx";
+import createHistory from 'history/createBrowserHistory';
+//http://videos.ap-northeast-2.elasticbeanstalk.com/
 
 let rtc;
 const simpLioRTC = 'https://sm1.lio.app:443/';
-const localHostIp = 'http://videos.ap-northeast-2.elasticbeanstalk.com/';
-const localHostIpApi = 'http://videos.ap-northeast-2.elasticbeanstalk.com/api/auth/';
+const localHostIp = 'http://localhost:8000/';
+const localHostIpApi = `${localHostIp}api/auth/`;
 const provider = new firebase.auth.GoogleAuthProvider();
 const history = createHistory({
   forceRefresh: true
 });
-
+const socket = io(localHostIp);
 const setAuthToken = token => {
   if (token) {
     axios.defaults.headers.common['Authorization'] = token;
@@ -49,7 +54,7 @@ const mapStateToProps = state => ({
   isroom: state.isroom,
   peers: state.peers,
   webrtc: state.webrtc,
-  mute : state.mute
+  mute: state.mute
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -87,7 +92,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     userlogout: debounce(() => {
       let userRemove = localStorage.removeItem('user');
-      firebase.auth().signOut().then( () => {
+      firebase.auth().signOut().then(() => {
         history.push('/');
         dispatch({
           type: IS_LOGOUT_DATA,
@@ -98,14 +103,54 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       });
     }, 1000),
     channelData: () => {
+      let arr = [];
       axios.get(localHostIp).then(({ data }) => {
+        arr = [...arr, data]
         dispatch({
           type: ROOMS_DATA,
           data
         });
+        socket.on('new:message', function (msgObject) {
+          dispatch({
+            type: ROOM_ADD,
+            data: msgObject
+          });
+        });
       }).catch((error) => {
         dispatch({ type: GET_ERRORS, error });
       });
+    },
+    saveFormData: (logedin, items, title) => {
+      if (logedin) {
+        if (title.length > 1 && title.length < 11) {
+          let data = {
+            title,
+            userName: items.name,
+            userMail: items.email
+          }
+          axios.post(`${localHostIp}rooms`, data);
+          socket.emit('new:message', data);
+          dispatch({ type: ROOM_ADD, data });
+          history.push(`/rooms/${title}`);
+        } else {
+          alert('회의방 제목은 2글자 이상 10글자 미만이에요.\n다시 한번 작성해주세요');
+          title = '';
+        }
+      } else {
+        alert('로그인을 해주세요');
+        title = '';
+      }
+    },
+    roomDelete: (dataid, dataMail, itemsMail) => {
+      if (dataMail === itemsMail) {
+        axios.delete(`${localHostIp}rooms/dataId`, { data: { id: dataid } });
+        dispatch({
+          type: ROOM_REMOVE
+        })
+        alert('회의실이 삭제되었습니다.');
+      } else {
+        alert('회의실 삭제 권한은 주최자에게만 있어요.');
+      }
     },
     init: (localele) => {
       let user = JSON.parse(localStorage.getItem('user'));
@@ -154,7 +199,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     joinChat: (roomname) => {
       rtc.on('readyToCall', () => {
-        if ( roomname !== undefined ) {
+        if (roomname !== undefined) {
           dispatch({
             type: READY_TO_CALL,
             joinroom: rtc.joinRoom(roomname)
@@ -162,14 +207,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         }
       })
     },
-    handleSelfMute : (e) => {
+    handleSelfMute: (e) => {
       console.log(ownProps.mute)
       dispatch({
-        type : AUDIO_CHECK,
-        func : rtc
+        type: AUDIO_CHECK,
+        func: rtc
       });
     }
   };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps, null, { withref: true })(App);
+
+

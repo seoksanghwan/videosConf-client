@@ -106,6 +106,7 @@ export default class Home extends React.Component {
                   connectVideo={this.connectVideo.bind(this)}
                   disconnect={this.disconnect.bind(this)}
                   handleSelfMute={handleSelfMute}
+                  localref={(vid) => this.localVideo = vid}
                 />
               );
             } else {

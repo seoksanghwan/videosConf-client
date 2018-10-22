@@ -14,7 +14,9 @@ import {
 	REMOVE_VIDEO,
 	READY_TO_CALL,
 	DISCONNECTED_WEBCAM,
-	AUDIO_CHECK
+	AUDIO_CHECK,
+	ROOM_ADD,
+	ROOM_REMOVE
 } from '../actions';
 
 const initialState = {
@@ -122,6 +124,19 @@ export default function productReducer(state = initialState, action) {
 				...state,
 				mute: !state.mute
 			};
+
+		case ROOM_ADD:
+			const dataroom = [...state.isroom, action.data]
+			console.log(dataroom)
+			return {
+				...state,
+				isroom: dataroom
+			}
+
+		case ROOM_REMOVE:
+			return {
+				...state
+			}
 
 		case GET_ERRORS:
 			return action.payload;
