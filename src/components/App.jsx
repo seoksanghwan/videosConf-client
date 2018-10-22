@@ -36,7 +36,7 @@ export default class App extends React.Component {
           userName: items.name,
           userMail: items.email
         });
-        this.history.push(`/rooms/${title}`, { some: 'state' });
+        //this.history.push(`/rooms/${title}`, { some: 'state' });
       } else {
         alert('회의방 제목은 2글자 이상 10글자 미만이에요.\n다시 한번 작성해주세요');
         this.inputNode.value = '';
@@ -78,7 +78,7 @@ export default class App extends React.Component {
         <Route
           render={props => {
             return (
-              (isLoggedIn) ?
+              (webrtc !== null) ?
               <Home
                 {...props}
                 isLoggedIn={isLoggedIn}

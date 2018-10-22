@@ -14,13 +14,11 @@ export default class Home extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.webrtc !== null) {
-      if (!this.props.location.pathname.split('/rooms/')[1]) {
-        console.log('연결해제')
-        this.props.webrtc.connection.disconnect();
-        this.props.webrtc.stopLocalVideo();
-        this.props.webrtc.leaveRoom();
-      }
+    if (!this.props.location.pathname.split('/rooms/')[1]) {
+      console.log('연결해제')
+      this.props.webrtc.connection.disconnect();
+      this.props.webrtc.stopLocalVideo();
+      this.props.webrtc.leaveRoom();
     }
   }
 

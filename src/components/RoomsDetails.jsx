@@ -8,8 +8,8 @@ export default class RoomsDetails extends Component {
   }
 
   componentDidMount() {
-    this.webrtc = this.props.webrtc;
     const { room_name } = this.props.match.params;
+    this.webrtc = this.props.webrtc;
     this.props.startLoclaVideo(this.localVideo);
     this.props.AddpeerVideo(this.remoteVideos);
     this.props.joinChat(room_name);
