@@ -24,9 +24,9 @@ export default class App extends React.Component {
 
   saveFormDatas(event) {
     event.preventDefault();
-    const title = this.inputNode.value;
-    const { isLoggedIn, items } = this.props;
-    this.props.saveFormData(isLoggedIn, items, title);
+    const { isLoggedIn, items, isroom } = this.props;
+    this.props.saveFormData(isLoggedIn, items, this.inputNode.value, isroom);
+    this.inputNode.value = '';
   }
 
   roomDeletes(event) {

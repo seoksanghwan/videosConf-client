@@ -26,16 +26,14 @@ import {
 } from '../actions';
 import App from "../components/App.jsx";
 import createHistory from 'history/createBrowserHistory';
-//http://videos.ap-northeast-2.elasticbeanstalk.com/
+//
 
 let rtc;
 const simpLioRTC = 'https://sm1.lio.app:443/';
-const localHostIp = 'http://localhost:8000/';
+const localHostIp = 'https://videos.ap-northeast-2.elasticbeanstalk.com/';
 const localHostIpApi = `${localHostIp}api/auth/`;
 const provider = new firebase.auth.GoogleAuthProvider();
-const history = createHistory({
-  forceRefresh: true
-});
+const history = createHistory();
 const socket = io(localHostIp);
 const setAuthToken = token => {
   if (token) {
@@ -90,7 +88,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         data: user
       });
     },
-    userlogout: debounce(() => {
+    userlogout: () => {
       let userRemove = localStorage.removeItem('user');
       firebase.auth().signOut().then(() => {
         history.push('/');
@@ -101,52 +99,61 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       }).catch(error => {
         dispatch({ type: GET_ERRORS, error });
       });
-    }, 1000),
+    },
     channelData: () => {
-      let arr = [];
-      axios.get(localHostIp).then(({ data }) => {
-        arr = [...arr, data]
+      socket.on('initialList',(data)=>{
+        console.log(data)
         dispatch({
           type: ROOMS_DATA,
           data
         });
-        socket.on('new:message', function (msgObject) {
-          dispatch({
-            type: ROOM_ADD,
-            data: msgObject
-          });
+      });
+      socket.on('itemAdded', (data) => {
+        dispatch({
+          type: ROOM_ADD,
+          data
         });
-      }).catch((error) => {
-        dispatch({ type: GET_ERRORS, error });
+      });
+      socket.on('itemRemove', (data) => {
+        dispatch({
+          type: ROOM_REMOVE,
+          data
+        });
       });
     },
-    saveFormData: (logedin, items, title) => {
+    saveFormData: (logedin, items, title, isroom) => {
+      let titleOverLap = Boolean(isroom.every( roommData => roommData.title !== title));
+      let come;
       if (logedin) {
         if (title.length > 1 && title.length < 11) {
           let data = {
             title,
             userName: items.name,
             userMail: items.email
-          }
-          axios.post(`${localHostIp}rooms`, data);
-          socket.emit('new:message', data);
-          dispatch({ type: ROOM_ADD, data });
-          history.push(`/rooms/${title}`);
+          };
+          if ( titleOverLap || isroom === [] ) {
+            socket.emit('addItem', data);
+            come = true;
+            if (come === true) {
+              history.push(`/rooms/${title}`);
+            }
+          } else {
+            alert('중복된 회의실이 있습니다.');
+            come = false;
+          } 
         } else {
           alert('회의방 제목은 2글자 이상 10글자 미만이에요.\n다시 한번 작성해주세요');
-          title = '';
         }
       } else {
         alert('로그인을 해주세요');
-        title = '';
-      }
+      } 
     },
-    roomDelete: (dataid, dataMail, itemsMail) => {
+    roomDelete: (id, dataMail, itemsMail) => {
       if (dataMail === itemsMail) {
-        axios.delete(`${localHostIp}rooms/dataId`, { data: { id: dataid } });
+        socket.emit('removeItem' , id);
         dispatch({
           type: ROOM_REMOVE
-        })
+        });
         alert('회의실이 삭제되었습니다.');
       } else {
         alert('회의실 삭제 권한은 주최자에게만 있어요.');
@@ -163,7 +170,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           maxPeers: 8,
           minPeers: 4
         },
-        debug: true,
+        debug: false,
         nick: email
       });
       rtc
@@ -192,7 +199,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     AddpeerVideo: (targetremote) => {
       rtc.on('videoAdded', (stream, peer) => {
         if (targetremote) {
-          dispatch({ type: ADD_MEDIA, peer });
+          dispatch({
+            type: ADD_MEDIA,
+            peer
+          });
           rtc.attachStream(stream, targetremote[peer.id], { autoplay: true });
         }
       })
@@ -205,10 +215,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             joinroom: rtc.joinRoom(roomname)
           });
         }
-      })
+      });
     },
     handleSelfMute: (e) => {
-      console.log(ownProps.mute)
       dispatch({
         type: AUDIO_CHECK,
         func: rtc

@@ -7,19 +7,17 @@ import About from './About.jsx';
 import Rooms from './Rooms.jsx';
 import RoomsDetails from './RoomsDetails.jsx';
 
-
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
   }
-
+  
   componentDidUpdate() {
     if (!this.props.location.pathname.split('/rooms/')[1]) {
-      console.log('연결해제')
       this.props.webrtc.connection.disconnect();
       this.props.webrtc.stopLocalVideo();
       this.props.webrtc.leaveRoom();
-    }
+    } 
   }
 
   connectVideo() {

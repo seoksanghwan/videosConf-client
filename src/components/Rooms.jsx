@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from "react-router-dom";
+import { uniqWith, isEqual } from "lodash";
 
 const Rooms = ({ roomDelete, roomData }) => {
   return (
@@ -13,7 +14,7 @@ const Rooms = ({ roomDelete, roomData }) => {
           </h2>
         </dt>
         {
-          roomData.map(data => {
+          uniqWith(roomData, isEqual).map(data => {
             return (
               <dd key={data._id}>
                 <Link to={`rooms/${data.title}`}>

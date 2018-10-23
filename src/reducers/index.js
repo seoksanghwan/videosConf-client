@@ -77,6 +77,24 @@ export default function productReducer(state = initialState, action) {
 				inroom: false
 			}
 
+		case ROOM_ADD:
+			const dataroom = [...state.isroom, action.data];
+			return {
+				...state,
+				isroom: dataroom
+			}
+
+		case ROOM_REMOVE:
+			
+			const removeRoom = state.isroom;
+			const roomId = action.data;
+			const removeUpdate = removeRoom.filter( (data) =>  roomId !== data._id );
+
+			return {
+				...state,
+				isroom : removeUpdate
+			}
+
 		case RTC_SETTING:
 			return {
 				...state,
@@ -124,19 +142,6 @@ export default function productReducer(state = initialState, action) {
 				...state,
 				mute: !state.mute
 			};
-
-		case ROOM_ADD:
-			const dataroom = [...state.isroom, action.data]
-			console.log(dataroom)
-			return {
-				...state,
-				isroom: dataroom
-			}
-
-		case ROOM_REMOVE:
-			return {
-				...state
-			}
 
 		case GET_ERRORS:
 			return action.payload;
