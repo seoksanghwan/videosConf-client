@@ -30,7 +30,7 @@ import createHistory from 'history/createBrowserHistory';
 
 let rtc;
 const simpLioRTC = 'https://sm1.lio.app:443/';
-const localHostIp = 'https://videos.ap-northeast-2.elasticbeanstalk.com/';
+const localHostIp = 'https://videos-conf-service.herokuapp.com/';
 const localHostIpApi = `${localHostIp}api/auth/`;
 const provider = new firebase.auth.GoogleAuthProvider();
 const history = createHistory();
