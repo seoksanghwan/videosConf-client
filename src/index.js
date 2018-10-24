@@ -7,6 +7,9 @@ import reducer from './reducers'
 import App from './containers/App.jsx';
 import './style.css';
 import './service/firebase';
+import createHistory from 'history/createBrowserHistory';
+
+const history = createHistory({ forceRefresh: true });
 
 const store = createStore(
   reducer,
@@ -15,7 +18,7 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>	
-    <App />
+    <App history={history}/>
   </Provider>,
   document.getElementById('root')
 );

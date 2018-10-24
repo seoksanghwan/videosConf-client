@@ -8,7 +8,7 @@ const Navbar = props => {
         <div className="nav-content">
           <div className="nav-menu">
             <dl>
-              <dt><Link to="/">VideΩs.</Link></dt>
+              <dt><Link to="/"><img src="https://github.com/seoksanghwan/videosConf---client/blob/master/src/img/logo.png?raw=true" alt=""/></Link></dt>
               <dd>
                 <Link to="/about">About</Link>
               </dd>

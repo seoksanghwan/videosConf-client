@@ -195,7 +195,7 @@ video {
 }
 
 .container .navbar-start .nav-content {
-  width: 95%;
+  width: 1200px;
   margin: 0 auto;
 }
 
@@ -217,6 +217,11 @@ video {
   font-size: 55px;
   font-weight: bold;
   font-family: 'Roboto', sans-serif;
+}
+
+.container .navbar-start .nav-content .nav-menu dl dt a img {
+ vertical-align: middle;
+  height: 60px;
 }
 
 .container .navbar-start .nav-content .nav-menu dl dd p, .container .navbar-start .nav-content .nav-menu dl dd a {
@@ -257,7 +262,7 @@ video {
 }
 
 .rooms-list {
-  width: 95%;
+  width: 1200px;
   margin: 0 auto 100px auto;
   padding: 20px;
   padding-top: 0;
@@ -350,7 +355,7 @@ video {
   font-size: 19px;
   padding: 4px 10px;
   border-radius: 5px;
-  background: #1d2329;
+  background: #3f46ad;
   color: #fff;
   outline: none;
   margin: 15px;
@@ -381,23 +386,33 @@ video {
   font-family: 'Roboto', sans-serif;
 }
 
+.meeting-room-create h1 img {
+  margin-right: 10px;
+  font-variant-numeric: 
+}
+
 .meeting-room-create form {
   width: 100%;
 }
 
 .meeting-room-create input {
-  width: 76%;
+  width: 74%;
+  margin-right: 1.5%;
   height: 70px;
-  border: none;
   font-size: 20px;
   line-height: 70px;
   font-weight: bold;
   vertical-align: middle;
   outline: none;
-  border-radius: 0 !important;
   text-align: center;
   margin-bottom: 10px;
-  background: #f1f1f1;
+  background: #fff;
+  border: 1px solid #a8a9b0;
+  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+  -webkit-transform: rotate(0.000001deg);
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  border-radius: 7px;
 }
 
 .meeting-room-create button {
@@ -405,24 +420,31 @@ video {
   height: 70px;
   border: none;
   vertical-align: middle;
-  background: #1d2329;
+  background: #3f46ad;
   color: #fff;
   margin-bottom: 10px;
   font-size: 25px;
   font-weight: bold;
+  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+  -webkit-transform: rotate(0.000001deg);
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  border-radius: 7px;
 }
 
 .meeting-room-create .navbar-item {
   font-size: 18px;
-  border: 1px solid #333;
+  border: 1px solid #a8a9b0;
   padding: 3px 7px;
   border-radius: 4px;
   color: #333;
+  font-variant-numeric: 
 }
 
 .details-box {
-  width: 100%;
+  width: 85%;
   height: -webkit-fill-available;
+  margin:0 auto;
 }
 
 .details-box input[type=text] {
@@ -595,6 +617,11 @@ video {
   text-align: center;
 }
 
+.buttons p {
+  margin-top: 10px;
+  font-size: 20px;
+}
+
 .buttons button {
   display: inline-block;
   font-size: 18px;
@@ -622,11 +649,19 @@ video {
   background: #11a736;
 }
 
+.about {
+  height: -webkit-fill-available;
+  width: 100%;
+  display: flex;
+  justify-content : center;
+  align-items: center;
+}
+
 .about-content {
   display: flex;
   justify-content : space-between;
   width: 1200px;
-  margin: 20px auto 0 auto;
+  margin: -387px auto 0 auto;
 }
 
 .about-content .about-img {
@@ -638,7 +673,7 @@ video {
 }
 
 .about-content .about-info-text {
-  width: 37%;
+  width: 40%;
 }
 
 .about-content .about-info-text h2 {
@@ -649,4 +684,44 @@ video {
 
 .about-content .about-info-text p {
   font-size:25px;
+}
+
+.goingChannel {
+  width: 100%;
+  font-size:0;
+  margin-top: 25px;
+}
+
+.goingChannel input {
+  display: inline-block;
+  width: 65%;
+  margin-right: 2%;
+  height: 60px;
+  line-height: 60px;
+  box-sizing: border-box;
+  text-align: center;
+  font-size:18px;
+  border: #a8a9b0 1px solid;
+  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+  -webkit-transform: rotate(0.000001deg);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.goingChannel  button {
+  display: inline-block;
+  color:#fff;
+  width: 28%;
+  height: 60px;
+  line-height: 60px;
+  cursor: pointer;
+  background:#3f46ad;
+  font-size:22px;
+  font-weight: 500;
+  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+  -webkit-transform: rotate(0.000001deg);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
 }

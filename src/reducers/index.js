@@ -1,5 +1,6 @@
 import LioWebRTC from 'liowebrtc';
 import { combineReducers } from 'redux';
+import createHistory from 'history/createBrowserHistory';
 import {
 	FETCH_PRODUCTS_BEGIN,
 	IS_LOGIN_USER,
@@ -16,7 +17,8 @@ import {
 	DISCONNECTED_WEBCAM,
 	AUDIO_CHECK,
 	ROOM_ADD,
-	ROOM_REMOVE
+	ROOM_REMOVE,
+	CHANNEL_CHECK
 } from '../actions';
 
 const initialState = {
@@ -28,8 +30,10 @@ const initialState = {
 	inroom: true,
 	webrtc: null,
 	roomname: '',
-	mute: false
+	mute: false,
+	length: 0
 };
+const history = createHistory({ forceRefresh: true });
 
 export default function productReducer(state = initialState, action) {
 	switch (action.type) {
@@ -85,14 +89,12 @@ export default function productReducer(state = initialState, action) {
 			}
 
 		case ROOM_REMOVE:
-			
 			const removeRoom = state.isroom;
 			const roomId = action.data;
-			const removeUpdate = removeRoom.filter( (data) =>  roomId !== data._id );
-
+			const removeUpdate = removeRoom.filter((data) => roomId !== data._id);
 			return {
 				...state,
-				isroom : removeUpdate
+				isroom: removeUpdate
 			}
 
 		case RTC_SETTING:
@@ -142,6 +144,11 @@ export default function productReducer(state = initialState, action) {
 				...state,
 				mute: !state.mute
 			};
+
+		case CHANNEL_CHECK:
+			return {
+				...state	 
+			}
 
 		case GET_ERRORS:
 			return action.payload;

@@ -22,18 +22,18 @@ import {
   READY_TO_CALL,
   AUDIO_CHECK,
   ROOM_ADD,
-  ROOM_REMOVE
+  ROOM_REMOVE,
+  CHANNEL_CHECK
 } from '../actions';
 import App from "../components/App.jsx";
 import createHistory from 'history/createBrowserHistory';
-//
 
 let rtc;
 const simpLioRTC = 'https://sm1.lio.app:443/';
 const localHostIp = 'https://videos-conf-service.herokuapp.com/';
 const localHostIpApi = `${localHostIp}api/auth/`;
 const provider = new firebase.auth.GoogleAuthProvider();
-const history = createHistory();
+const history = createHistory({ forceRefresh: true });
 const socket = io(localHostIp);
 const setAuthToken = token => {
   if (token) {
@@ -52,7 +52,8 @@ const mapStateToProps = state => ({
   isroom: state.isroom,
   peers: state.peers,
   webrtc: state.webrtc,
-  mute: state.mute
+  mute: state.mute,
+  length :  state.length
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -122,7 +123,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     saveFormData: (logedin, items, title, isroom) => {
       let titleOverLap = Boolean(isroom.every( roommData => roommData.title !== title));
-      let come;
       if (logedin) {
         if (title.length > 1 && title.length < 11) {
           let data = {
@@ -132,13 +132,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           };
           if ( titleOverLap || isroom === [] ) {
             socket.emit('addItem', data);
-            come = true;
-            if (come === true) {
-              history.push(`/rooms/${title}`);
-            }
+            history.push(`/rooms/${title}`);
           } else {
             alert('중복된 회의실이 있습니다.');
-            come = false;
           } 
         } else {
           alert('회의방 제목은 2글자 이상 10글자 미만이에요.\n다시 한번 작성해주세요');
@@ -166,8 +162,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         localVideoEl: '',
         dataOnly: false,
         network: {
-          maxPeers: 8,
-          minPeers: 4
+          maxPeers: 2,
+          minPeers: 1
         },
         debug: false,
         nick: email
@@ -200,13 +196,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         if (targetremote) {
           dispatch({
             type: ADD_MEDIA,
-            peer
+            peer,
+            rtc
           });
           rtc.attachStream(stream, targetremote[peer.id], { autoplay: true });
         }
       })
     },
     joinChat: (roomname) => {
+      // /history.go(0);
       rtc.on('readyToCall', () => {
         if (roomname !== undefined) {
           dispatch({

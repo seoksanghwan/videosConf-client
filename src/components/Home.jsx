@@ -7,17 +7,26 @@ import About from './About.jsx';
 import Rooms from './Rooms.jsx';
 import RoomsDetails from './RoomsDetails.jsx';
 
+
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
   }
-  
+
   componentDidUpdate() {
     if (!this.props.location.pathname.split('/rooms/')[1]) {
       this.props.webrtc.connection.disconnect();
       this.props.webrtc.stopLocalVideo();
       this.props.webrtc.leaveRoom();
-    } 
+    } else {
+      let title = this.props.isroom.map( data => data.title);
+      let title_len = this.props.location.pathname.split('/rooms/')[1];
+      let isRoomValid = title.some(item => item === title_len );
+      if(!isRoomValid) {
+        alert('없는 화상 회의실입니다.');
+        this.props.history.push('/rooms');
+      }
+    }
   }
 
   connectVideo() {
@@ -32,6 +41,7 @@ export default class Home extends React.Component {
     const {
       isLoggedIn,
       inputRef,
+      goingRef,
       items,
       isroom,
       init,
@@ -43,6 +53,7 @@ export default class Home extends React.Component {
       joinChat,
       startLoclaVideo,
       handleSelfMute,
+      goingChannel,
       mute } = this.props;
     return (
       <div id="app" className="container">
@@ -68,6 +79,8 @@ export default class Home extends React.Component {
             return (
               <About
                 {...props}
+                goingRef={goingRef}
+                goingChannel={goingChannel}
               />
             );
           }} />
@@ -84,10 +97,8 @@ export default class Home extends React.Component {
             }
           }} />
           <Route exact path="/rooms/:room_name" render={props => {
-            var title_len = props.match.params.room_name;
-            var isRoomValid = isroom.some(item => item.title === title_len);
-            var email = items.email ? items.email : 'null';
-            if (isLoggedIn) {
+            let email = items.email ? items.email : 'null';
+            if (isLoggedIn && isroom) {
               return (
                 <RoomsDetails
                   {...props}
@@ -97,6 +108,7 @@ export default class Home extends React.Component {
                   peers={peers}
                   webrtc={webrtc}
                   inroom={inroom}
+                  isroom={isroom}
                   startLoclaVideo={startLoclaVideo}
                   AddpeerVideo={AddpeerVideo}
                   joinChat={joinChat}

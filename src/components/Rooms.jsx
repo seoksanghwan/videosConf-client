@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Link } from "react-router-dom";
 import { uniqWith, isEqual } from "lodash";
 
-const Rooms = ({ roomDelete, roomData }) => {
+const Rooms = ({ roomDelete, roomData, peers }) => {
   return (
     <div className="rooms-list">
       <dl>
@@ -19,7 +19,7 @@ const Rooms = ({ roomDelete, roomData }) => {
               <dd key={data._id}>
                 <Link to={`rooms/${data.title}`}>
                   {data.title}
-                  <p>Organiser {data.userName}</p>
+                  <p> Organiser {data.userName}</p>
                 </Link>
                 <button onClick={roomDelete} data-mail={data.userMail} data-id={data._id} >Delete</button>
               </dd>

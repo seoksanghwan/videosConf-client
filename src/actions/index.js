@@ -14,6 +14,7 @@ export const DISCONNECTED_WEBCAM = 'DISCONNECTED_WEBCAM';
 export const AUDIO_CHECK = 'AUDIO_CHECK';
 export const ROOM_ADD = 'ROOM_ADD';
 export const ROOM_REMOVE = 'ROOM_REMOVE';
+export const CHANNEL_CHECK = 'CHANNEL_CHECK';
 
 export const isLogoutData = () => ({
 	type: IS_LOGOUT_DATA
@@ -80,6 +81,12 @@ export const roomAdd = products => ({
 export const roomRemove = products => ({
   type: ROOM_REMOVE
 });
+
+export const channelCheck = products => ({
+  type: CHANNEL_CHECK
+});
+
+
 
 
 

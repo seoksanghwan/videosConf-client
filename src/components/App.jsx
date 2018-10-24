@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import createHistory from 'history/createBrowserHistory';
 import axios from 'axios';
 import Home from './Home.jsx';
 
@@ -9,7 +8,6 @@ export default class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.history = createHistory({ forceRefresh: true });
   }
 
   componentDidMount() {
@@ -37,6 +35,12 @@ export default class App extends React.Component {
     this.props.roomDelete(dataId, dataMail, items.email);
   }
 
+  goingChannel(event) {
+    event.preventDefault();
+    const channelTitle = this.gochannel.value;
+    this.props.history.push(`/rooms/${channelTitle}`);
+  }
+
   render() {
     const {
       isLoggedIn,
@@ -49,35 +53,42 @@ export default class App extends React.Component {
       AddpeerVideo,
       startLoclaVideo,
       handleSelfMute,
-      mute } = this.props;
+      mute,
+      history,
+      channelcheck } = this.props;
     return (
       <Router>
         <Route
           render={props => {
-            return (
-              (webrtc !== null) ?
-                <Home
-                  {...props}
-                  isLoggedIn={isLoggedIn}
-                  items={items}
-                  isroom={isroom}
-                  saveFormData={this.saveFormDatas.bind(this)}
-                  roomDelete={this.roomDeletes.bind(this)}
-                  onLoginButtonClick={this.props.loginUser}
-                  onLogoutButtonClick={this.props.userlogout}
-                  signAlert={this.signAlertMessage}
-                  webrtc={webrtc}
-                  peers={peers}
-                  inroom={inroom}
-                  startLoclaVideo={startLoclaVideo}
-                  AddpeerVideo={AddpeerVideo}
-                  mute={mute}
-                  handleSelfMute={handleSelfMute.bind(this)}
-                  joinChat={joinChat}
-                  inputRef={value => this.inputNode = value}
-                /> :
-                null
-            )
+            if (isroom) {
+              return (
+                (webrtc !== null) ?
+                  <Home
+                    {...props}
+                    isLoggedIn={isLoggedIn}
+                    items={items}
+                    isroom={isroom}
+                    channelcheck={channelcheck}
+                    saveFormData={this.saveFormDatas.bind(this)}
+                    roomDelete={this.roomDeletes.bind(this)}
+                    goingChannel={this.goingChannel.bind(this)}
+                    onLoginButtonClick={this.props.loginUser}
+                    onLogoutButtonClick={this.props.userlogout}
+                    signAlert={this.signAlertMessage}
+                    webrtc={webrtc}
+                    peers={peers}
+                    inroom={inroom}
+                    startLoclaVideo={startLoclaVideo}
+                    AddpeerVideo={AddpeerVideo}
+                    mute={mute}
+                    handleSelfMute={handleSelfMute.bind(this)}
+                    joinChat={joinChat}
+                    inputRef={value => this.inputNode = value}
+                    goingRef={value => this.gochannel = value}
+                  /> :
+                  null
+              )
+            }
           }}
         />
       </Router>

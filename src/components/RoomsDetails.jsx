@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { uniqWith, isEqual } from "lodash";
 
 export default class RoomsDetails extends Component {
   constructor(props) {
@@ -45,6 +46,7 @@ export default class RoomsDetails extends Component {
             <button onClick={disconnect}>
               <i className="fas fa-sign-out-alt"></i>
             </button>
+            <p>통화버튼을 눌러주세요.</p>
           </div>
           <div className="remotePeerList">
             <h3>Member</h3>
@@ -58,7 +60,7 @@ export default class RoomsDetails extends Component {
         </div>
         <div className="remotevideo" >
           {
-            webrtc && peers.map(data => (
+            uniqWith(peers, isEqual).map(data => (
               <div className="vidContainer" key={data.id} id={`${webrtc.getContainerId(data)}`} >
                 <video id={webrtc.getId(data)} autoPlay={true} ref={(vid) => this.remoteVideos[data.id] = vid} playsInline />
                 <div className="nick">
