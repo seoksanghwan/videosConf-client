@@ -102,7 +102,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     channelData: () => {
       socket.on('initialList',(data)=>{
-        console.log(data)
         dispatch({
           type: ROOMS_DATA,
           data
