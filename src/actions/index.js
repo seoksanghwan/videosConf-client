@@ -21,25 +21,26 @@ export const POP_ClOSE_CHECK = 'POP_ClOSE_CHECK';
 export const ROOM_MAINTENANCE = 'ROOM_MAINTENANCE';
 export const ROOM_TITLE_MATCH = 'ROOM_TITLE_MATCH';
 export const FORMAT_ROOM_PASS = 'FORMAT_ROOM_PASS';
+export const ALERT_MESSAGE_CHANGE = 'ALERT_MESSAGE_CHANGE';
 
 export const isLogoutData = () => ({
-	type: IS_LOGOUT_DATA
+  type: IS_LOGOUT_DATA
 });
 
 export const isLoggedInData = () => ({
-	type: IS_LOGGED_IN_DATA
-});  
+  type: IS_LOGGED_IN_DATA
+});
 
 export const fetchProductsBegin = () => ({
-	type: FETCH_PRODUCTS_BEGIN
-});  
+  type: FETCH_PRODUCTS_BEGIN
+});
 
 export const getErrors = () => ({
-	type: GET_ERRORS
-});  
+  type: GET_ERRORS
+});
 
 export const roomdData = () => ({
-	type: ROOMS_DATA
+  type: ROOMS_DATA
 });
 
 export const isLoginUser = products => ({
@@ -115,3 +116,6 @@ export const formatRoomPass = products => ({
   type: FORMAT_ROOM_PASS
 });
 
+export const alertMessageChange = products => ({
+  type: ALERT_MESSAGE_CHANGE
+});

@@ -29,7 +29,8 @@ import {
   POP_ClOSE_CHECK,
   ROOM_MAINTENANCE,
   ROOM_TITLE_MATCH,
-  FORMAT_ROOM_PASS
+  FORMAT_ROOM_PASS,
+  ALERT_MESSAGE_CHANGE
 } from '../actions';
 import App from "../components/App.jsx";
 import createHistory from 'history/createBrowserHistory';
@@ -66,7 +67,8 @@ const mapStateToProps = state => ({
   focusid: state.focusid,
   pass: state.pass,
   focustitle: state.focustitle,
-  aboutValueTitle: state.aboutValueTitle
+  aboutValueTitle: state.aboutValueTitle,
+  alertMessage: state.alertMessage
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -134,8 +136,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         });
       });
     },
-    saveFormData: (logedin, items, title, roomPassword, isroom) => {
-      console.log()
+    saveFormData: (logedin, items, title, roomPassword, isroom, callback) => {
       let titleOverLap = Boolean(isroom.every(roommData => roommData.title !== title));
       if (logedin) {
         if (title.length > 1 && title.length < 11 && roomPassword.length > 1 && roomPassword.length < 11) {
@@ -147,7 +148,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           };
           if (titleOverLap || isroom === []) {
             socket.emit('addItem', data);
-            history.push(`/rooms/${title}`);
+            dispatch({
+              type: POP_EVENT_CHECK,
+              booelan: true,
+              title
+            })
+            callback(title)
           } else {
             alert('중복된 회의실이 있습니다.');
           }
@@ -219,7 +225,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       })
     },
     joinChat: (roomname) => {
-      // /history.go(0);
       rtc.on('readyToCall', () => {
         if (roomname !== undefined) {
           dispatch({
@@ -347,6 +352,19 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             roomBoolean: false
           })
         }
+      }
+    },
+    alertMessageChange: () => {
+      if (history.location.pathname === '/') {
+        dispatch({
+          type : ALERT_MESSAGE_CHANGE,
+          message : '회의실이 생성되었습니다.\n지금 바로 입장하실려면 패스워드를 입력해주세요.'
+        })
+      } else {
+        dispatch({
+          type : ALERT_MESSAGE_CHANGE,
+          message : `회의실 패스워드를 입력해주세요.`
+        })
       }
     }
   };

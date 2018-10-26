@@ -10,11 +10,15 @@ import RoomsDetails from './RoomsDetails.jsx';
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
+    window.onpopstate = e => {
+      this.props.popClose();
+    }
   }
 
   componentDidUpdate() {
     if (!this.props.location.pathname.split('/rooms/')[1]) {
       this.disconnectSet();
+      this.props.alertMessageChange();
     }
     this.props.roomMatch(this.props.isroom);
   }
@@ -31,6 +35,8 @@ export default class Home extends React.Component {
 
   disconnect() {
     this.props.history.push('/rooms');
+    this.props.alertMessageChange();
+    this.props.popClose();
   }
 
   render() {
@@ -59,7 +65,8 @@ export default class Home extends React.Component {
       popEvent,
       popClose,
       focustitle,
-      inputCancel } = this.props;
+      inputCancel,
+      alertMessage } = this.props;
     return (
       <div id="app" className="container">
         <Navbar
@@ -78,6 +85,14 @@ export default class Home extends React.Component {
                 saveFormData={saveFormData}
                 inputRef={inputRef}
                 passRef={passRef}
+                pass={pass}
+                popEvent={popEvent}
+                popClose={popClose}
+                popopen={popopen}
+                passwordCheck={passwordCheck}
+                passCheckRef={passCheckRef}
+                focustitle={focustitle}
+                alertMessage={alertMessage}
               />
             );
           }} />
@@ -95,6 +110,7 @@ export default class Home extends React.Component {
                 passCheckRef={passCheckRef}
                 focustitle={focustitle}
                 inputCancel={inputCancel}
+                alertMessage={alertMessage}
               />
             );
           }} />
@@ -113,6 +129,7 @@ export default class Home extends React.Component {
                   popEvent={popEvent}
                   focustitle={focustitle}
                   inputCancel={inputCancel}
+                  alertMessage={alertMessage}
                 />
               );
             } else {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Alert from './Alert.jsx';
 
-const About = ({goingRef, goingChannel, passCheckRef, passwordCheck, popClose, pass, focustitle, popopen, inputCancel})=> {
+const About = ({goingRef, goingChannel, passCheckRef, passwordCheck, popClose, pass, focustitle, popopen, inputCancel, alertMessage})=> {
 	return (
 		<div className="about">
 			<div className="about-content">
@@ -25,7 +25,7 @@ const About = ({goingRef, goingChannel, passCheckRef, passwordCheck, popClose, p
 			</div>
 			{
         (popopen) ?
-          <Alert passCheckRef={passCheckRef} passwordCheck={passwordCheck} popClose={popClose} pass={pass} focustitle={focustitle} inputCancel={inputCancel} /> :
+          <Alert alertMessage={alertMessage} passCheckRef={passCheckRef} passwordCheck={passwordCheck} popClose={popClose} pass={pass} focustitle={focustitle} inputCancel={inputCancel} /> :
           null
       }
 		</div>

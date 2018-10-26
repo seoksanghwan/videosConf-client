@@ -781,6 +781,7 @@ video {
 .loginContent h3 {
   font-size:24px;
   margin-bottom: 10px;
+  white-space: pre-line;
 }
 
 .loginContent input{

@@ -16,6 +16,7 @@ export default class App extends React.Component {
     this.props.channelData();
     this.props.init();
     this.props.chatRoomUsing();
+    this.props.alertMessageChange();
   }
 
   signAlertMessage() {
@@ -25,7 +26,10 @@ export default class App extends React.Component {
   saveFormDatas(event) {
     event.preventDefault();
     const { isLoggedIn, items, isroom } = this.props;
-    this.props.saveFormData(isLoggedIn, items, this.inputNode.value, this.passNode.value, isroom);
+    const channelTitle = this.inputNode.value
+    const channelPassword = this.passNode.value
+    this.props.saveFormData(isLoggedIn, items, channelTitle, channelPassword, isroom, this.props.aboutPopEvent);
+    this.props.alertMessageChange();
     this.inputNode.value = '';
     this.passNode.value = '';
   }
@@ -41,11 +45,11 @@ export default class App extends React.Component {
   goingChannel(event) {
     event.preventDefault();
     const channelTitle = this.gochannel.value;
-    const {isroom} = this.props;
-    const titleEqualCheck = isroom.filter( data => data.title === channelTitle)[0]
-    if( channelTitle.length > 1 && channelTitle.length < 11) {
-      if ( titleEqualCheck !== undefined) {
-        if (titleEqualCheck.title ===  channelTitle ) {
+    const { isroom } = this.props;
+    const titleEqualCheck = isroom.filter(data => data.title === channelTitle)[0]
+    if (channelTitle.length > 1 && channelTitle.length < 11) {
+      if (titleEqualCheck !== undefined) {
+        if (titleEqualCheck.title === channelTitle) {
           this.props.aboutPopEvent(channelTitle);
         }
       } else {
@@ -63,7 +67,7 @@ export default class App extends React.Component {
     const dataTite = this.props.aboutValueTitle;
     const dataId = this.props.focusid;
     const passCheck = this.checkNode.value;
-    const {isroom} = this.props;
+    const { isroom } = this.props;
     this.props.passpostCheck(passCheck, dataId, isroom, dataTite, event)
   }
 
@@ -91,7 +95,11 @@ export default class App extends React.Component {
       roomMatch,
       alertHide,
       inputCancel,
-      formatRoomPassword } = this.props;
+      formatRoomPassword,
+      alertMessage,
+      loginUser,
+      userlogout,
+      alertMessageChange } = this.props;
     return (
       <Router>
         <Route
@@ -117,9 +125,10 @@ export default class App extends React.Component {
                     popClose={popClose}
                     focustitle={focustitle}
                     alertHide={alertHide}
-                    onLoginButtonClick={this.props.loginUser}
-                    onLogoutButtonClick={this.props.userlogout}
+                    onLoginButtonClick={loginUser}
+                    onLogoutButtonClick={userlogout}
                     signAlert={this.signAlertMessage}
+                    alertMessageChange={alertMessageChange}
                     webrtc={webrtc}
                     peers={peers}
                     inroom={inroom}
@@ -130,6 +139,7 @@ export default class App extends React.Component {
                     mute={mute}
                     popopen={popopen}
                     joinChat={joinChat}
+                    alertMessage={alertMessage}
                     inputRef={value => this.inputNode = value}
                     goingRef={value => this.gochannel = value}
                     passRef={value => this.passNode = value}

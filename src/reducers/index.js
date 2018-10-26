@@ -24,7 +24,8 @@ import {
 	POP_ClOSE_CHECK,
 	ROOM_MAINTENANCE,
 	ROOM_TITLE_MATCH,
-	FORMAT_ROOM_PASS
+	FORMAT_ROOM_PASS,
+	ALERT_MESSAGE_CHANGE
 } from '../actions';
 
 const initialState = {
@@ -43,6 +44,7 @@ const initialState = {
 	focusid: '',
 	focustitle: '',
 	aboutValueTitle: '',
+	alertMessage: '회의실 패스워드를 입력해주세요.'
 };
 const history = createHistory({ forceRefresh: true });
 
@@ -197,6 +199,12 @@ export default function productReducer(state = initialState, action) {
 			return {
 				...state,
 				inroom : action.roomBoolean
+			}
+
+		case ALERT_MESSAGE_CHANGE:
+			return {
+				...state,
+				alertMessage: action.message
 			}
 
 		case GET_ERRORS:

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-const Alert = ({ passCheckRef, passwordCheck, popClose, pass, focustitle, inputCancel }) => {
+const Alert = ({ passCheckRef, passwordCheck, popClose, pass, focustitle, inputCancel, alertMessage }) => {
   return (
     <div className="AlertBox">
       <div className="loginContent">
@@ -9,7 +9,7 @@ const Alert = ({ passCheckRef, passwordCheck, popClose, pass, focustitle, inputC
           <i className="fas fa-times" onClick={popClose}></i>
         </div>
         <form>
-          <h3>회의실 패스워드를 입력해주세요.</h3>
+          <h3>{alertMessage}</h3>
           <label htmlFor="pass_check">
             <input type="password" name="pass_check" ref={passCheckRef} placeholder='패스워드' />
             <button name="pass_check" onClick={passwordCheck} type="button"> check </button>
