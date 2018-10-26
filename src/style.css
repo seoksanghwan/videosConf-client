@@ -691,10 +691,9 @@ video {
 
 .about-content .about-img {
   width: 42%;
-}
-
-.about-content .about-img img {
-  width: 100%;
+  height: 500px;
+  background: url('https://github.com/seoksanghwan/videosConf---client/blob/master/src/img/webcamconf.png?raw=true') no-repeat center top;
+  background-size:100%;
 }
 
 .about-content .about-info-text {

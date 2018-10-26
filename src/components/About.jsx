@@ -6,9 +6,7 @@ const About = ({goingRef, goingChannel, passCheckRef, passwordCheck, popClose, p
 	return (
 		<div className="about">
 			<div className="about-content">
-				<div className="about-img">
-					<img src="https://github.com/seoksanghwan/videosConf---client/blob/master/src/img/webcamconf.png?raw=true" alt="" />
-				</div>
+				<div className="about-img"></div>
 				<div className="about-info-text">
 					<h2>Videos Conf</h2>
 					<p>
