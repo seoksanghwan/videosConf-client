@@ -16,7 +16,6 @@ export default class App extends React.Component {
     this.props.channelData();
     this.props.init();
     this.props.chatRoomUsing();
-    this.props.alertMessageChange();
   }
 
   signAlertMessage() {
@@ -29,7 +28,7 @@ export default class App extends React.Component {
     const channelTitle = this.inputNode.value
     const channelPassword = this.passNode.value
     this.props.saveFormData(isLoggedIn, items, channelTitle, channelPassword, isroom, this.props.aboutPopEvent);
-    this.props.alertMessageChange();
+    this.props.MainAlertMessageChange();
     this.inputNode.value = '';
     this.passNode.value = '';
   }
@@ -50,6 +49,7 @@ export default class App extends React.Component {
     if (channelTitle.length > 1 && channelTitle.length < 11) {
       if (titleEqualCheck !== undefined) {
         if (titleEqualCheck.title === channelTitle) {
+          this.props.aboutAlertMessageChange();
           this.props.aboutPopEvent(channelTitle);
         }
       } else {
@@ -99,7 +99,10 @@ export default class App extends React.Component {
       alertMessage,
       loginUser,
       userlogout,
-      alertMessageChange } = this.props;
+      aboutAlertMessageChange,
+      spinner,
+      alertBoxBottom,
+      alertColor } = this.props;
     return (
       <Router>
         <Route
@@ -125,10 +128,12 @@ export default class App extends React.Component {
                     popClose={popClose}
                     focustitle={focustitle}
                     alertHide={alertHide}
+                    alertColor={alertColor}
+                    alertBoxBottom={alertBoxBottom}
                     onLoginButtonClick={loginUser}
                     onLogoutButtonClick={userlogout}
                     signAlert={this.signAlertMessage}
-                    alertMessageChange={alertMessageChange}
+                    alertMessageChange={aboutAlertMessageChange}
                     webrtc={webrtc}
                     peers={peers}
                     inroom={inroom}
@@ -140,6 +145,7 @@ export default class App extends React.Component {
                     popopen={popopen}
                     joinChat={joinChat}
                     alertMessage={alertMessage}
+                    spinner={spinner}
                     inputRef={value => this.inputNode = value}
                     goingRef={value => this.gochannel = value}
                     passRef={value => this.passNode = value}

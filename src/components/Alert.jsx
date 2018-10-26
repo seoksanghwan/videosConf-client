@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-const Alert = ({ passCheckRef, passwordCheck, popClose, pass, focustitle, inputCancel, alertMessage }) => {
+const Alert = ({ spinner, passCheckRef, passwordCheck, popClose, pass, focustitle, inputCancel, alertMessage, alertBoxBottom, alertColor }) => {
   return (
     <div className="AlertBox">
       <div className="loginContent">
@@ -12,13 +12,18 @@ const Alert = ({ passCheckRef, passwordCheck, popClose, pass, focustitle, inputC
           <h3>{alertMessage}</h3>
           <label htmlFor="pass_check">
             <input type="password" name="pass_check" ref={passCheckRef} placeholder='패스워드' />
-            <button name="pass_check" onClick={passwordCheck} type="button"> check </button>
+            <button name="pass_check" onClick={passwordCheck} type="button">
+              check
+              {
+                spinner ?  <i className="fas fa-spinner"></i> : null
+              }
+            </button>
           </label>
         </form>
         <div className="pass-check">
           {
             pass ?
-              <Link to={`rooms/${focustitle}`}  >패스워드가 일치합니다. 참여하실려면 클릭해주세요.</Link> : <p>패스워드를 입력해주세요.</p>
+              <Link to={`rooms/${focustitle}`}  >패스워드가 일치합니다. 참여하실려면 클릭해주세요.</Link> : <p style={{ color : alertColor }}>{alertBoxBottom}</p>
           }
         </div>
       </div>

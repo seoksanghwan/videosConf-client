@@ -25,7 +25,9 @@ import {
 	ROOM_MAINTENANCE,
 	ROOM_TITLE_MATCH,
 	FORMAT_ROOM_PASS,
-	ALERT_MESSAGE_CHANGE
+	ALERT_MESSAGE_CHANGE,
+	SPINNER_ACTION,
+	ALERT_WARNING
 } from '../actions';
 
 const initialState = {
@@ -44,7 +46,10 @@ const initialState = {
 	focusid: '',
 	focustitle: '',
 	aboutValueTitle: '',
-	alertMessage: '회의실 패스워드를 입력해주세요.'
+	alertMessage: '회의실 패스워드를 입력해주세요.',
+	spinner: false,
+	alertBoxBottom : '패스워드를 입력해주세요.',
+	alertColor : '#3c29aa'
 };
 const history = createHistory({ forceRefresh: true });
 
@@ -165,7 +170,8 @@ export default function productReducer(state = initialState, action) {
 			return {
 				...state,
 				pass: action.result,
-				focustitle: action.title
+				focustitle: action.title,
+				spinner:false
 			}
 
 		case POP_EVENT_CHECK:
@@ -205,6 +211,19 @@ export default function productReducer(state = initialState, action) {
 			return {
 				...state,
 				alertMessage: action.message
+			}
+		
+		case SPINNER_ACTION:
+			return {
+				...state,
+				spinner:action.check
+			}
+		
+		case ALERT_WARNING:
+			return {
+				...state,
+				alertBoxBottom : action.alert,
+				alertColor : action.color
 			}
 
 		case GET_ERRORS:

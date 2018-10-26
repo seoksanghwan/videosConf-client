@@ -22,6 +22,8 @@ export const ROOM_MAINTENANCE = 'ROOM_MAINTENANCE';
 export const ROOM_TITLE_MATCH = 'ROOM_TITLE_MATCH';
 export const FORMAT_ROOM_PASS = 'FORMAT_ROOM_PASS';
 export const ALERT_MESSAGE_CHANGE = 'ALERT_MESSAGE_CHANGE';
+export const SPINNER_ACTION = 'SPINNER_ACTION';
+export const ALERT_WARNING = 'ALERT_WARNING';
 
 export const isLogoutData = () => ({
   type: IS_LOGOUT_DATA
@@ -119,3 +121,12 @@ export const formatRoomPass = products => ({
 export const alertMessageChange = products => ({
   type: ALERT_MESSAGE_CHANGE
 });
+
+export const spinnerAction = products => ({
+  type: SPINNER_ACTION
+});
+
+export const alertWarning = products => ({
+  type: ALERT_WARNING
+});
+

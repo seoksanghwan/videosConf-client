@@ -30,7 +30,9 @@ import {
   ROOM_MAINTENANCE,
   ROOM_TITLE_MATCH,
   FORMAT_ROOM_PASS,
-  ALERT_MESSAGE_CHANGE
+  ALERT_MESSAGE_CHANGE,
+  SPINNER_ACTION,
+  ALERT_WARNING
 } from '../actions';
 import App from "../components/App.jsx";
 import createHistory from 'history/createBrowserHistory';
@@ -68,7 +70,10 @@ const mapStateToProps = state => ({
   pass: state.pass,
   focustitle: state.focustitle,
   aboutValueTitle: state.aboutValueTitle,
-  alertMessage: state.alertMessage
+  alertMessage: state.alertMessage,
+  spinner: state.spinner,
+  alertBoxBottom: state.alertBoxBottom,
+  alertColor : state.alertColor
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -92,7 +97,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             data: decoded
           });
           localStorage.setItem('user', JSON.stringify(decoded));
-        })
+        });
       }).catch(error => {
         dispatch({ type: GET_ERRORS, error });
       });
@@ -177,7 +182,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     init: (localele) => {
       let user = JSON.parse(localStorage.getItem('user'));
-      let email = (user !== null) ? `${user.email},${user.url}` : 'Not user';
+      let email = (user !== null) ? `${user.name},${user.url}` : 'Not user';
       rtc = new LioWebRTC({
         url: simpLioRTC,
         localVideoEl: '',
@@ -242,6 +247,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     passpostCheck: (password, roomid, isroom, dataTite, event) => {
       event.preventDefault();
+      dispatch({ 
+        type : SPINNER_ACTION,
+        check : true
+      });
       isroom.filter(item => {
         if (item._id === roomid || item.title === dataTite) {
           if (password.length >= 1) {
@@ -263,16 +272,40 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                 }
                 if (shouldCheck === true) {
                   localStorage.setItem('roomPassResults', JSON.stringify(roomObj));
+                  dispatch({ 
+                    type : ALERT_WARNING,
+                    alert : '패스워드를 입력해주세요.',
+                    color : '#3f46ad'
+                  });
                 } else {
                   localStorage.setItem('roomPassResults', JSON.stringify(roomObj));
+                  dispatch({ 
+                    type : SPINNER_ACTION,
+                    check : false
+                  });
+                  dispatch({ 
+                    type : ALERT_WARNING,
+                    alert : '패스워드를 잘못 입력하셨습니다.',
+                    color : '#e30641'
+                  });
                 }
               })
               .catch(error => {
                 dispatch({ type: GET_ERRORS, error });
               });
+          } else {
+            dispatch({ 
+              type : SPINNER_ACTION,
+              check : false
+            });
+            dispatch({ 
+              type : ALERT_WARNING,
+              alert : '패스워드가 입력되지 않았습니다.',
+              color : '#e30641'
+            });
           }
         }
-      })
+      });
     },
     chatRoomUsing: () => {
       let roomData = JSON.parse(localStorage.getItem('roomPassResults'));
@@ -283,12 +316,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             dispatch({
               type: ROOM_MAINTENANCE,
               data: roomData.shouldCheck
-            })
+            });
           } else {
             dispatch({
               type: ROOM_MAINTENANCE,
               data: false
-            })
+            });
           }
         }
       }
@@ -299,14 +332,18 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         type: POP_EVENT_CHECK,
         booelan: true,
         dataId
-      })
+      });
+      dispatch({
+        type: ALERT_MESSAGE_CHANGE,
+        message : `회의실 패스워드를 입력해주세요.`
+      });
     },
     aboutPopEvent: (targetTitle) => {
       dispatch({
         type: POP_EVENT_CHECK,
         booelan: true,
         targetTitle
-      })
+      });
     },
     popClose: () => {
       let roomDataRmove = localStorage.removeItem('roomPassResults');
@@ -314,17 +351,22 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch({
         type: POP_ClOSE_CHECK,
         booelan: false
-      })
+      });
       dispatch({
         type: ROOM_MAINTENANCE,
         data: roomNull
-      })
+      });
+      dispatch({ 
+        type : ALERT_WARNING,
+        alert : '패스워드를 입력해주세요.',
+        color : '#3f46ad'
+      });
     },
     inputCancel: () => {
       dispatch({
         type: POP_ClOSE_CHECK,
         booelan: false
-      })
+      });
     },
     formatRoomPassword: () => {
       let roomDataRmove = localStorage.removeItem('roomPassResults');
@@ -333,7 +375,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           type: FORMAT_ROOM_PASS,
           data: null,
           pass: true
-        })
+        });
       }
     },
     roomMatch: (isroomdata) => {
@@ -345,27 +387,26 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           dispatch({
             type: ROOM_TITLE_MATCH,
             roomBoolean: true
-          })
+          });
         } else {
           dispatch({
             type: ROOM_TITLE_MATCH,
             roomBoolean: false
-          })
+          });
         }
       }
     },
-    alertMessageChange: () => {
-      if (history.location.pathname === '/') {
-        dispatch({
-          type : ALERT_MESSAGE_CHANGE,
-          message : '회의실이 생성되었습니다.\n지금 바로 입장하실려면 패스워드를 입력해주세요.'
-        })
-      } else {
-        dispatch({
-          type : ALERT_MESSAGE_CHANGE,
-          message : `회의실 패스워드를 입력해주세요.`
-        })
-      }
+    MainAlertMessageChange: () => {
+      dispatch({
+        type : ALERT_MESSAGE_CHANGE,
+        message : '회의실이 생성되었습니다.\n지금 바로 입장하실려면 패스워드를 입력해주세요.'
+      });
+    },
+    aboutAlertMessageChange: () => {
+      dispatch({
+        type : ALERT_MESSAGE_CHANGE,
+        message : `회의실 패스워드를 입력해주세요.`
+      });
     }
   };
 };

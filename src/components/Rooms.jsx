@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { uniqWith, isEqual } from "lodash";
 import Alert from './Alert.jsx';
 
-const Rooms = ({ roomDelete, roomData, passCheckRef, passwordCheck, items, popopen, popEvent, popClose, pass, focustitle, inputCancel, alertMessage }) => {
+const Rooms = ({ spinner, roomDelete, roomData, passCheckRef, passwordCheck, items, popopen, popEvent, popClose, pass, focustitle, inputCancel, alertMessage, alertBoxBottom, alertColor }) => {
   return (
     <div className="rooms-list">
       <dl>
@@ -40,7 +40,7 @@ const Rooms = ({ roomDelete, roomData, passCheckRef, passwordCheck, items, popop
       </dl>
       {
         (popopen) ?
-          <Alert alertMessage={alertMessage} passCheckRef={passCheckRef} passwordCheck={passwordCheck} popClose={popClose} pass={pass} focustitle={focustitle} inputCancel={inputCancel} /> :
+          <Alert alertColor={alertColor} alertBoxBottom={alertBoxBottom} spinner={spinner} alertMessage={alertMessage} passCheckRef={passCheckRef} passwordCheck={passwordCheck} popClose={popClose} pass={pass} focustitle={focustitle} inputCancel={inputCancel} /> :
           null
       }
     </div>

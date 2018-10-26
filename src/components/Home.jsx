@@ -18,7 +18,6 @@ export default class Home extends React.Component {
   componentDidUpdate() {
     if (!this.props.location.pathname.split('/rooms/')[1]) {
       this.disconnectSet();
-      this.props.alertMessageChange();
     }
     this.props.roomMatch(this.props.isroom);
   }
@@ -66,7 +65,10 @@ export default class Home extends React.Component {
       popClose,
       focustitle,
       inputCancel,
-      alertMessage } = this.props;
+      alertMessage,
+      spinner,
+      alertBoxBottom,
+      alertColor } = this.props;
     return (
       <div id="app" className="container">
         <Navbar
@@ -81,6 +83,7 @@ export default class Home extends React.Component {
             return (
               <Main
                 {...props}
+                spinner={spinner}
                 isLoggedIn={isLoggedIn}
                 saveFormData={saveFormData}
                 inputRef={inputRef}
@@ -93,6 +96,8 @@ export default class Home extends React.Component {
                 passCheckRef={passCheckRef}
                 focustitle={focustitle}
                 alertMessage={alertMessage}
+                alertBoxBottom={alertBoxBottom}
+                alertColor={alertColor}
               />
             );
           }} />
@@ -100,6 +105,7 @@ export default class Home extends React.Component {
             return (
               <About
                 {...props}
+                spinner={spinner}
                 goingRef={goingRef}
                 goingChannel={goingChannel}
                 pass={pass}
@@ -111,6 +117,8 @@ export default class Home extends React.Component {
                 focustitle={focustitle}
                 inputCancel={inputCancel}
                 alertMessage={alertMessage}
+                alertBoxBottom={alertBoxBottom}
+                alertColor={alertColor}
               />
             );
           }} />
@@ -118,6 +126,7 @@ export default class Home extends React.Component {
             if (isLoggedIn) {
               return (
                 <Rooms
+                  spinner={spinner}
                   popClose={popClose}
                   popopen={popopen}
                   pass={pass}
@@ -130,6 +139,8 @@ export default class Home extends React.Component {
                   focustitle={focustitle}
                   inputCancel={inputCancel}
                   alertMessage={alertMessage}
+                  alertBoxBottom={alertBoxBottom}
+                  alertColor={alertColor}
                 />
               );
             } else {
@@ -137,8 +148,8 @@ export default class Home extends React.Component {
             }
           }} />
           <Route exact path="/rooms/:room_name" render={props => {
-            let email = items.email ? items.email : 'null';
-            if (isLoggedIn && isroom ) {
+            let email = items.name ? items.name : 'null';
+            if (isLoggedIn && isroom) {
               if (pass) {
                 return (
                   <RoomsDetails
