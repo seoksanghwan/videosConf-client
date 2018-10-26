@@ -7,7 +7,6 @@ import About from './About.jsx';
 import Rooms from './Rooms.jsx';
 import RoomsDetails from './RoomsDetails.jsx';
 
-
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -15,18 +14,15 @@ export default class Home extends React.Component {
 
   componentDidUpdate() {
     if (!this.props.location.pathname.split('/rooms/')[1]) {
-      this.props.webrtc.connection.disconnect();
-      this.props.webrtc.stopLocalVideo();
-      this.props.webrtc.leaveRoom();
-    } else {
-      let title = this.props.isroom.map( data => data.title);
-      let title_len = this.props.location.pathname.split('/rooms/')[1];
-      let isRoomValid = title.some(item => item === title_len );
-      if(!isRoomValid) {
-        alert('없는 화상 회의실입니다.');
-        this.props.history.push('/rooms');
-      }
+      this.disconnectSet();
     }
+    this.props.roomMatch(this.props.isroom);
+  }
+
+  disconnectSet() {
+    this.props.webrtc.connection.disconnect();
+    this.props.webrtc.stopLocalVideo();
+    this.props.webrtc.leaveRoom();
   }
 
   connectVideo() {
@@ -54,7 +50,16 @@ export default class Home extends React.Component {
       startLoclaVideo,
       handleSelfMute,
       goingChannel,
-      mute } = this.props;
+      passRef,
+      passCheckRef,
+      passwordCheck,
+      pass,
+      mute,
+      popopen,
+      popEvent,
+      popClose,
+      focustitle,
+      inputCancel } = this.props;
     return (
       <div id="app" className="container">
         <Navbar
@@ -72,6 +77,7 @@ export default class Home extends React.Component {
                 isLoggedIn={isLoggedIn}
                 saveFormData={saveFormData}
                 inputRef={inputRef}
+                passRef={passRef}
               />
             );
           }} />
@@ -81,6 +87,14 @@ export default class Home extends React.Component {
                 {...props}
                 goingRef={goingRef}
                 goingChannel={goingChannel}
+                pass={pass}
+                popEvent={popEvent}
+                popClose={popClose}
+                popopen={popopen}
+                passwordCheck={passwordCheck}
+                passCheckRef={passCheckRef}
+                focustitle={focustitle}
+                inputCancel={inputCancel}
               />
             );
           }} />
@@ -88,8 +102,17 @@ export default class Home extends React.Component {
             if (isLoggedIn) {
               return (
                 <Rooms
+                  popClose={popClose}
+                  popopen={popopen}
+                  pass={pass}
+                  items={items}
                   roomData={isroom}
                   roomDelete={this.props.roomDelete}
+                  passCheckRef={passCheckRef}
+                  passwordCheck={passwordCheck}
+                  popEvent={popEvent}
+                  focustitle={focustitle}
+                  inputCancel={inputCancel}
                 />
               );
             } else {
@@ -98,27 +121,33 @@ export default class Home extends React.Component {
           }} />
           <Route exact path="/rooms/:room_name" render={props => {
             let email = items.email ? items.email : 'null';
-            if (isLoggedIn && isroom) {
-              return (
-                <RoomsDetails
-                  {...props}
-                  init={init}
-                  email={email}
-                  url={items.url}
-                  peers={peers}
-                  webrtc={webrtc}
-                  inroom={inroom}
-                  isroom={isroom}
-                  startLoclaVideo={startLoclaVideo}
-                  AddpeerVideo={AddpeerVideo}
-                  joinChat={joinChat}
-                  mute={mute}
-                  connectVideo={this.connectVideo.bind(this)}
-                  disconnect={this.disconnect.bind(this)}
-                  handleSelfMute={handleSelfMute}
-                  localref={(vid) => this.localVideo = vid}
-                />
-              );
+            if (isLoggedIn && isroom ) {
+              if (pass) {
+                return (
+                  <RoomsDetails
+                    {...props}
+                    init={init}
+                    email={email}
+                    url={items.url}
+                    peers={peers}
+                    webrtc={webrtc}
+                    inroom={inroom}
+                    isroom={isroom}
+                    startLoclaVideo={startLoclaVideo}
+                    AddpeerVideo={AddpeerVideo}
+                    joinChat={joinChat}
+                    mute={mute}
+                    pass={pass}
+                    connectVideo={this.connectVideo.bind(this)}
+                    disconnect={this.disconnect.bind(this)}
+                    handleSelfMute={handleSelfMute}
+                    localref={(vid) => this.localVideo = vid}
+                  />
+                );
+              } else {
+                alert('잘못된 접근입니다.');
+                return <Redirect to="/rooms" />;
+              }
             } else {
               return <span>Loading...</span>;
             }

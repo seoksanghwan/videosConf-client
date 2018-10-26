@@ -15,8 +15,8 @@ const Navbar = props => {
               <dd>
                 {
                   (props.isLoggedIn) ?
-                    <Link to="/rooms">Public Channel</Link> :
-                    <Link onClick={props.signAlert} to="/">Public Channel</Link>
+                    <Link to="/rooms">Channel List</Link> :
+                    <Link onClick={props.signAlert} to="/">Channel List</Link>
                 }
               </dd>
               <dd>

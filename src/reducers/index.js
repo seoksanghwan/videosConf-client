@@ -18,7 +18,13 @@ import {
 	AUDIO_CHECK,
 	ROOM_ADD,
 	ROOM_REMOVE,
-	CHANNEL_CHECK
+	CHANNEL_CHECK,
+	PASSWORD_CHECK,
+	POP_EVENT_CHECK,
+	POP_ClOSE_CHECK,
+	ROOM_MAINTENANCE,
+	ROOM_TITLE_MATCH,
+	FORMAT_ROOM_PASS
 } from '../actions';
 
 const initialState = {
@@ -27,11 +33,16 @@ const initialState = {
 	error: null,
 	isroom: [],
 	peers: [],
-	inroom: true,
+	inroom: false,
 	webrtc: null,
 	roomname: '',
 	mute: false,
-	length: 0
+	length: 0,
+	pass: false,
+	popopen: false,
+	focusid: '',
+	focustitle: '',
+	aboutValueTitle: '',
 };
 const history = createHistory({ forceRefresh: true });
 
@@ -42,16 +53,14 @@ export default function productReducer(state = initialState, action) {
 				...state,
 				islogedin: false,
 				items: {},
-				isroom: [],
-				inroom: false
+				isroom: []
 			};
 
 		case IS_LOGIN_USER:
 			return {
 				...state,
 				isLoggedIn: true,
-				items: action.data,
-				inroom: false
+				items: action.data
 			};
 
 		case IS_LOGGED_IN_DATA:
@@ -60,8 +69,7 @@ export default function productReducer(state = initialState, action) {
 			return {
 				...state,
 				isLoggedIn: loggedTrue,
-				items: user,
-				inroom: false
+				items: user
 			}
 
 		case IS_LOGOUT_DATA:
@@ -69,16 +77,14 @@ export default function productReducer(state = initialState, action) {
 				...state,
 				isLoggedIn: false,
 				items: {},
-				isroom: [],
-				inroom: false
+				isroom: []
 			}
 
 		case ROOMS_DATA:
 			let roomCopy = [...action.data, ...state.isroom];
 			return {
 				...state,
-				isroom: roomCopy,
-				inroom: false
+				isroom: roomCopy
 			}
 
 		case ROOM_ADD:
@@ -100,8 +106,7 @@ export default function productReducer(state = initialState, action) {
 		case RTC_SETTING:
 			return {
 				...state,
-				webrtc: action.payload,
-				inroom: true
+				webrtc: action.payload
 			};
 
 		case ADD_MEDIA:
@@ -119,8 +124,7 @@ export default function productReducer(state = initialState, action) {
 
 		case READY_TO_CALL:
 			return {
-				...state,
-				inroom: true
+				...state
 			};
 
 		case LOCAL_VIDEO:
@@ -147,7 +151,52 @@ export default function productReducer(state = initialState, action) {
 
 		case CHANNEL_CHECK:
 			return {
-				...state	 
+				...state
+			}
+
+		case PASSWORD_CHECK:
+			if (action.result) {
+				state.inroom = true
+			} else {
+				state.inroom = false
+			}
+			return {
+				...state,
+				pass: action.result,
+				focustitle: action.title
+			}
+
+		case POP_EVENT_CHECK:
+			return {
+				...state,
+				popopen: action.booelan,
+				focusid: action.dataId,
+				aboutValueTitle: action.targetTitle
+			}
+
+		case FORMAT_ROOM_PASS:
+			return {
+				...state,
+				pass : action.pass
+			}
+
+		case POP_ClOSE_CHECK:
+			return {
+				...state,
+				popopen: action.booelan
+			}
+
+		case ROOM_MAINTENANCE:
+			return {
+				...state,
+				popopen: action.booelan,
+				pass: action.data
+			}
+
+		case ROOM_TITLE_MATCH:
+			return {
+				...state,
+				inroom : action.roomBoolean
 			}
 
 		case GET_ERRORS:

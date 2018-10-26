@@ -131,7 +131,7 @@ body {
 
 body::before {
   content: "";
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -319,8 +319,12 @@ video {
   color: #fff;
 }
 
+.rooms-list dl {
+  text-align: center;
+}
+
 .rooms-list dd {
-  width: 24%;
+  width: 32%;
   float: left;
   margin: 0 0.5% 15px 0.5%;
   position: relative;
@@ -328,29 +332,35 @@ video {
   border-radius: 2px;
   transition: 0.3s background ease-in-out;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
+  position: relative;
+  padding-top: 10px;
+  padding-bottom: 15px;
 }
 
 .rooms-list dd:hover {
   background: #e6e6e6;
 }
 
-.rooms-list dd a {
+.rooms-list dd h3 {
   color: #222;
   padding: 15px;
   box-sizing: border-box;
   font-weight: 500;
-  font-size: 35px;
-  line-height: 50px;
+  font-size: 33px;
+  line-height: 40px;
   display: block;
   width: 100%;
   height: 100%;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #dedee1;
+  text-align: left;
+}
+
+.rooms-list dd .del-enter {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .rooms-list dd button {
-  float: right;
   cursor: pointer;
   font-size: 19px;
   padding: 4px 10px;
@@ -358,12 +368,21 @@ video {
   background: #3f46ad;
   color: #fff;
   outline: none;
-  margin: 15px;
+  top: 10px;
+  right: 10px;
+  margin-left: 5px;
 }
 
-.rooms-list dd a p {
+.password-form {
+  display: block;
+  width: 100%;
+  height: 40px;
+}
+
+.rooms-list dd h3 p {
   font-size: 18px;
   text-align: right;
+  margin-top: 15px;
 }
 
 .meeting-room-create {
@@ -375,7 +394,7 @@ video {
 
 .meeting-room-create .rooms_title {
   margin-top: -266px;
-  height: 166px;
+  height: 273px;
   width: 550px;
 }
 
@@ -395,13 +414,18 @@ video {
   width: 100%;
 }
 
-.meeting-room-create input {
-  width: 74%;
+.meeting-room-create .inputbox{
+  display: inline-block;
   margin-right: 1.5%;
+  width: 74%;
+}
+
+.meeting-room-create input {
+  width: 100%;
   height: 70px;
   font-size: 20px;
   line-height: 70px;
-  font-weight: bold;
+  font-weight: 500;
   vertical-align: middle;
   outline: none;
   text-align: center;
@@ -419,7 +443,7 @@ video {
   width: 24%;
   height: 70px;
   border: none;
-  vertical-align: middle;
+  vertical-align: top;
   background: #3f46ad;
   color: #fff;
   margin-bottom: 10px;
@@ -719,6 +743,94 @@ video {
   background:#3f46ad;
   font-size:22px;
   font-weight: 500;
+  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+  -webkit-transform: rotate(0.000001deg);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.AlertBox{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items:center;
+}
+
+.loginContent {
+  width: 600px;
+  padding:50px 0;
+  background:#fff;
+  text-align: center;
+  position: relative;
+}
+
+.loginContent .close-btn{
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size:30px;
+  cursor: pointer;
+}
+
+.loginContent h3 {
+  font-size:24px;
+  margin-bottom: 10px;
+}
+
+.loginContent input{
+  width: 48%;
+  margin-right: 1%;
+  height: 60px;
+  line-height: 60px;
+  box-sizing: border-box;
+  text-align: center;
+  font-size:18px;
+  border: #a8a9b0 1px solid;
+  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+  -webkit-transform: rotate(0.000001deg);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.loginContent button {
+  width: 25%;
+  font-size:22px;
+  font-weight: 500;
+  color:#fff;
+  height: 60px;
+  line-height: 60px;
+  cursor: pointer;
+  background:#3f46ad;
+  -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+  -webkit-transform: rotate(0.000001deg);
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.pass-check {
+  margin-top: 15px;
+}
+
+.pass-check p {
+  font-size : 15px;
+  font-weight: bold;
+  color:#3c29aa;
+}
+
+.pass-check a {
+  font-size : 15px;
+  font-weight: bold;
+  padding:5px 7px;
+  color:#fff;
+  background:#3c29aa;
   -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
   -webkit-transform: rotate(0.000001deg);
   -webkit-border-radius: 5px;

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import Alert from './Alert.jsx';
 
-const About = props => {
+const About = ({goingRef, goingChannel, passCheckRef, passwordCheck, popClose, pass, focustitle, popopen, inputCancel})=> {
 	return (
 		<div className="about">
 			<div className="about-content">
@@ -15,13 +16,18 @@ const About = props => {
 						지금 바로 시작해보세요.!!
 					 </p>
 					<div className="goingChannel">
-						<label htmlFor="rooms_title">
-							<input type="text" id="rooms_title" name="rooms_title" ref={props.goingRef} placeholder="참가 할 채널 제목을 입력해주세요!" />
-							<button name="rooms_title" onClick={props.goingChannel} >Go!</button>
+						<label htmlFor="going_channel">
+							<input type="text" id="going_channel" name="going_channel" ref={goingRef} placeholder="채널 제목을 입력해주세요!" />
+							<button name="going_channel" onClick={goingChannel} >Go!</button>
 						</label>
 					</div>
 				</div>
 			</div>
+			{
+        (popopen) ?
+          <Alert passCheckRef={passCheckRef} passwordCheck={passwordCheck} popClose={popClose} pass={pass} focustitle={focustitle} inputCancel={inputCancel} /> :
+          null
+      }
 		</div>
 	);
 };

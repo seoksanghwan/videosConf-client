@@ -15,6 +15,12 @@ export const AUDIO_CHECK = 'AUDIO_CHECK';
 export const ROOM_ADD = 'ROOM_ADD';
 export const ROOM_REMOVE = 'ROOM_REMOVE';
 export const CHANNEL_CHECK = 'CHANNEL_CHECK';
+export const PASSWORD_CHECK = 'PASSWORD_CHECK';
+export const POP_EVENT_CHECK = 'POP_EVENT_CHECK';
+export const POP_ClOSE_CHECK = 'POP_ClOSE_CHECK';
+export const ROOM_MAINTENANCE = 'ROOM_MAINTENANCE';
+export const ROOM_TITLE_MATCH = 'ROOM_TITLE_MATCH';
+export const FORMAT_ROOM_PASS = 'FORMAT_ROOM_PASS';
 
 export const isLogoutData = () => ({
 	type: IS_LOGOUT_DATA
@@ -37,8 +43,7 @@ export const roomdData = () => ({
 });
 
 export const isLoginUser = products => ({
-  type: IS_LOGIN_USER,
-  payload: { products }
+  type: IS_LOGIN_USER
 });
 
 /* video RTC */
@@ -86,8 +91,27 @@ export const channelCheck = products => ({
   type: CHANNEL_CHECK
 });
 
+export const passwordCheck = products => ({
+  type: PASSWORD_CHECK
+});
 
+export const popEventCheck = products => ({
+  type: POP_EVENT_CHECK
+});
 
+export const popCloseCheck = products => ({
+  type: POP_ClOSE_CHECK
+});
 
+export const roomMaintenance = products => ({
+  type: ROOM_MAINTENANCE
+});
 
+export const roomMatchTtile = products => ({
+  type: ROOM_TITLE_MATCH
+});
+
+export const formatRoomPass = products => ({
+  type: FORMAT_ROOM_PASS
+});
 

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import axios from 'axios';
 import Home from './Home.jsx';
+import { throws } from 'assert';
 
 export default class App extends React.Component {
 
@@ -14,6 +15,7 @@ export default class App extends React.Component {
     this.props.usingUserData();
     this.props.channelData();
     this.props.init();
+    this.props.chatRoomUsing();
   }
 
   signAlertMessage() {
@@ -23,8 +25,9 @@ export default class App extends React.Component {
   saveFormDatas(event) {
     event.preventDefault();
     const { isLoggedIn, items, isroom } = this.props;
-    this.props.saveFormData(isLoggedIn, items, this.inputNode.value, isroom);
+    this.props.saveFormData(isLoggedIn, items, this.inputNode.value, this.passNode.value, isroom);
     this.inputNode.value = '';
+    this.passNode.value = '';
   }
 
   roomDeletes(event) {
@@ -38,7 +41,30 @@ export default class App extends React.Component {
   goingChannel(event) {
     event.preventDefault();
     const channelTitle = this.gochannel.value;
-    this.props.history.push(`/rooms/${channelTitle}`);
+    const {isroom} = this.props;
+    const titleEqualCheck = isroom.filter( data => data.title === channelTitle)[0]
+    if( channelTitle.length > 1 && channelTitle.length < 11) {
+      if ( titleEqualCheck !== undefined) {
+        if (titleEqualCheck.title ===  channelTitle ) {
+          this.props.aboutPopEvent(channelTitle);
+        }
+      } else {
+        alert('채널 목록에 없는 채널입니다.');
+        this.gochannel.value = '';
+      }
+    } else {
+      alert('채널 제목은 2글자 미만이거나, 11글자 이상 일 수 없습니다.');
+      this.gochannel.value = '';
+    }
+  }
+
+  passwordCheck(event) {
+    event.preventDefault();
+    const dataTite = this.props.aboutValueTitle;
+    const dataId = this.props.focusid;
+    const passCheck = this.checkNode.value;
+    const {isroom} = this.props;
+    this.props.passpostCheck(passCheck, dataId, isroom, dataTite, event)
   }
 
   render() {
@@ -54,8 +80,18 @@ export default class App extends React.Component {
       startLoclaVideo,
       handleSelfMute,
       mute,
+      pass,
       history,
-      channelcheck } = this.props;
+      popopen,
+      channelcheck,
+      popEvent,
+      popClose,
+      passpostCheck,
+      focustitle,
+      roomMatch,
+      alertHide,
+      inputCancel,
+      formatRoomPassword } = this.props;
     return (
       <Router>
         <Route
@@ -72,19 +108,32 @@ export default class App extends React.Component {
                     saveFormData={this.saveFormDatas.bind(this)}
                     roomDelete={this.roomDeletes.bind(this)}
                     goingChannel={this.goingChannel.bind(this)}
+                    passwordCheck={this.passwordCheck.bind(this)}
+                    formatRoomPassword={formatRoomPassword}
+                    handleSelfMute={handleSelfMute.bind(this)}
+                    inputCancel={inputCancel.bind(this)}
+                    passpostCheck={passpostCheck}
+                    popEvent={popEvent.bind(this)}
+                    popClose={popClose}
+                    focustitle={focustitle}
+                    alertHide={alertHide}
                     onLoginButtonClick={this.props.loginUser}
                     onLogoutButtonClick={this.props.userlogout}
                     signAlert={this.signAlertMessage}
                     webrtc={webrtc}
                     peers={peers}
                     inroom={inroom}
+                    pass={pass}
+                    roomMatch={roomMatch}
                     startLoclaVideo={startLoclaVideo}
                     AddpeerVideo={AddpeerVideo}
                     mute={mute}
-                    handleSelfMute={handleSelfMute.bind(this)}
+                    popopen={popopen}
                     joinChat={joinChat}
                     inputRef={value => this.inputNode = value}
                     goingRef={value => this.gochannel = value}
+                    passRef={value => this.passNode = value}
+                    passCheckRef={value => this.checkNode = value}
                   /> :
                   null
               )

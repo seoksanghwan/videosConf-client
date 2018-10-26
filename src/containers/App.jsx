@@ -23,11 +23,19 @@ import {
   AUDIO_CHECK,
   ROOM_ADD,
   ROOM_REMOVE,
-  CHANNEL_CHECK
+  CHANNEL_CHECK,
+  PASSWORD_CHECK,
+  POP_EVENT_CHECK,
+  POP_ClOSE_CHECK,
+  ROOM_MAINTENANCE,
+  ROOM_TITLE_MATCH,
+  FORMAT_ROOM_PASS
 } from '../actions';
 import App from "../components/App.jsx";
 import createHistory from 'history/createBrowserHistory';
 
+//https://videos-conf-service.herokuapp.com/
+//http://localhost:8080/
 let rtc;
 const simpLioRTC = 'https://sm1.lio.app:443/';
 const localHostIp = 'https://videos-conf-service.herokuapp.com/';
@@ -49,11 +57,16 @@ const mapStateToProps = state => ({
   isLoggedIn: state.isLoggedIn,
   error: state.error,
   isroom: state.isroom,
-  isroom: state.isroom,
+  inroom: state.inroom,
   peers: state.peers,
   webrtc: state.webrtc,
   mute: state.mute,
-  length :  state.length
+  length: state.length,
+  popopen: state.popopen,
+  focusid: state.focusid,
+  pass: state.pass,
+  focustitle: state.focustitle,
+  aboutValueTitle: state.aboutValueTitle
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -102,7 +115,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       });
     },
     channelData: () => {
-      socket.on('initialList',(data)=>{
+      socket.on('initialList', (data) => {
         dispatch({
           type: ROOMS_DATA,
           data
@@ -121,31 +134,33 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         });
       });
     },
-    saveFormData: (logedin, items, title, isroom) => {
-      let titleOverLap = Boolean(isroom.every( roommData => roommData.title !== title));
+    saveFormData: (logedin, items, title, roomPassword, isroom) => {
+      console.log()
+      let titleOverLap = Boolean(isroom.every(roommData => roommData.title !== title));
       if (logedin) {
-        if (title.length > 1 && title.length < 11) {
+        if (title.length > 1 && title.length < 11 && roomPassword.length > 1 && roomPassword.length < 11) {
           let data = {
             title,
+            roomPassword,
             userName: items.name,
             userMail: items.email
           };
-          if ( titleOverLap || isroom === [] ) {
+          if (titleOverLap || isroom === []) {
             socket.emit('addItem', data);
             history.push(`/rooms/${title}`);
           } else {
             alert('중복된 회의실이 있습니다.');
-          } 
+          }
         } else {
-          alert('회의방 제목은 2글자 이상 10글자 미만이에요.\n다시 한번 작성해주세요');
+          alert('회의방 제목 및 패스워드는 2글자 이상 10글자 미만이에요.\n다시 한번 작성해주세요');
         }
       } else {
         alert('로그인을 해주세요');
-      } 
+      }
     },
     roomDelete: (id, dataMail, itemsMail) => {
       if (dataMail === itemsMail) {
-        socket.emit('removeItem' , id);
+        socket.emit('removeItem', id);
         dispatch({
           type: ROOM_REMOVE
         });
@@ -188,7 +203,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       if (localvideo) {
         rtc.config.localVideoEl = localvideo;
       } else {
-        rtc.config.localVideoEl = '';
+        rtc.config.localVideoEl = localvideo;
       }
     },
     AddpeerVideo: (targetremote) => {
@@ -219,6 +234,120 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         type: AUDIO_CHECK,
         func: rtc
       });
+    },
+    passpostCheck: (password, roomid, isroom, dataTite, event) => {
+      event.preventDefault();
+      isroom.filter(item => {
+        if (item._id === roomid || item.title === dataTite) {
+          if (password.length >= 1) {
+            const inputdata = {
+              password,
+              roomid: item._id
+            }
+            axios.post(`${localHostIp}passcheck`, inputdata)
+              .then(data => {
+                const shouldCheck = data.data.message;
+                dispatch({
+                  type: PASSWORD_CHECK,
+                  result: shouldCheck,
+                  title: item.title
+                })
+                const roomObj = {
+                  item,
+                  shouldCheck
+                }
+                if (shouldCheck === true) {
+                  localStorage.setItem('roomPassResults', JSON.stringify(roomObj));
+                } else {
+                  localStorage.setItem('roomPassResults', JSON.stringify(roomObj));
+                }
+              })
+              .catch(error => {
+                dispatch({ type: GET_ERRORS, error });
+              });
+          }
+        }
+      })
+    },
+    chatRoomUsing: () => {
+      let roomData = JSON.parse(localStorage.getItem('roomPassResults'));
+      let roomTitle = history.location.pathname.split('/rooms/')[1];
+      if (roomTitle !== undefined && roomData !== null) {
+        if (history.location.pathname.split('/rooms/')[1] && roomData !== null) {
+          if (roomTitle === roomData.item.title && roomData.shouldCheck) {
+            dispatch({
+              type: ROOM_MAINTENANCE,
+              data: roomData.shouldCheck
+            })
+          } else {
+            dispatch({
+              type: ROOM_MAINTENANCE,
+              data: false
+            })
+          }
+        }
+      }
+    },
+    popEvent: (event) => {
+      const dataId = event.target.dataset.id;
+      dispatch({
+        type: POP_EVENT_CHECK,
+        booelan: true,
+        dataId
+      })
+    },
+    aboutPopEvent: (targetTitle) => {
+      dispatch({
+        type: POP_EVENT_CHECK,
+        booelan: true,
+        targetTitle
+      })
+    },
+    popClose: () => {
+      let roomDataRmove = localStorage.removeItem('roomPassResults');
+      let roomNull = roomDataRmove === null ? false : null
+      dispatch({
+        type: POP_ClOSE_CHECK,
+        booelan: false
+      })
+      dispatch({
+        type: ROOM_MAINTENANCE,
+        data: roomNull
+      })
+    },
+    inputCancel: () => {
+      dispatch({
+        type: POP_ClOSE_CHECK,
+        booelan: false
+      })
+    },
+    formatRoomPassword: () => {
+      let roomDataRmove = localStorage.removeItem('roomPassResults');
+      if (history.location.pathname.split('/rooms/')[1]) {
+        dispatch({
+          type: FORMAT_ROOM_PASS,
+          data: null,
+          pass: true
+        })
+      }
+    },
+    roomMatch: (isroomdata) => {
+      let roomTitleUrl = history.location.pathname.split('/rooms/')[1];
+      if (history.location.pathname.split('/rooms/')[1]) {
+        let title = isroomdata.map(data => data.title);
+        let isRoomValid = title.some(item => item === roomTitleUrl);
+        if (isRoomValid) {
+          dispatch({
+            type: ROOM_TITLE_MATCH,
+            roomBoolean: true
+          })
+        } else {
+          dispatch({
+            type: ROOM_TITLE_MATCH,
+            roomBoolean: false
+          })
+        }
+      }
     }
   };
 };
