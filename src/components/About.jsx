@@ -12,7 +12,7 @@ const About = ({goingRef, goingChannel, passCheckRef, passwordCheck, popClose, p
 				<div className="about-info-text">
 					<h2>Videos Conf</h2>
 					<p>
-						언제 어디서든 노트북만 있으면, 화상회의를 시작 하실 수 있습니다.
+						언제 어디서든 노트북만 있으면, 화상회의를<br/>시작 하실 수 있습니다.
 						지금 바로 시작해보세요.!!
 					 </p>
 					<div className="goingChannel">
