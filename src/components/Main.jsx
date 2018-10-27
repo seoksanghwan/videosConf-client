@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import Alert from './Alert.jsx';
 
-const Main = ({ channelAlertMessage, saveFormData, inputRef, passRef, passCheckRef, passwordCheck, popClose, pass, focustitle, inputCancel, popopen, alertMessage, spinner, alertBoxBottom, alertColor }) => {
+const Main = ({ gochnanelRoom, channelAlertMessage, saveFormData, inputRef, passRef, passCheckRef, passwordCheck, popClose, pass, focustitle, inputCancel, popopen, alertMessage, spinner, alertBoxBottom, alertColor }) => {
   return (
     <div className="meeting-room-create">
       <div className="rooms_title">
@@ -26,7 +26,7 @@ const Main = ({ channelAlertMessage, saveFormData, inputRef, passRef, passCheckR
       </div>
       {
         (popopen) ?
-          <Alert alertColor={alertColor} alertBoxBottom={alertBoxBottom} spinner={spinner} alertMessage={alertMessage} passCheckRef={passCheckRef} passwordCheck={passwordCheck} popClose={popClose} pass={pass} focustitle={focustitle} inputCancel={inputCancel} /> :
+          <Alert gochnanelRoom={gochnanelRoom} alertColor={alertColor} alertBoxBottom={alertBoxBottom} spinner={spinner} alertMessage={alertMessage} passCheckRef={passCheckRef} passwordCheck={passwordCheck} popClose={popClose} pass={pass} focustitle={focustitle} inputCancel={inputCancel} /> :
           null
       }
     </div>

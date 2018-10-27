@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 import { uniqWith, isEqual } from "lodash";
 import Alert from './Alert.jsx';
 
-const Rooms = ({ deleteAelrt, spinner, roomDelete, roomData, passCheckRef, passwordCheck, items, popopen, popEvent, popClose, roomDeletePop, pass, focustitle, inputCancel, alertMessage, alertBoxBottom, alertColor }) => {
+const Rooms = ({ gochnanelRoom, deleteAelrt, spinner, roomDelete, roomData, passCheckRef, passwordCheck, items, popopen, popEvent, popClose, roomDeletePop, pass, focustitle, inputCancel, alertMessage, alertBoxBottom, alertColor }) => {
   return (
     <div className="rooms-list">
       <dl>
         <dt>
           <h2 className="title">
-            Enjoy Channel!!
-            <em>안녕하세요 채널 리스트입니다.</em>
+            Enjoy Channel
+            <em>여기는 채널 리스트입니다.</em>
           </h2>
         </dt>
         { 
@@ -42,7 +42,7 @@ const Rooms = ({ deleteAelrt, spinner, roomDelete, roomData, passCheckRef, passw
       </dl>
       {
         (popopen) ?
-          <Alert alertColor={alertColor} alertBoxBottom={alertBoxBottom} spinner={spinner} alertMessage={alertMessage} passCheckRef={passCheckRef} passwordCheck={passwordCheck} popClose={popClose} pass={pass} focustitle={focustitle} inputCancel={inputCancel} /> :
+          <Alert gochnanelRoom={gochnanelRoom} alertColor={alertColor} alertBoxBottom={alertBoxBottom} spinner={spinner} alertMessage={alertMessage} passCheckRef={passCheckRef} passwordCheck={passwordCheck} popClose={popClose} pass={pass} focustitle={focustitle} inputCancel={inputCancel} /> :
           null
       }
       {

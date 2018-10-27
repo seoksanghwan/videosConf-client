@@ -54,6 +54,11 @@ export default class App extends React.Component {
     this.props.passpostCheck(passCheck, dataId, isroom, dataTite, event)
   }
 
+  gochnanelRoom() {
+    const {focustitle} = this.props;
+    this.props.goMoveChannel(focustitle);
+  }
+
   render() {
     const {
       isLoggedIn,
@@ -91,7 +96,8 @@ export default class App extends React.Component {
       loginpopEvent,
       loggedPopUp,
       deleteAelrt,
-      roomDeletePop } = this.props;
+      roomDeletePop,
+      gochnanelRoom } = this.props;
     return (
       <Router>
         <Route
@@ -116,6 +122,7 @@ export default class App extends React.Component {
                     inputCancel={inputCancel.bind(this)}
                     passpostCheck={passpostCheck}
                     popEvent={popEvent.bind(this)}
+                    gochnanelRoom={this.gochnanelRoom.bind(this)}
                     loginpopEvent={loginpopEvent.bind(this)}
                     loggedPopUp={loggedPopUp}
                     popClose={popClose}

@@ -39,14 +39,12 @@ import {
 import App from "../components/App.jsx";
 import createHistory from 'history/createBrowserHistory';
 
-//https://videos-conf-service.herokuapp.com/
-//http://localhost:8080/
 let rtc;
 const simpLioRTC = 'https://sm1.lio.app:443/';
 const localHostIp = 'https://videos-conf-service.herokuapp.com/';
 const localHostIpApi = `${localHostIp}api/auth/`;
 const provider = new firebase.auth.GoogleAuthProvider();
-const history = createHistory({ forceRefresh: false });
+const history = createHistory({ forceRefresh: true });
 const socket = io(localHostIp);
 const setAuthToken = token => {
   if (token) {
@@ -55,6 +53,15 @@ const setAuthToken = token => {
   else {
     delete axios.defaults.headers.common['Authorization'];
   }
+}
+
+const removeData = (dispatch) => {
+  let roomDataRmove = localStorage.removeItem('roomPassResults');
+  let roomNull = roomDataRmove === null ? false : null
+  dispatch({
+    type: ROOM_MAINTENANCE,
+    data: roomNull
+  });
 }
 
 const mapStateToProps = state => ({
@@ -123,7 +130,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     userlogout: () => {
       let userRemove = localStorage.removeItem('user');
       firebase.auth().signOut().then(() => {
-        history.push('/');
         dispatch({
           type: IS_LOGOUT_DATA,
           data: userRemove
@@ -159,6 +165,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       });
     },
     saveFormData: (logedin, items, title, roomPassword, isroom, callback) => {
+      removeData(dispatch)
       let titleOverLap = Boolean(isroom.every(roommData => roommData.title !== title));
       if (logedin) {
         if (title.length > 1 && title.length < 11 && roomPassword.length > 1 && roomPassword.length < 11) {
@@ -208,6 +215,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       }
     },
     goingChannels: (isLoggedIn, channelTitle, isroom, titleEqualCheck, callback) => {
+      removeData(dispatch)
       if (isLoggedIn) {
         if (channelTitle.length > 1 && channelTitle.length < 11) {
           if (titleEqualCheck !== undefined) {
@@ -244,6 +252,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           resultBoolean : true
         });
       }
+    },
+    goMoveChannel: (channelName) => {
+      history.push(`/rooms/${channelName}`)
     },
     roomDelete: (id) => {
       localStorage.setItem('roomObjId', JSON.stringify(id));
@@ -431,17 +442,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       });
     },
     popClose: () => {
-      let roomDataRmove = localStorage.removeItem('roomPassResults');
-      let roomNull = roomDataRmove === null ? false : null
+      removeData(dispatch)
       dispatch({
         type: POP_ClOSE_CHECK,
         booelan: false,
         popBoolean : false,
         deleteMsg : false
-      });
-      dispatch({
-        type: ROOM_MAINTENANCE,
-        data: roomNull
       });
       dispatch({
         type: ALERT_WARNING,

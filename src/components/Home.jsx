@@ -29,7 +29,7 @@ export default class Home extends React.Component {
   }
 
   connectVideo() {
-    this.props.history.go(0);
+    this.props.webrtc.pause()
   }
 
   disconnect() {
@@ -77,7 +77,8 @@ export default class Home extends React.Component {
       loginpopEvent,
       loggedPopUp,
       deleteAelrt,
-      roomDeletePop } = this.props;
+      roomDeletePop,
+      gochnanelRoom } = this.props;
     return (
       <div id="app" className="container">
         <Navbar
@@ -115,6 +116,7 @@ export default class Home extends React.Component {
                 alertBoxBottom={alertBoxBottom}
                 alertColor={alertColor}
                 channelAlertMessage={channelAlertMessage}
+                gochnanelRoom={gochnanelRoom}
               />
             );
           }} />
@@ -137,6 +139,7 @@ export default class Home extends React.Component {
                 alertMessage={alertMessage}
                 alertBoxBottom={alertBoxBottom}
                 alertColor={alertColor}
+                gochnanelRoom={gochnanelRoom}
               />
             );
           }} />
@@ -161,6 +164,7 @@ export default class Home extends React.Component {
                   alertColor={alertColor}
                   deleteAelrt={deleteAelrt}
                   roomDeletePop={roomDeletePop}
+                  gochnanelRoom={gochnanelRoom}
                 />
               );
             } else {

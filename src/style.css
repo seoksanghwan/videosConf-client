@@ -1,5 +1,5 @@
 @charset "utf-8";
-@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic');
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR');
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 html {
   height: 100%;
@@ -11,7 +11,7 @@ body, div, p, ul, li, ol, dl, dt, dd, h1, h2, h3, h4, h5, h6, table, td, th, hea
   border: 0;
   color: #474b53;
   font-size: 14px;
-  font-family: 'NanumGothic', 'Nanum Gothic';
+  font-family: 'Noto Sans KR', sans-serif;
   line-height: 160%;
 }
 
@@ -141,7 +141,7 @@ body::before {
   width: 100%;
   height: 100%;
   z-index: -1;
-  opacity: .2;
+  opacity: .17;
   background: url('https://github.com/seoksanghwan/videosConf---client/blob/master/src/img/webcam.png?raw=true') no-repeat;
   background-size: 37%;
   background-position: right bottom;
@@ -266,8 +266,9 @@ video {
 .title {
   text-align: right;
   font-size: 40px;
-  color: #333;
+  color: #306dbc;
   margin: 20px 0 10px 0;
+  font-family: 'Roboto', sans-serif;
 }
 
 .title em {
@@ -279,24 +280,6 @@ video {
   font-size: 20px;
   position: relative;
   color: #3e3e3ecc;
-}
-
-.title em::after {
-  content: '🐵';
-  font-size: 30px;
-  animation: fade 2s infinite linear;
-}
-
-@keyframes fade {
-  0% {
-    content: '🙈';
-  }
-  50% {
-    content: '🙉';
-  }
-  100% {
-    content: '🙊';
-  }
 }
 
 .navbar-item {
@@ -430,7 +413,7 @@ video {
   border-bottom: 1px solid #d3d3d3;
 }
 
-.meeting-room-create input {
+.meeting-room-create .rooms_title input {
   width: 100%;
   height: 70px;
   font-size: 20px;
@@ -454,7 +437,7 @@ video {
   margin-bottom: 0;
 }
 
-.meeting-room-create button {
+.meeting-room-create .rooms_title button {
   width: 100%;
   height: 70px;
   border: none;
@@ -859,6 +842,7 @@ video {
   color: #3c29aa;
 }
 
+.pass-check .sucess-password,
 .pass-check a {
   font-size: 15px;
   font-weight: bold;
@@ -870,6 +854,8 @@ video {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  cursor: pointer;
+  display: inline;
 }
 
 .fa-spinner {
