@@ -24,6 +24,8 @@ export const FORMAT_ROOM_PASS = 'FORMAT_ROOM_PASS';
 export const ALERT_MESSAGE_CHANGE = 'ALERT_MESSAGE_CHANGE';
 export const SPINNER_ACTION = 'SPINNER_ACTION';
 export const ALERT_WARNING = 'ALERT_WARNING';
+export const LOGGIN_POP_OPEN = 'LOGGIN_POP_OPEN';
+export const ROOM_REMOVE_POP = 'ROOM_REMOVE_POP';
 
 export const isLogoutData = () => ({
   type: IS_LOGOUT_DATA
@@ -130,3 +132,10 @@ export const alertWarning = products => ({
   type: ALERT_WARNING
 });
 
+export const loginPopOpen = products => ({
+  type: LOGGIN_POP_OPEN
+});
+
+export const roomRemovePop = products => ({
+  type: ROOM_REMOVE_POP
+});

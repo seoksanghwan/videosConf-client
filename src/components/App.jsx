@@ -18,10 +18,6 @@ export default class App extends React.Component {
     this.props.chatRoomUsing();
   }
 
-  signAlertMessage() {
-    alert('로그인을 해주세요');
-  }
-
   saveFormDatas(event) {
     event.preventDefault();
     const { isLoggedIn, items, isroom } = this.props;
@@ -36,30 +32,17 @@ export default class App extends React.Component {
   roomDeletes(event) {
     event.preventDefault();
     const dataId = event.target.dataset.id;
-    const dataMail = event.target.dataset.mail;
-    const { items } = this.props;
-    this.props.roomDelete(dataId, dataMail, items.email);
+    this.props.roomDelete(dataId);
   }
 
   goingChannel(event) {
     event.preventDefault();
     const channelTitle = this.gochannel.value;
-    const { isroom } = this.props;
+    const { isLoggedIn, isroom } = this.props;
     const titleEqualCheck = isroom.filter(data => data.title === channelTitle)[0]
-    if (channelTitle.length > 1 && channelTitle.length < 11) {
-      if (titleEqualCheck !== undefined) {
-        if (titleEqualCheck.title === channelTitle) {
-          this.props.aboutAlertMessageChange();
-          this.props.aboutPopEvent(channelTitle);
-        }
-      } else {
-        alert('채널 목록에 없는 채널입니다.');
-        this.gochannel.value = '';
-      }
-    } else {
-      alert('채널 제목은 2글자 미만이거나, 11글자 이상 일 수 없습니다.');
-      this.gochannel.value = '';
-    }
+    this.props.goingChannels(isLoggedIn, channelTitle, isroom, titleEqualCheck, this.props.aboutPopEvent)
+    this.props.aboutAlertMessageChange();
+    this.gochannel.value = '';
   }
 
   passwordCheck(event) {
@@ -102,7 +85,13 @@ export default class App extends React.Component {
       aboutAlertMessageChange,
       spinner,
       alertBoxBottom,
-      alertColor } = this.props;
+      alertColor,
+      channelAlertMessage,
+      alertMessageFormat,
+      loginpopEvent,
+      loggedPopUp,
+      deleteAelrt,
+      roomDeletePop } = this.props;
     return (
       <Router>
         <Route
@@ -116,8 +105,10 @@ export default class App extends React.Component {
                     items={items}
                     isroom={isroom}
                     channelcheck={channelcheck}
+                    alertMessageFormat={alertMessageFormat}
                     saveFormData={this.saveFormDatas.bind(this)}
                     roomDelete={this.roomDeletes.bind(this)}
+                    roomDeletePop={roomDeletePop.bind(this)}
                     goingChannel={this.goingChannel.bind(this)}
                     passwordCheck={this.passwordCheck.bind(this)}
                     formatRoomPassword={formatRoomPassword}
@@ -125,6 +116,8 @@ export default class App extends React.Component {
                     inputCancel={inputCancel.bind(this)}
                     passpostCheck={passpostCheck}
                     popEvent={popEvent.bind(this)}
+                    loginpopEvent={loginpopEvent.bind(this)}
+                    loggedPopUp={loggedPopUp}
                     popClose={popClose}
                     focustitle={focustitle}
                     alertHide={alertHide}
@@ -139,19 +132,22 @@ export default class App extends React.Component {
                     inroom={inroom}
                     pass={pass}
                     roomMatch={roomMatch}
+                    channelAlertMessage={channelAlertMessage}
                     startLoclaVideo={startLoclaVideo}
                     AddpeerVideo={AddpeerVideo}
                     mute={mute}
+                    loginpopEvent={loginpopEvent}
                     popopen={popopen}
                     joinChat={joinChat}
                     alertMessage={alertMessage}
                     spinner={spinner}
+                    deleteAelrt={deleteAelrt}
                     inputRef={value => this.inputNode = value}
                     goingRef={value => this.gochannel = value}
                     passRef={value => this.passNode = value}
                     passCheckRef={value => this.checkNode = value}
                   /> :
-                  null
+                  <div className="loadspin"></div>
               )
             }
           }}

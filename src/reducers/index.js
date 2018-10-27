@@ -27,7 +27,9 @@ import {
 	FORMAT_ROOM_PASS,
 	ALERT_MESSAGE_CHANGE,
 	SPINNER_ACTION,
-	ALERT_WARNING
+	ALERT_WARNING,
+	LOGGIN_POP_OPEN,
+	ROOM_REMOVE_POP
 } from '../actions';
 
 const initialState = {
@@ -48,8 +50,11 @@ const initialState = {
 	aboutValueTitle: '',
 	alertMessage: '회의실 패스워드를 입력해주세요.',
 	spinner: false,
-	alertBoxBottom : '패스워드를 입력해주세요.',
-	alertColor : '#3c29aa'
+	alertBoxBottom: '',
+	alertColor: '#3c29aa',
+	channelAlertMessage: false,
+	loggedPopUp: false,
+	deleteAelrt: false
 };
 
 export default function productReducer(state = initialState, action) {
@@ -100,12 +105,9 @@ export default function productReducer(state = initialState, action) {
 			}
 
 		case ROOM_REMOVE:
-			const removeRoom = state.isroom;
-			const roomId = action.data;
-			const removeUpdate = removeRoom.filter((data) => roomId !== data._id);
 			return {
 				...state,
-				isroom: removeUpdate
+				deleteAelrt: action.deleteMsg
 			}
 
 		case RTC_SETTING:
@@ -169,7 +171,7 @@ export default function productReducer(state = initialState, action) {
 				...state,
 				pass: action.result,
 				focustitle: action.title,
-				spinner:false
+				spinner: false
 			}
 
 		case POP_EVENT_CHECK:
@@ -183,13 +185,15 @@ export default function productReducer(state = initialState, action) {
 		case FORMAT_ROOM_PASS:
 			return {
 				...state,
-				pass : action.pass
+				pass: action.pass
 			}
 
 		case POP_ClOSE_CHECK:
 			return {
 				...state,
-				popopen: action.booelan
+				popopen: action.booelan,
+				loggedPopUp: action.popBoolean,
+				deleteAelrt: action.deleteMsg
 			}
 
 		case ROOM_MAINTENANCE:
@@ -202,7 +206,7 @@ export default function productReducer(state = initialState, action) {
 		case ROOM_TITLE_MATCH:
 			return {
 				...state,
-				inroom : action.roomBoolean
+				inroom: action.roomBoolean
 			}
 
 		case ALERT_MESSAGE_CHANGE:
@@ -210,20 +214,37 @@ export default function productReducer(state = initialState, action) {
 				...state,
 				alertMessage: action.message
 			}
-		
+
 		case SPINNER_ACTION:
 			return {
 				...state,
-				spinner:action.check
+				spinner: action.check
 			}
-		
+
 		case ALERT_WARNING:
 			return {
 				...state,
-				alertBoxBottom : action.alert,
-				alertColor : action.color
+				alertBoxBottom: action.alert,
+				alertColor: action.color,
+				channelAlertMessage: action.resultBoolean
 			}
 
+		case ROOM_REMOVE_POP:
+			const removeRoom = state.isroom;
+			const roomId = action.data;
+			const removeUpdate = removeRoom.filter((data) => roomId !== data._id);
+			return {
+				...state,
+				isroom: removeUpdate,
+				deleteAelrt: action.deleteMsg
+			}	
+
+		case LOGGIN_POP_OPEN:
+			return {
+				...state,
+				loggedPopUp : action.popBoolean
+			}
+			
 		case GET_ERRORS:
 			return {
 				...state,

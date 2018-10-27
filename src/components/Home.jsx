@@ -68,15 +68,31 @@ export default class Home extends React.Component {
       alertMessage,
       spinner,
       alertBoxBottom,
-      alertColor } = this.props;
+      alertColor,
+      channelAlertMessage,
+      alertMessageFormat,
+      onLogoutButtonClick,
+      onLoginButtonClick,
+      signAlert,
+      loginpopEvent,
+      loggedPopUp,
+      deleteAelrt,
+      roomDeletePop } = this.props;
     return (
       <div id="app" className="container">
         <Navbar
           items={items}
+          loginpopEvent={loginpopEvent}
+          loggedPopUp={loggedPopUp}
           isLoggedIn={isLoggedIn}
-          signAlert={this.props.signAlert}
-          onLoginButtonClick={this.props.onLoginButtonClick}
-          onLogoutButtonClick={this.props.onLogoutButtonClick}
+          signAlert={signAlert}
+          onLoginButtonClick={onLoginButtonClick}
+          onLogoutButtonClick={onLogoutButtonClick}
+          alertMessageFormat={alertMessageFormat}
+          alertBoxBottom={alertBoxBottom}
+          popEvent={popEvent}
+          popClose={popClose}
+          popopen={popopen}
         />
         <Switch>
           <Route exact path="/" render={props => {
@@ -98,6 +114,7 @@ export default class Home extends React.Component {
                 alertMessage={alertMessage}
                 alertBoxBottom={alertBoxBottom}
                 alertColor={alertColor}
+                channelAlertMessage={channelAlertMessage}
               />
             );
           }} />
@@ -109,6 +126,7 @@ export default class Home extends React.Component {
                 goingRef={goingRef}
                 goingChannel={goingChannel}
                 pass={pass}
+                channelAlertMessage={channelAlertMessage}
                 popEvent={popEvent}
                 popClose={popClose}
                 popopen={popopen}
@@ -141,6 +159,8 @@ export default class Home extends React.Component {
                   alertMessage={alertMessage}
                   alertBoxBottom={alertBoxBottom}
                   alertColor={alertColor}
+                  deleteAelrt={deleteAelrt}
+                  roomDeletePop={roomDeletePop}
                 />
               );
             } else {

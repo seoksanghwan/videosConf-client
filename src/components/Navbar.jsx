@@ -1,42 +1,48 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import LoginAlert from './LoginAlert.jsx';
 
-const Navbar = props => {
+const Navbar = ({ loggedPopUp, popopen, popClose, loginpopEvent, isLoggedIn, alertMessageFormat, signAlert, onLoginButtonClick, onLogoutButtonClick, items}) => {
   return (
     <div className="container">
       <div className="navbar-start">
         <div className="nav-content">
           <div className="nav-menu">
             <dl>
-              <dt><Link to="/"><img src="https://github.com/seoksanghwan/videosConf---client/blob/master/src/img/logo.png?raw=true" alt=""/></Link></dt>
+              <dt><Link onClick={alertMessageFormat} to="/"><img src="https://github.com/seoksanghwan/videosConf---client/blob/master/src/img/logo.png?raw=true" alt=""/></Link></dt>
               <dd>
-                <Link to="/about">About</Link>
+                <Link onClick={alertMessageFormat} to="/about">About</Link>
               </dd>
               <dd>
                 {
-                  (props.isLoggedIn) ?
-                    <Link to="/rooms">Channel List</Link> :
-                    <Link onClick={props.signAlert} to="/">Channel List</Link>
+                  (isLoggedIn) ?
+                    <Link onClick={alertMessageFormat} to="/rooms">Channel List</Link> :
+                    <p onClick={loginpopEvent}>Channel List</p>
                 }
               </dd>
               <dd>
                 {
-                  (props.isLoggedIn) ?
-                    <p onClick={props.onLogoutButtonClick}>Sign Out</p> :
-                    <p onClick={props.onLoginButtonClick}>Sign In</p>
+                  (isLoggedIn) ?
+                    <p onClick={onLogoutButtonClick}>Sign Out</p> :
+                    <p onClick={onLoginButtonClick}>Sign In</p>
                 }
               </dd>
             </dl>
           </div>
           <div className="user-info-nav">
             {
-              (props.isLoggedIn) ?
-                <p><img src={props.items.url} /> <strong>{props.items.name}</strong>님 안녕하세요.!!</p> :
-                <p>로그인해주세요.</p>
+              (isLoggedIn) ?
+                <p><img src={items.url} /> <strong>{items.name}</strong>님 안녕하세요.</p> :
+                <p>로그인을 해주세요.</p>
             }
           </div>
         </div>
       </div>
+      {
+        (loggedPopUp) ?
+          <LoginAlert popClose={popClose} /> :
+          null
+      }
     </div>
   );
 };
