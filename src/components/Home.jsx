@@ -28,10 +28,6 @@ export default class Home extends React.Component {
     this.props.webrtc.leaveRoom();
   }
 
-  connectVideo() {
-    this.props.webrtc.pause()
-  }
-
   disconnect() {
     this.props.history.push('/rooms');
     this.props.alertMessageChange();
@@ -190,7 +186,6 @@ export default class Home extends React.Component {
                     joinChat={joinChat}
                     mute={mute}
                     pass={pass}
-                    connectVideo={this.connectVideo.bind(this)}
                     disconnect={this.disconnect.bind(this)}
                     handleSelfMute={handleSelfMute}
                     localref={(vid) => this.localVideo = vid}

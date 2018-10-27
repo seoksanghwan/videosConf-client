@@ -17,7 +17,7 @@ export default class RoomsDetails extends Component {
   }
 
   render() {
-    const { peers, email, url, AddpeerVideo, webrtc, disconnect, handleSelfMute, mute, connectVideo } = this.props;
+    const { peers, email, url, AddpeerVideo, webrtc, disconnect, handleSelfMute, mute } = this.props;
     const { room_name } = this.props.match.params;
     return (
       <div className="details-box">
@@ -33,9 +33,6 @@ export default class RoomsDetails extends Component {
             </div>
           </div>
           <div className="buttons">
-            <button onClick={connectVideo}>
-              <i className="fas fa-video"></i>
-            </button>
             <button onClick={handleSelfMute}>
               {
                 (mute) ?
@@ -46,7 +43,6 @@ export default class RoomsDetails extends Component {
             <button onClick={disconnect}>
               <i className="fas fa-sign-out-alt"></i>
             </button>
-            <p>통화버튼을 눌러주세요.</p>
           </div>
           <div className="remotePeerList">
             <h3>Member</h3>

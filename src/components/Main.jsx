@@ -13,7 +13,7 @@ const Main = ({ gochnanelRoom, channelAlertMessage, saveFormData, inputRef, pass
             </h1>
             <div className="inputbox">
               <input type="text" id="rooms_title" name="rooms_title" ref={inputRef} placeholder="안녕하세요. 채널을 생성해주세요." />
-              <input type="password" id="rooms_password" name="rooms_title" ref={passRef} placeholder="패스워드도 설정해봐요." />
+              <input type="password" id="rooms_password" name="rooms_title" ref={passRef} placeholder="패스워드도 설정해주세요." />
             </div>
             <button name="rooms_title" onClick={saveFormData} >Create!</button>
             {
