@@ -40,12 +40,12 @@ caption {
   display: none;
 }
 
-i웃put {
+input {
   background: #fff;
   margin: 0;
   padding: 0;
   vertical-align: middle;
-  border: 1px solid #eee;
+  border: 1px solid #d3d3d3;
 }
 
 input[type=text] {
@@ -158,44 +158,16 @@ video {
   height: 100px;
 }
 
-.login-page {
-  width: 300px;
-  height: 150px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-}
-
-.login-page * {
-  color: #222;
-  text-align: center;
-}
-
-.login-page h1, .login-page h2 {
-  margin-bottom: 10px;
-}
-
-.login-page button {
-  background: none;
-  cursor: pointer;
-  background: #2196f3;
-  width: 170px;
-  height: 40px;
-  display: block;
-  margin: 0 auto;
-  outline: none;
-}
-
 .container {
   width: 100%;
 }
 
 .container .navbar-start {
   width: 100%;
-  height: 80px;
+  height: 60px;
+  line-height: 60px;
+  padding:15px 0;
+  border-bottom: 1px solid #d3d3d3;
 }
 
 .container .navbar-start .nav-content {
@@ -211,16 +183,15 @@ video {
   margin-right: 40px !important;
 }
 
-.container .navbar-start .nav-content .nav-menu dl dt, .container .navbar-start .nav-content .nav-menu dl dd {
-  float: left;
-  line-height: 80px;
-  margin-right: 18px;
+.container .navbar-start .nav-content .nav-menu dl dt,
+.container .navbar-start .nav-content .nav-menu dl dd {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .container .navbar-start .nav-content .nav-menu dl dt a {
-  font-size: 55px;
-  font-weight: bold;
   font-family: 'Roboto', sans-serif;
+  vertical-align: middle;
 }
 
 .container .navbar-start .nav-content .nav-menu dl dt a img {
@@ -228,13 +199,29 @@ video {
   height: 60px;
 }
 
-.container .navbar-start .nav-content .nav-menu dl dd p, .container .navbar-start .nav-content .nav-menu dl dd a {
+.container .navbar-start .nav-content .nav-menu dl dd {
+  padding:0 15px;
+  border-right:1px solid #d3d3d3;
+}
+
+.container .navbar-start .nav-content .nav-menu dl dd:last-child{
+  font-size:20px;
+  border: none;
+}
+
+.container .navbar-start .nav-content .nav-menu dl dd p,
+.container .navbar-start .nav-content .nav-menu dl dd a {
   display: block;
   font-size: 20px;
-  padding-top: 30px;
-  border-bottom: 1px solid rgb(161, 161, 161);
-  padding-bottom: 5px;
+  font-family: 'Roboto', sans-serif;
   cursor: pointer;
+  color:#222;
+  transition: 0.2s color ease-in;
+}
+
+.container .navbar-start .nav-content .nav-menu dl dd p:hover,
+.container .navbar-start .nav-content .nav-menu dl dd a:hover {
+  color:#3290cf;
 }
 
 .container .navbar-start .nav-content .user-info-nav {
@@ -242,38 +229,31 @@ video {
 }
 
 .container .navbar-start .nav-content .user-info-nav p {
-  line-height: 80px;
-  color: #222;
-  font-size: 20px;
+  color: rgb(126, 126, 126);
+  font-size: 18px;
+  line-height: 60px;
   vertical-align: middle;
 }
 
-.container .navbar-start .nav-content .user-info-nav p img {
+.container .navbar-start .nav-content .user-info-nav p.userIn {
+  color:#222;
+}
+
+.container .navbar-start .nav-content .user-info-nav p.userIn img {
   vertical-align: middle;
   width: 40px;
   height: 40px;
   border-radius: 5px;
 }
 
-.container .nav-content .btnLogOut {
-  line-height: 22px;
-  color: #fff;
-  background: #222;
-  font-weight: bold;
-  box-sizing: border-box;
-  padding: 7px 15px;
-  font-size: 17px;
-}
-
 .rooms-list {
   width: 1200px;
-  margin: 0 auto 100px auto;
+  margin: 40px auto 100px auto;
   padding: 20px;
   padding-top: 0;
 }
 
 .rooms-list dt {
-  border-bottom: 1px solid rgb(206, 206, 206);
   margin-bottom: 30px;
   padding-bottom: 20px;
 }
@@ -328,9 +308,9 @@ video {
 }
 
 .rooms-list dd {
-  width: 32%;
+  width: 49%;
   float: left;
-  margin: 0 0.5% 15px 0.5%;
+  margin: 0 0 20px 0;
   position: relative;
   background: #fff;
   border-radius: 2px;
@@ -339,6 +319,11 @@ video {
   position: relative;
   padding-top: 10px;
   padding-bottom: 15px;
+}
+
+.rooms-list dd:nth-child(even) {
+  float: right;
+  margin-right: 0;
 }
 
 .rooms-list dd.no-channel {
@@ -382,16 +367,21 @@ video {
   font-size: 19px;
   padding: 4px 10px;
   border-radius: 5px;
-  background: #3f46ad;
+  background: #3c90ff;
   color: #fff;
   outline: none;
   top: 10px;
   right: 10px;
   margin-right: 5px;
+  transition: 0.2s background ease-in;
 }
 
 .rooms-list dd button:nth-child(2) {
-  background: #1c1e4a;
+  background: #72727c;
+}
+
+.rooms-list dd button:nth-child(2):hover {
+  background: #37373b;
 }
 
 .password-form {
@@ -436,6 +426,8 @@ video {
 .meeting-room-create .inputbox {
   display: inline-block;
   width: 100%;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #d3d3d3;
 }
 
 .meeting-room-create input {
@@ -445,6 +437,7 @@ video {
   line-height: 70px;
   font-weight: 500;
   vertical-align: middle;
+  box-sizing: border-box;
   outline: none;
   text-align: center;
   margin-bottom: 10px;
@@ -457,15 +450,19 @@ video {
   border-radius: 7px;
 }
 
+.meeting-room-create input:last-child{
+  margin-bottom: 0;
+}
+
 .meeting-room-create button {
   width: 100%;
   height: 70px;
   border: none;
   vertical-align: top;
-  background: #3f46ad;
+  background: #3c90ff;
   cursor: pointer;
   color: #fff;
-  margin-bottom: 10px;
+  margin: 20px 0 10px 0;
   font-size: 25px;
   font-weight: bold;
   -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
@@ -473,6 +470,7 @@ video {
   -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
   border-radius: 7px;
+  transition: 0.2s background ease-in;
 }
 
 .meeting-room-create .navbar-item {
@@ -482,6 +480,11 @@ video {
   border-radius: 4px;
   color: #333;
   top: -10px;
+  transition: 0.2s color ease-in;
+}
+
+.meeting-room-create .navbar-item:hover {
+  color:#3290cf;
 }
 
 .details-box {
@@ -720,9 +723,10 @@ video {
 }
 
 .about-content .about-info-text h2 {
-  font-weight: bold;
+  font-weight: 500;
   font-family: 'Roboto', sans-serif;
   font-size: 45px;
+  color:#222;
 }
 
 .about-content .about-info-text p {
@@ -750,6 +754,7 @@ video {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  vertical-align: middle;
 }
 
 .goingChannel button {
@@ -759,7 +764,7 @@ video {
   height: 60px;
   line-height: 60px;
   cursor: pointer;
-  background: #3f46ad;
+  background: #3c90ff;
   font-size: 22px;
   font-weight: 500;
   -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
@@ -767,6 +772,8 @@ video {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  vertical-align: middle;
+  transition: 0.2s background ease-in;
 }
 
 .AlertBox {
@@ -822,6 +829,7 @@ video {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  vertical-align: middle;
 }
 
 .loginContent button {
@@ -832,12 +840,13 @@ video {
   height: 60px;
   line-height: 60px;
   cursor: pointer;
-  background: #3f46ad;
+  background: #3c90ff;
   -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
   -webkit-transform: rotate(0.000001deg);
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  vertical-align: middle;
 }
 
 .pass-check {
@@ -904,4 +913,10 @@ video {
   to {
     transform: rotate(360deg);
   }
+}
+
+.goingChannel button:hover,
+.meeting-room-create button:hover, 
+.rooms-list dd button:hover {
+  background: #1e7dfc;
 }

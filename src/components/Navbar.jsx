@@ -32,7 +32,7 @@ const Navbar = ({ loggedPopUp, popopen, popClose, loginpopEvent, isLoggedIn, ale
           <div className="user-info-nav">
             {
               (isLoggedIn) ?
-                <p><img src={items.url} /> <strong>{items.name}</strong>님 안녕하세요.</p> :
+                <p className="userIn"><img src={items.url} /> <strong>{items.name}</strong>님 안녕하세요.</p> :
                 <p>로그인을 해주세요.</p>
             }
           </div>
