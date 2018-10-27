@@ -10,7 +10,6 @@ const Main = ({ channelAlertMessage, saveFormData, inputRef, passRef, passCheckR
           <label htmlFor="rooms_title">
             <h1>
               <img src="https://github.com/seoksanghwan/videosConf---client/blob/master/src/img/logo.png?raw=true" alt="" />
-              <Link className="navbar-item" to="/rooms">Channel List</Link>
             </h1>
             <div className="inputbox">
               <input type="text" id="rooms_title" name="rooms_title" ref={inputRef} placeholder="안녕하세요. 채널을 생성해주세요." />
