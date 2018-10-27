@@ -164,8 +164,8 @@ video {
 
 .container .navbar-start {
   width: 100%;
-  height: 60px;
-  line-height: 60px;
+  height: 40px;
+  line-height: 40px;
   padding:15px 0;
   border-bottom: 1px solid #d3d3d3;
 }
@@ -180,7 +180,7 @@ video {
 }
 
 .container .navbar-start .nav-content .nav-menu dl dt {
-  margin-right: 40px !important;
+  margin-right: 10px !important;
 }
 
 .container .navbar-start .nav-content .nav-menu dl dt,
@@ -196,7 +196,7 @@ video {
 
 .container .navbar-start .nav-content .nav-menu dl dt a img {
   vertical-align: middle;
-  height: 60px;
+  height: 40px;
 }
 
 .container .navbar-start .nav-content .nav-menu dl dd {
@@ -205,7 +205,6 @@ video {
 }
 
 .container .navbar-start .nav-content .nav-menu dl dd:last-child{
-  font-size:20px;
   border: none;
 }
 
@@ -231,7 +230,7 @@ video {
 .container .navbar-start .nav-content .user-info-nav p {
   color: rgb(126, 126, 126);
   font-size: 18px;
-  line-height: 60px;
+  line-height: 40px;
   vertical-align: middle;
 }
 
@@ -241,8 +240,8 @@ video {
 
 .container .navbar-start .nav-content .user-info-nav p.userIn img {
   vertical-align: middle;
-  width: 40px;
-  height: 40px;
+  width: 28px;
+  height: 28px;
   border-radius: 5px;
 }
 
