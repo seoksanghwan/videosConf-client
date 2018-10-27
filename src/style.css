@@ -382,7 +382,7 @@ video {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100% - 98px);
+  height: calc(100% - 81px);
 }
 
 .meeting-room-create .rooms_title {
@@ -471,7 +471,7 @@ video {
 
 .details-box {
   width: 85%;
-  height: calc(100% - 98px);
+  height: calc(100% - 81px);
   margin: 0 auto;
 }
 
@@ -679,7 +679,7 @@ video {
 }
 
 .about {
-  height: calc(100% - 98px);
+  height: calc(100% - 81px);
   width: 100%;
   display: flex;
   justify-content: center;
