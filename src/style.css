@@ -321,7 +321,7 @@ video {
   padding-bottom: 15px;
 }
 
-.rooms-list dd:nth-child(even) {
+.rooms-list dd:nth-child(odd) {
   float: right;
   margin-right: 0;
 }
