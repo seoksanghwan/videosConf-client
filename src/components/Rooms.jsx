@@ -11,7 +11,7 @@ const Rooms = ({ spinner, roomDelete, roomData, passCheckRef, passwordCheck, ite
         <dt>
           <h2 className="title">
             Enjoy Channel!!
-            <em>안녕하세요 회의실 리스트입니다.</em>
+            <em>안녕하세요 채널 리스트입니다.</em>
           </h2>
         </dt>
         {

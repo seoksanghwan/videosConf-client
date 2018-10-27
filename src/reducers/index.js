@@ -51,7 +51,6 @@ const initialState = {
 	alertBoxBottom : '패스워드를 입력해주세요.',
 	alertColor : '#3c29aa'
 };
-const history = createHistory({ forceRefresh: true });
 
 export default function productReducer(state = initialState, action) {
 	switch (action.type) {
@@ -83,8 +82,7 @@ export default function productReducer(state = initialState, action) {
 			return {
 				...state,
 				isLoggedIn: false,
-				items: {},
-				isroom: []
+				items: {}
 			}
 
 		case ROOMS_DATA:
@@ -227,7 +225,11 @@ export default function productReducer(state = initialState, action) {
 			}
 
 		case GET_ERRORS:
-			return action.payload;
+			return {
+				...state,
+				items: {},
+				isLoggedIn: false
+			}
 
 		default:
 			return state;

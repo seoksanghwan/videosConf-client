@@ -44,7 +44,7 @@ const simpLioRTC = 'https://sm1.lio.app:443/';
 const localHostIp = 'https://videos-conf-service.herokuapp.com/';
 const localHostIpApi = `${localHostIp}api/auth/`;
 const provider = new firebase.auth.GoogleAuthProvider();
-const history = createHistory({ forceRefresh: true });
+const history = createHistory({ forceRefresh: false });
 const socket = io(localHostIp);
 const setAuthToken = token => {
   if (token) {
@@ -176,8 +176,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           type: ROOM_REMOVE
         });
         alert('회의실이 삭제되었습니다.');
-      } else {
-        alert('회의실 삭제 권한은 주최자에게만 있어요.');
       }
     },
     init: (localele) => {

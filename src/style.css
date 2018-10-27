@@ -349,7 +349,7 @@ video {
   padding: 15px;
   box-sizing: border-box;
   font-weight: 500;
-  font-size: 33px;
+  font-size: 26px;
   line-height: 40px;
   display: block;
   width: 100%;
@@ -359,8 +359,8 @@ video {
 
 .rooms-list dd .del-enter {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  bottom: 17px;
+  left: 15px;
 }
 
 .rooms-list dd button {
@@ -373,7 +373,11 @@ video {
   outline: none;
   top: 10px;
   right: 10px;
-  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.rooms-list dd button:nth-child(2) {
+  background:#1c1e4a;
 }
 
 .password-form {
@@ -496,7 +500,7 @@ video {
 
 .sidebar.local h2 {
   width: 80%;
-  font-size: 30px;
+  font-size: 18px;
   text-align: left;
   font-weight: bold;
   margin: 20px auto 0 auto;
@@ -504,10 +508,10 @@ video {
 }
 
 .sidebar.local h2 em {
-  position: absolute;
-  right: 10px;
+  float: right;
+  margin-right: 10px;
   bottom: 0;
-  font-size: 17px;
+  font-size: 14px;
   font-style: normal;
   font-weight: normal;
 }
@@ -644,7 +648,8 @@ video {
 
 .buttons p {
   margin-top: 10px;
-  font-size: 20px;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 .buttons button {
