@@ -563,7 +563,7 @@ video {
   float: left;
   width: 24%;
   height: 250px;
-  margin-right: 1%;
+  margin: 0 1% 15px 0;
   overflow: hidden;
   -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
   -webkit-transform: rotate(0.000001deg);
