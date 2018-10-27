@@ -409,7 +409,6 @@ video {
 
 .meeting-room-create h1 img {
   margin-right: 10px;
-  font-variant-numeric: 
 }
 
 .meeting-room-create form {
@@ -446,6 +445,7 @@ video {
   border: none;
   vertical-align: top;
   background: #3f46ad;
+  cursor: pointer;
   color: #fff;
   margin-bottom: 10px;
   font-size: 25px;
