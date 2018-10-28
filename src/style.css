@@ -464,7 +464,7 @@ video {
 }
 
 .details-box {
-  width: 85%;
+  width: 1200px;
   height: calc(100% - 81px);
   margin: 0 auto;
 }
@@ -482,7 +482,7 @@ video {
 }
 
 .sidebar.local {
-  width: 21%;
+  width: 23%;
   height: 100%;
   float: left;
   margin-right: 1%;
@@ -549,7 +549,7 @@ video {
 
 .remotevideo {
   margin-top: 57.2px;
-  width: 78%;
+  width: 76%;
   float: left;
 }
 
