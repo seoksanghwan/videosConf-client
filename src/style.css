@@ -133,20 +133,6 @@ body {
   height: 100%;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  opacity: .17;
-  background: url('https://github.com/seoksanghwan/videosConf---client/blob/master/src/img/webcam.png?raw=true') no-repeat;
-  background-size: 37%;
-  background-position: right bottom;
-}
-
 body>#root, body>#root>#app {
   width: 100%;
   height: 100%;
@@ -180,7 +166,7 @@ video {
 }
 
 .container .navbar-start .nav-content .nav-menu dl dt {
-  margin-right: 10px !important;
+  margin-right: 30px !important;
 }
 
 .container .navbar-start .nav-content .nav-menu dl dt,
@@ -201,11 +187,22 @@ video {
 
 .container .navbar-start .nav-content .nav-menu dl dd {
   padding:0 15px;
-  border-right:1px solid #d3d3d3;
+  position: relative;
 }
 
-.container .navbar-start .nav-content .nav-menu dl dd:last-child{
-  border: none;
+.container .navbar-start .nav-content .nav-menu dl dd:last-child::after{
+  display: none;
+}
+
+.container .navbar-start .nav-content .nav-menu dl dd::after {
+  content: '';
+  display: block;
+  height: 20px;
+  width: 1px;
+  background:#d3d3d3;
+  position: absolute;
+  top: 7px;
+  right: 0;
 }
 
 .container .navbar-start .nav-content .nav-menu dl dd p,
@@ -394,11 +391,8 @@ video {
 .meeting-room-create h1 {
   color: #555;
   text-align: center;
-  font-family: 'Roboto', sans-serif;
-}
-
-.meeting-room-create h1 img {
-  margin-right: 10px;
+  margin-bottom: 20px;
+  height: 85px;
 }
 
 .meeting-room-create form {
