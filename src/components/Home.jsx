@@ -17,17 +17,12 @@ export default class Home extends React.Component {
     }
   }
 
-  componentDidMount() {
-    //this.props.roomMatch(this.props.isroom);
-    this.props.chatRoomUsing(this.props.isroom, this.props.inroom);
-  }
-
   componentDidUpdate() {
     if (!this.props.location.pathname.split('/rooms/')[1]) {
       this.disconnectSet();
+    } else {
+      this.props.chatRoomUsing(this.props.isroom, this.props.inroom);
     }
-    //this.props.roomMatch(this.props.isroom);
-    this.props.chatRoomUsing(this.props.isroom, this.props.inroom);
   }
 
   disconnectSet() {
@@ -182,7 +177,7 @@ export default class Home extends React.Component {
           }} />
           <Route exact path="/rooms/:room_name" render={props => {
             let email = items.name ? items.name : 'null';
-            if (isLoggedIn && isroom.length) {
+            if (isLoggedIn) {
               if (inroom) {
                 return (
                   <RoomsDetails
@@ -210,8 +205,9 @@ export default class Home extends React.Component {
             } else {
               return <span>Loading...</span>;
             }
+
           }} />
-          <Route path="/warning" render={ props => ( <Warning {...props} pageGoback={pageGoback} pageReturn={pageReturn} popClose={popClose} /> ) } />
+          <Route path="/warning" render={props => (<Warning {...props} pageGoback={pageGoback} pageReturn={pageReturn} popClose={popClose} />)} />
           <Route render={() => <Redirect to="/" />} />
         </Switch>
       </div>

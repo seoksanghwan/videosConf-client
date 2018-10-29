@@ -111,7 +111,7 @@ export default class App extends React.Component {
           render={props => {
             if (ieCehck) {
               return (
-                (webrtc !== null && isroom.length) ?
+                (webrtc !== null && Boolean(isroom)) ?
                   <Home
                     {...props}
                     isLoggedIn={isLoggedIn}

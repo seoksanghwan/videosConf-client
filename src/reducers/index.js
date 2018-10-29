@@ -166,11 +166,6 @@ export default function productReducer(state = initialState, action) {
 			}
 
 		case PASSWORD_CHECK:
-			if (action.result) {
-				state.inroom = true
-			} else {
-				state.inroom = false
-			}
 			return {
 				...state,
 				pass: action.result,
@@ -203,7 +198,6 @@ export default function productReducer(state = initialState, action) {
 		case ROOM_MAINTENANCE:
 			return {
 				...state,
-				popopen: action.booelan,
 				pass: action.data,
 				inroom: action.roomBoolean
 			}

@@ -30,7 +30,7 @@ const Rooms = ({ delPopClose, gochnanelRoom, deleteAelrt, spinner, roomDelete, r
                     {
                       (data.userName === items.name) ?
                         <button onClick={roomDelete} data-mail={data.userMail} data-id={data._id} >
-                          <i className="fas fa-trash" data-mail={data.userMail} data-id={data._id} ></i>
+                          <i className="fas fa-trash" onClick={roomDelete} data-mail={data.userMail} data-id={data._id} ></i>
                         </button> : null
                     }
                   </div>

@@ -106,7 +106,7 @@ const mapStateToProps = state => ({
   loggedPopUp: state.loggedPopUp,
   deleteAelrt: state.deleteAelrt,
   ieCehck: state.ieCehck,
-  pageReturn : state.pageReturn
+  pageReturn: state.pageReturn
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -422,30 +422,51 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     chatRoomUsing: (isroomdata, inroom) => {
       let roomData = JSON.parse(localStorage.getItem('roomPassResults'));
       let roomTitle = history.location.pathname.split('/rooms/')[1];
-      let title = isroomdata.map(data => data.title);
-      let isRoomValid = title.some(item => item === roomTitle);
-      if (roomTitle !== undefined && roomData !== null) {
-        if (history.location.pathname.split('/rooms/')[1] && roomData !== null) {
-          if (roomTitle === roomData.item.title && roomData.shouldCheck && isRoomValid) {
-            dispatch({
-              type: ROOM_MAINTENANCE,
-              data: roomData.shouldCheck,
-              roomBoolean : true
-            });
+      if (roomTitle) {
+        if (isroomdata.length) {
+          let title = isroomdata.map(data => data.title);
+          let isRoomValid = title.some(item => item === roomTitle);
+          if (isRoomValid && roomData !== null) {
+            if (roomTitle === roomData.item.title && roomData.shouldCheck && isRoomValid) {
+              dispatch({
+                type: ROOM_MAINTENANCE,
+                data: roomData.shouldCheck,
+                roomBoolean: true
+              });
+            } else {
+              dispatch({
+                type: ROOM_MAINTENANCE,
+                data: false,
+                roomBoolean: false
+              });
+            }
           } else {
             dispatch({
               type: ROOM_MAINTENANCE,
               data: false,
-              roomBoolean : false
+              roomBoolean: false
             });
+            if (isroomdata.length === 0) {
+              dispatch({
+                type: ROOM_MAINTENANCE,
+                data: false,
+                roomBoolean: false
+              });
+            }
           }
+        } else {
+          dispatch({
+            type: ROOM_MAINTENANCE,
+            data: false,
+            roomBoolean: false
+          });  
         }
       } else {
         dispatch({
-          type : ROOM_TITLE_MATCH,
+          type: ROOM_MAINTENANCE,
           data: false,
-          roomBoolean : false
-        })
+          roomBoolean: false
+        });
       }
     },
     popEvent: (event) => {
@@ -569,10 +590,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         })
       }
     },
-    pageGoback: debounce (() => {
+    pageGoback: debounce(() => {
       dispatch({
-        type : WARNING_CHECK,
-        warningSould : true
+        type: WARNING_CHECK,
+        warningSould: true
       })
     }, 3000)
   };
