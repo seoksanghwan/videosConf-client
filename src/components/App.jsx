@@ -16,7 +16,6 @@ export default class App extends React.Component {
     this.props.usingUserData();
     this.props.channelData();
     this.props.init();
-    this.props.chatRoomUsing();
     this.props.getVersionOfIE();
   }
 
@@ -35,6 +34,7 @@ export default class App extends React.Component {
     event.preventDefault();
     const dataId = event.target.dataset.id;
     this.props.roomDelete(dataId);
+    
   }
 
   goingChannel(event) {
@@ -100,20 +100,25 @@ export default class App extends React.Component {
       deleteAelrt,
       roomDeletePop,
       gochnanelRoom,
-      ieCehck } = this.props;
+      ieCehck,
+      delPopClose,
+      chatRoomUsing,
+      pageGoback,
+      pageReturn } = this.props;
     return (
       <Router>
         <Route
           render={props => {
-            if (isroom && ieCehck) {
+            if (ieCehck) {
               return (
-                (webrtc !== null) ?
+                (webrtc !== null && isroom.length) ?
                   <Home
                     {...props}
                     isLoggedIn={isLoggedIn}
                     items={items}
                     isroom={isroom}
                     channelcheck={channelcheck}
+                    chatRoomUsing={chatRoomUsing}
                     alertMessageFormat={alertMessageFormat}
                     saveFormData={this.saveFormDatas.bind(this)}
                     roomDelete={this.roomDeletes.bind(this)}
@@ -125,13 +130,16 @@ export default class App extends React.Component {
                     inputCancel={inputCancel.bind(this)}
                     passpostCheck={passpostCheck}
                     popEvent={popEvent.bind(this)}
+                    delPopClose={delPopClose.bind(this)}
                     gochnanelRoom={this.gochnanelRoom.bind(this)}
                     loginpopEvent={loginpopEvent.bind(this)}
                     loggedPopUp={loggedPopUp}
+                    pageGoback={pageGoback}
                     popClose={popClose}
                     focustitle={focustitle}
                     alertHide={alertHide}
                     alertColor={alertColor}
+                    pageReturn={pageReturn}
                     alertBoxBottom={alertBoxBottom}
                     onLoginButtonClick={loginUser}
                     onLogoutButtonClick={userlogout}

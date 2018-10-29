@@ -957,7 +957,11 @@ video {
   background : url('https://community.thunkable.com/uploads/default/original/1X/a8c639f5bd67f6eecf3b7f2209c7e7fada621f9c.png') no-repeat center center;
   width: 100%;
   height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
   animation: spinner infinite 3s linear;
+  opacity: .5;
 }
 
 @keyframes spinner {
@@ -999,4 +1003,13 @@ video {
   width: 100%;
   border:1px solid #3c90ff;
   box-sizing: border-box;
+}
+
+.warning-page {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.warning-page p {
+  font-size:30px;
 }

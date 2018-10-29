@@ -30,7 +30,8 @@ import {
 	ALERT_WARNING,
 	LOGGIN_POP_OPEN,
 	ROOM_REMOVE_POP,
-	IE_CHECK
+	IE_CHECK,
+	WARNING_CHECK
 } from '../actions';
 
 const initialState = {
@@ -39,7 +40,7 @@ const initialState = {
 	error: null,
 	isroom: [],
 	peers: [],
-	inroom: false,
+	inroom: true,
 	webrtc: null,
 	roomname: '',
 	mute: false,
@@ -56,7 +57,8 @@ const initialState = {
 	channelAlertMessage: false,
 	loggedPopUp: false,
 	deleteAelrt: false,
-	ieCehck : ''
+	ieCehck: '',
+	pageReturn: false
 };
 
 export default function productReducer(state = initialState, action) {
@@ -202,7 +204,8 @@ export default function productReducer(state = initialState, action) {
 			return {
 				...state,
 				popopen: action.booelan,
-				pass: action.data
+				pass: action.data,
+				inroom: action.roomBoolean
 			}
 
 		case ROOM_TITLE_MATCH:
@@ -238,8 +241,7 @@ export default function productReducer(state = initialState, action) {
 			return {
 				...state,
 				isroom: removeUpdate,
-				deleteAelrt: action.deleteMsg,
-				pass : action.result
+				deleteAelrt: action.deleteMsg
 			}
 
 		case LOGGIN_POP_OPEN:
@@ -252,6 +254,12 @@ export default function productReducer(state = initialState, action) {
 			return {
 				...state,
 				ieCehck: action.ieBoolean
+			}
+
+		case WARNING_CHECK:
+			return {
+				...state,
+				pageReturn: action.warningSould
 			}
 
 		case GET_ERRORS:

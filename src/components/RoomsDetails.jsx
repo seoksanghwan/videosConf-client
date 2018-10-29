@@ -8,12 +8,22 @@ export default class RoomsDetails extends Component {
     this.remoteVideos = {};
   }
 
+  componentDidUpdate( ) {
+    
+    this.pass = this.props.pass
+  }
+
   componentDidMount() {
+    const { inroom, isroom, pass } = this.props;
     const { room_name } = this.props.match.params;
+    let title = isroom.map(data => data.title);
+    let isRoomValid = title.some(item => item === room_name);
     this.webrtc = this.props.webrtc;
-    this.props.startLoclaVideo(this.localVideo);
-    this.props.AddpeerVideo(this.remoteVideos);
-    this.props.joinChat(room_name);
+    if(isRoomValid && inroom  ){
+      this.props.startLoclaVideo(this.localVideo);
+      this.props.AddpeerVideo(this.remoteVideos);
+      this.props.joinChat(room_name, inroom);
+    }
   }
 
   render() {

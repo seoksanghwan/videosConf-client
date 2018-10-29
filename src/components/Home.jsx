@@ -6,20 +6,28 @@ import Navbar from './Navbar.jsx';
 import About from './About.jsx';
 import Rooms from './Rooms.jsx';
 import RoomsDetails from './RoomsDetails.jsx';
+import Warning from './Warning.jsx';
 
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
     window.onpopstate = e => {
       this.props.popClose();
+      this.disconnectSet();
     }
+  }
+
+  componentDidMount() {
+    //this.props.roomMatch(this.props.isroom);
+    this.props.chatRoomUsing(this.props.isroom, this.props.inroom);
   }
 
   componentDidUpdate() {
     if (!this.props.location.pathname.split('/rooms/')[1]) {
       this.disconnectSet();
     }
-    this.props.roomMatch(this.props.isroom);
+    //this.props.roomMatch(this.props.isroom);
+    this.props.chatRoomUsing(this.props.isroom, this.props.inroom);
   }
 
   disconnectSet() {
@@ -74,7 +82,11 @@ export default class Home extends React.Component {
       loggedPopUp,
       deleteAelrt,
       roomDeletePop,
-      gochnanelRoom } = this.props;
+      gochnanelRoom,
+      delPopClose,
+      roomDelete,
+      pageGoback,
+      pageReturn } = this.props;
     return (
       <div id="app" className="container">
         <Navbar
@@ -149,7 +161,7 @@ export default class Home extends React.Component {
                   pass={pass}
                   items={items}
                   roomData={isroom}
-                  roomDelete={this.props.roomDelete}
+                  roomDelete={roomDelete}
                   passCheckRef={passCheckRef}
                   passwordCheck={passwordCheck}
                   popEvent={popEvent}
@@ -161,6 +173,7 @@ export default class Home extends React.Component {
                   deleteAelrt={deleteAelrt}
                   roomDeletePop={roomDeletePop}
                   gochnanelRoom={gochnanelRoom}
+                  delPopClose={delPopClose}
                 />
               );
             } else {
@@ -169,8 +182,8 @@ export default class Home extends React.Component {
           }} />
           <Route exact path="/rooms/:room_name" render={props => {
             let email = items.name ? items.name : 'null';
-            if (isLoggedIn && isroom) {
-              if (pass) {
+            if (isLoggedIn && isroom.length) {
+              if (inroom) {
                 return (
                   <RoomsDetails
                     {...props}
@@ -192,13 +205,13 @@ export default class Home extends React.Component {
                   />
                 );
               } else {
-                alert('채널 리스트에 없는 채널 이거나, 주최자가 채널을 삭제하였습니다.');
-                return <Redirect to="/rooms" />;
+                return <Redirect to="/warning" />;
               }
             } else {
               return <span>Loading...</span>;
             }
           }} />
+          <Route path="/warning" render={ props => ( <Warning {...props} pageGoback={pageGoback} pageReturn={pageReturn} /> ) } />
           <Route render={() => <Redirect to="/" />} />
         </Switch>
       </div>

@@ -12,7 +12,8 @@ import createHistory from 'history/createBrowserHistory';
 const history = createHistory({ forceRefresh: true });
 
 const store = createStore(
-  reducer
+  reducer,
+  applyMiddleware(logger)
 );
 
 ReactDOM.render(

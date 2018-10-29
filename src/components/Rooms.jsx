@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { uniqWith, isEqual } from "lodash";
 import Alert from './Alert.jsx';
 
-const Rooms = ({ gochnanelRoom, deleteAelrt, spinner, roomDelete, roomData, passCheckRef, passwordCheck, items, popopen, popEvent, popClose, roomDeletePop, pass, focustitle, inputCancel, alertMessage, alertBoxBottom, alertColor }) => {
+const Rooms = ({ delPopClose, gochnanelRoom, deleteAelrt, spinner, roomDelete, roomData, passCheckRef, passwordCheck, items, popopen, popEvent, popClose, roomDeletePop, pass, focustitle, inputCancel, alertMessage, alertBoxBottom, alertColor }) => {
   return (
     <div className="rooms-list">
       <dl>
@@ -50,12 +50,12 @@ const Rooms = ({ gochnanelRoom, deleteAelrt, spinner, roomDelete, roomData, pass
           <div className="removeAlertBox">
             <div className="loginContent">
               <div className="close-btn">
-                <i className="fas fa-times" onClick={popClose} > </i>
+                <i className="fas fa-times" onClick={delPopClose} > </i>
               </div>
               <h2>채널을 삭제 하시겠습니까?</h2>
               <ul className="delbutton">
                 <li><button onClick={roomDeletePop}>예</button></li>
-                <li><button onClick={popClose}>아니요</button></li>
+                <li><button onClick={delPopClose}>아니요</button></li>
               </ul>
             </div>
           </div> :

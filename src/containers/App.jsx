@@ -35,7 +35,8 @@ import {
   ALERT_WARNING,
   LOGGIN_POP_OPEN,
   ROOM_REMOVE_POP,
-  IE_CHECK
+  IE_CHECK,
+  WARNING_CHECK
 } from '../actions';
 import App from "../components/App.jsx";
 import createHistory from 'history/createBrowserHistory';
@@ -104,7 +105,8 @@ const mapStateToProps = state => ({
   channelAlertMessage: state.channelAlertMessage,
   loggedPopUp: state.loggedPopUp,
   deleteAelrt: state.deleteAelrt,
-  ieCehck: state.ieCehck
+  ieCehck: state.ieCehck,
+  pageReturn : state.pageReturn
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -286,10 +288,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       const id = JSON.parse(localStorage.getItem('roomObjId'));
       dispatch({
         type: ROOM_REMOVE_POP,
-        deleteMsg: false,
-        result : false
+        deleteMsg: false
       });
-      removeData(dispatch)
       socket.emit('removeItem', id);
     },
     init: (localele) => {
@@ -341,9 +341,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         }
       })
     },
-    joinChat: (roomname) => {
+    joinChat: (roomname, inroom) => {
       rtc.on('readyToCall', () => {
-        if (roomname !== undefined) {
+        if (roomname !== undefined && inroom) {
           dispatch({
             type: READY_TO_CALL,
             joinroom: rtc.joinRoom(roomname)
@@ -419,23 +419,33 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         }
       });
     },
-    chatRoomUsing: () => {
+    chatRoomUsing: (isroomdata, inroom) => {
       let roomData = JSON.parse(localStorage.getItem('roomPassResults'));
       let roomTitle = history.location.pathname.split('/rooms/')[1];
+      let title = isroomdata.map(data => data.title);
+      let isRoomValid = title.some(item => item === roomTitle);
       if (roomTitle !== undefined && roomData !== null) {
         if (history.location.pathname.split('/rooms/')[1] && roomData !== null) {
-          if (roomTitle === roomData.item.title && roomData.shouldCheck) {
+          if (roomTitle === roomData.item.title && roomData.shouldCheck && isRoomValid) {
             dispatch({
               type: ROOM_MAINTENANCE,
-              data: roomData.shouldCheck
+              data: roomData.shouldCheck,
+              roomBoolean : true
             });
           } else {
             dispatch({
               type: ROOM_MAINTENANCE,
-              data: false
+              data: false,
+              roomBoolean : false
             });
           }
         }
+      } else {
+        dispatch({
+          type : ROOM_TITLE_MATCH,
+          data: false,
+          roomBoolean : false
+        })
       }
     },
     popEvent: (event) => {
@@ -475,6 +485,13 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         alert: '패스워드를 입력해주세요.',
         color: '#3f46ad',
         resultBoolean: false
+      });
+    },
+    delPopClose: () => {
+      removeData(dispatch)
+      dispatch({
+        type: POP_ClOSE_CHECK,
+        deleteMsg: false
       });
     },
     inputCancel: () => {
@@ -541,17 +558,23 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       let checkVer = get_version_of_IE();
       if (checkVer == -1) {
         dispatch({
-          type : IE_CHECK,
-          ieBoolean : true
+          type: IE_CHECK,
+          ieBoolean: true
         })
       }
       else {
         dispatch({
-          type : IE_CHECK,
-          ieBoolean : false
+          type: IE_CHECK,
+          ieBoolean: false
         })
       }
-    }
+    },
+    pageGoback: debounce (() => {
+      dispatch({
+        type : WARNING_CHECK,
+        warningSould : true
+      })
+    }, 3000)
   };
 };
 
