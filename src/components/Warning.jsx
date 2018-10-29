@@ -9,6 +9,7 @@ export default class Warning extends React.Component {
 
   componentDidMount () {
    this.props.pageGoback();
+   this.props.popClose();
   }
 
   render () {

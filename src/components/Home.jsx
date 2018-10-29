@@ -211,7 +211,7 @@ export default class Home extends React.Component {
               return <span>Loading...</span>;
             }
           }} />
-          <Route path="/warning" render={ props => ( <Warning {...props} pageGoback={pageGoback} pageReturn={pageReturn} /> ) } />
+          <Route path="/warning" render={ props => ( <Warning {...props} pageGoback={pageGoback} pageReturn={pageReturn} popClose={popClose} /> ) } />
           <Route render={() => <Redirect to="/" />} />
         </Switch>
       </div>
