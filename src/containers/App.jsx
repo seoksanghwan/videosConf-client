@@ -34,7 +34,8 @@ import {
   SPINNER_ACTION,
   ALERT_WARNING,
   LOGGIN_POP_OPEN,
-  ROOM_REMOVE_POP
+  ROOM_REMOVE_POP,
+  IE_CHECK
 } from '../actions';
 import App from "../components/App.jsx";
 import createHistory from 'history/createBrowserHistory';
@@ -53,6 +54,23 @@ const setAuthToken = token => {
   else {
     delete axios.defaults.headers.common['Authorization'];
   }
+}
+
+const get_version_of_IE = () => {
+  var word;
+  var agent = navigator.userAgent.toLowerCase();
+  if (navigator.appName == "Microsoft Internet Explorer") {
+    word = "msie ";
+  } else if (agent.search("trident") > -1) {
+    word = "trident/.*rv:";
+  } else if (agent.search("edge/") > -1) {
+    word = "edge/";
+  } else {
+    return -1;
+  }
+  var reg = new RegExp(word + "([0-9]{1,})(\\.{0,}[0-9]{0,1})");
+  if (reg.exec(agent) != null) return parseFloat(RegExp.$1 + RegExp.$2);
+  return -1;
 }
 
 const removeData = (dispatch) => {
@@ -83,9 +101,10 @@ const mapStateToProps = state => ({
   spinner: state.spinner,
   alertBoxBottom: state.alertBoxBottom,
   alertColor: state.alertColor,
-  channelAlertMessage : state.channelAlertMessage,
-  loggedPopUp : state.loggedPopUp,
-  deleteAelrt : state.deleteAelrt
+  channelAlertMessage: state.channelAlertMessage,
+  loggedPopUp: state.loggedPopUp,
+  deleteAelrt: state.deleteAelrt,
+  ieCehck: state.ieCehck
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => {
@@ -114,7 +133,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           type: ALERT_WARNING,
           alert: '패스워드를 입력해주세요.',
           color: '#3f46ad',
-          resultBoolean : false
+          resultBoolean: false
         });
       }).catch(error => {
         dispatch({ type: GET_ERRORS, error });
@@ -138,7 +157,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           type: ALERT_WARNING,
           alert: '패스워드를 입력해주세요.',
           color: '#3f46ad',
-          resultBoolean : false
+          resultBoolean: false
         });
       }).catch(error => {
         dispatch({ type: GET_ERRORS, error });
@@ -179,7 +198,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             type: ALERT_WARNING,
             alert: '패스워드를 입력해주세요.',
             color: '#3f46ad',
-            resultBoolean : false
+            resultBoolean: false
           });
           if (titleOverLap || isroom === []) {
             socket.emit('addItem', data);
@@ -194,7 +213,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
               type: ALERT_WARNING,
               alert: '중복된 채널이 있습니다.',
               color: '#e30641',
-              resultBoolean : true
+              resultBoolean: true
             });
           }
         } else {
@@ -202,7 +221,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             type: ALERT_WARNING,
             alert: '채널 제목 및 패스워드는 2글자 이상 11글자 미만이에요.\n다시 한번 작성해주세요',
             color: '#e30641',
-            resultBoolean : true
+            resultBoolean: true
           });
         }
       } else {
@@ -210,7 +229,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           type: ALERT_WARNING,
           alert: '로그인을 해주셔야, 채널을 생성 하실 수 있습니다.',
           color: '#e30641',
-          resultBoolean : true
+          resultBoolean: true
         });
       }
     },
@@ -225,7 +244,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                 type: ALERT_WARNING,
                 alert: '패스워드를 입력해주세요.',
                 color: '#3f46ad',
-                resultBoolean : false
+                resultBoolean: false
               });
             }
           } else {
@@ -233,7 +252,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
               type: ALERT_WARNING,
               alert: '채널 목록에 없는 채널입니다.',
               color: '#e30641',
-              resultBoolean : true
+              resultBoolean: true
             });
           }
         } else {
@@ -241,7 +260,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             type: ALERT_WARNING,
             alert: '채널 제목은 2글자 미만이거나, 11글자 이상 일 수 없습니다.',
             color: '#e30641',
-            resultBoolean : true
+            resultBoolean: true
           });
         }
       } else {
@@ -249,7 +268,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
           type: ALERT_WARNING,
           alert: '로그인을 해주셔야, 채널에 입장 하실 수 있습니다.',
           color: '#e30641',
-          resultBoolean : true
+          resultBoolean: true
         });
       }
     },
@@ -260,14 +279,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       localStorage.setItem('roomObjId', JSON.stringify(id));
       dispatch({
         type: ROOM_REMOVE,
-        deleteMsg : true
+        deleteMsg: true
       });
     },
     roomDeletePop: () => {
       const id = JSON.parse(localStorage.getItem('roomObjId'));
       dispatch({
         type: ROOM_REMOVE_POP,
-        deleteMsg : false
+        deleteMsg: false
       });
       socket.emit('removeItem', id);
     },
@@ -446,14 +465,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch({
         type: POP_ClOSE_CHECK,
         booelan: false,
-        popBoolean : false,
-        deleteMsg : false
+        popBoolean: false,
+        deleteMsg: false
       });
       dispatch({
         type: ALERT_WARNING,
         alert: '패스워드를 입력해주세요.',
         color: '#3f46ad',
-        resultBoolean : false
+        resultBoolean: false
       });
     },
     inputCancel: () => {
@@ -502,19 +521,34 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         message: `채널 패스워드를 입력해주세요.`
       });
     },
-    alertMessageFormat : () => {
+    alertMessageFormat: () => {
       dispatch({
         type: ALERT_WARNING,
         alert: '패스워드를 입력해주세요.',
         color: '#3f46ad',
-        resultBoolean : false
+        resultBoolean: false
       });
     },
     loginpopEvent: () => {
       dispatch({
-        type : LOGGIN_POP_OPEN,
-        popBoolean : true
+        type: LOGGIN_POP_OPEN,
+        popBoolean: true
       })
+    },
+    getVersionOfIE: () => {
+      let checkVer = get_version_of_IE();
+      if (checkVer == -1) {
+        dispatch({
+          type : IE_CHECK,
+          ieBoolean : true
+        })
+      }
+      else {
+        dispatch({
+          type : IE_CHECK,
+          ieBoolean : false
+        })
+      }
     }
   };
 };

@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import axios from 'axios';
 import Home from './Home.jsx';
 import { throws } from 'assert';
+import NotSupport from './NotSupport.jsx'
 
 export default class App extends React.Component {
 
@@ -16,6 +17,7 @@ export default class App extends React.Component {
     this.props.channelData();
     this.props.init();
     this.props.chatRoomUsing();
+    this.props.getVersionOfIE();
   }
 
   saveFormDatas(event) {
@@ -97,12 +99,13 @@ export default class App extends React.Component {
       loggedPopUp,
       deleteAelrt,
       roomDeletePop,
-      gochnanelRoom } = this.props;
+      gochnanelRoom,
+      ieCehck } = this.props;
     return (
       <Router>
         <Route
           render={props => {
-            if (isroom) {
+            if (isroom && ieCehck) {
               return (
                 (webrtc !== null) ?
                   <Home
@@ -156,6 +159,8 @@ export default class App extends React.Component {
                   /> :
                   <div className="loadspin"></div>
               )
+            } else {
+              return <NotSupport />
             }
           }}
         />

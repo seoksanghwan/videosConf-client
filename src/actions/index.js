@@ -26,6 +26,7 @@ export const SPINNER_ACTION = 'SPINNER_ACTION';
 export const ALERT_WARNING = 'ALERT_WARNING';
 export const LOGGIN_POP_OPEN = 'LOGGIN_POP_OPEN';
 export const ROOM_REMOVE_POP = 'ROOM_REMOVE_POP';
+export const IE_CHECK = 'IE_CHECK';
 
 export const isLogoutData = () => ({
   type: IS_LOGOUT_DATA
@@ -139,3 +140,8 @@ export const loginPopOpen = products => ({
 export const roomRemovePop = products => ({
   type: ROOM_REMOVE_POP
 });
+
+export const ieCheck = products => ({
+  type: IE_CHECK
+});
+

@@ -37,7 +37,7 @@ const Rooms = ({ gochnanelRoom, deleteAelrt, spinner, roomDelete, roomData, pass
               </dd>
             );
           }) :
-          <dd className="no-channel">현재 채널이 없습니다. 생성해주세요. 🧐</dd>
+          <dd className="no-channel">현재 채널이 없습니다. 생성해주세요.</dd>
         }
       </dl>
       {

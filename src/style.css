@@ -375,6 +375,53 @@ video {
   margin-top: 15px;
 }
 
+.NotSupport {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100%);
+  width: 100%;
+  text-align: center;
+}
+
+.NotSupport::after{
+  content:'';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Internet_Explorer_10%2B11_logo.svg/611px-Internet_Explorer_10%2B11_logo.svg.png') no-repeat right bottom #eee;
+  background-size:500px;
+  z-index: -1;
+}
+
+.NotSupport p{
+  font-size:30px;
+  color: #222;
+}
+
+.NotSupport p a{
+  display: block;
+  background:rgb(61, 126, 211);
+  color:#fff;
+  width: 200px;
+  padding:20px 0;
+  margin:10px auto 0 auto;
+  font-size:17px;
+}
+
+.NotSupport .NotSupportText {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  font-size:100px;
+  vertical-align: bottom;
+  font-weight: bold;
+  opacity: .2;
+}
+
 .meeting-room-create {
   display: flex;
   justify-content: center;
@@ -482,13 +529,15 @@ video {
 }
 
 .sidebar.local {
-  width: 23%;
+  width: 24%;
   height: 100%;
   float: left;
-  margin-right: 1%;
-  height: 100%;
   position: relative;
-  background: rgba(255, 255, 255, 0.4);
+  background:#f8f8fa;
+  box-sizing: border-box;
+  border-right: 1px solid #d3d3d3;
+  border-left: 1px solid #d3d3d3;
+  overflow: hidden;
 }
 
 .sidebar.local h2 {
@@ -498,6 +547,7 @@ video {
   font-weight: bold;
   margin: 20px auto 0 auto;
   position: relative;
+  font-family: 'Roboto', sans-serif;
 }
 
 .sidebar.local h2 em {
@@ -512,7 +562,7 @@ video {
 .localBox {
   width: 85%;
   height: 250px;
-  margin: 10px auto 20px auto;
+  margin: 10px auto 15px auto;
   -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
   -webkit-transform: rotate(0.000001deg);
   -webkit-border-radius: 15px;
@@ -543,21 +593,29 @@ video {
 
 .localBox .nick p {
   line-height: 40px;
-  font-size: 17px;
+  font-size: 15px;
   color: #fff;
 }
 
 .remotevideo {
-  margin-top: 57.5px;
   width: 76%;
+  height: 100%;
   float: left;
+  border-right: 1px solid #d3d3d3;
+  box-sizing: border-box;
+}
+
+.remoteList {
+  padding-top: 58px;
+  width: 94.5%;
+  margin: 0 auto;
 }
 
 .remotevideo .vidContainer {
   float: left;
-  width: 24%;
+  width: 23.5%;
   height: 250px;
-  margin: 0 1% 15px 0;
+  margin: 0 2% 15px 0;
   overflow: hidden;
   -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
   -webkit-transform: rotate(0.000001deg);
@@ -568,18 +626,15 @@ video {
   background-size: 100% 100%;
 }
 
+.remotevideo .vidContainer:nth-child(4n) {
+  margin-right: 0;
+}
+
 .remotevideo .vidContainer video {
   object-fit: fill;
   width: 100%;
   height: 100%;
   position: relative;
-}
-
-.remotePeerList {
-  margin-top: 100px;
-  width: 85%;
-  margin: 40px auto 0 auto;
-  text-align: center;
 }
 
 .remotevideo .nick {
@@ -594,45 +649,66 @@ video {
 
 .remotevideo .nick p {
   line-height: 40px;
-  font-size: 17px;
+  font-size: 15px;
   color: #fff;
+  font-weight: normal;
 }
 
-.remotePeerList * {
-  color: #333;
+.remotePeerList {
+  border-top: 1px solid rgb(206, 206, 206);
+  margin: 40px auto 0 auto;
+  height: 100%;
+  width: 100%;
+  background:#fff;
 }
 
 .remotePeerList h3 {
-  font-size: 30px;
-  border-bottom: 1px solid rgb(206, 206, 206);
+  width: 85%;
+  margin: 0 auto;
+  font-size: 18px;
   margin-bottom: 10px;
   text-align: left;
+  font-family: 'Roboto', sans-serif;
+  font-weight: normal;
+  padding-top: 10px;
+}
+
+.remotePeerList h3 em {
+  font-style: normal;
+  margin-right: 5px;
+}
+
+.remotePeerList h3 em i {
+  margin-right: 2px;
+  color:#26ad5e;
 }
 
 .remotePeerList ul {
-  width: 100%;
+  width: 85%;
+  margin: 0 auto;
 }
 
 .remotePeerList ul li {
-  font-size: 18px;
+  font-size: 15px;
   text-align: left;
   font-weight: bold;
-  margin-bottom: 7px;
+  margin-bottom: 5px;
+  line-height: 25px;
 }
 
 .remotePeerList ul li p {
   display: inline-block;
   vertical-align: middle;
-  font-size: 18px;
+  font-size: 15px;
 }
 
 .remotePeerList ul li img {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
   display: inline-block;
   vertical-align: middle;
   border-radius: 5px;
-  margin-right: 5px;
+  margin-right: 2px;
 }
 
 .buttons {
@@ -640,19 +716,18 @@ video {
 }
 
 .buttons p {
-  margin-top: 10px;
   font-size: 16px;
   font-weight: bold;
 }
 
 .buttons button {
   display: inline-block;
-  font-size: 18px;
+  font-size: 15px;
   text-align: center;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 100%;
-  margin: 0 5px;
+  margin: 0 3px;
   color: #fff;
   outline: none;
   cursor: pointer;
@@ -665,7 +740,7 @@ video {
   display: block;
   width: 100%;
   height: 100%;
-  line-height: 50px;
+  line-height: 40px;
 }
 
 .buttons button i.fa-volume-up {

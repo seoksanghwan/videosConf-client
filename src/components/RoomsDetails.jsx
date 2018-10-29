@@ -24,7 +24,6 @@ export default class RoomsDetails extends Component {
         <div className="sidebar local">
           <h2>
             {room_name}
-            <em><i className="far fa-user"></i> {peers.length + 1}</em>
           </h2>
           <div className="localBox">
             <video id='localVideo' autoPlay={true} ref={(vid) => this.localVideo = vid} />
@@ -45,7 +44,7 @@ export default class RoomsDetails extends Component {
             </button>
           </div>
           <div className="remotePeerList">
-            <h3>Member</h3>
+            <h3><em><i className="far fa-user"></i>{peers.length + 1}</em>Member</h3>
             <ul>
               <li> <img src={url} alt="" /> <p>{email}</p></li>
               {
@@ -55,16 +54,18 @@ export default class RoomsDetails extends Component {
           </div>
         </div>
         <div className="remotevideo" >
-          {
-            uniqWith(peers, isEqual).map(data => (
-              <div className="vidContainer" key={data.id} id={`${webrtc.getContainerId(data)}`} >
-                <video id={webrtc.getId(data)} autoPlay={true} ref={(vid) => this.remoteVideos[data.id] = vid} playsInline />
-                <div className="nick">
-                  <p>{data.nick.split(',')[0]}</p>
+          <div className="remoteList">
+            {
+              uniqWith(peers, isEqual).map(data => (
+                <div className="vidContainer" key={data.id} id={`${webrtc.getContainerId(data)}`} >
+                  <video id={webrtc.getId(data)} autoPlay={true} ref={(vid) => this.remoteVideos[data.id] = vid} playsInline />
+                  <div className="nick">
+                    <p>{data.nick.split(',')[0]}</p>
+                  </div>
                 </div>
-              </div>
-            ))
-          }
+              ))
+            }
+          </div>
         </div>
       </div>
     );

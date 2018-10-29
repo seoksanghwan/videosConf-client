@@ -29,7 +29,8 @@ import {
 	SPINNER_ACTION,
 	ALERT_WARNING,
 	LOGGIN_POP_OPEN,
-	ROOM_REMOVE_POP
+	ROOM_REMOVE_POP,
+	IE_CHECK
 } from '../actions';
 
 const initialState = {
@@ -54,7 +55,8 @@ const initialState = {
 	alertColor: '#3c29aa',
 	channelAlertMessage: false,
 	loggedPopUp: false,
-	deleteAelrt: false
+	deleteAelrt: false,
+	ieCehck : ''
 };
 
 export default function productReducer(state = initialState, action) {
@@ -237,14 +239,20 @@ export default function productReducer(state = initialState, action) {
 				...state,
 				isroom: removeUpdate,
 				deleteAelrt: action.deleteMsg
-			}	
+			}
 
 		case LOGGIN_POP_OPEN:
 			return {
 				...state,
-				loggedPopUp : action.popBoolean
+				loggedPopUp: action.popBoolean
 			}
-			
+
+		case IE_CHECK:
+			return {
+				...state,
+				ieCehck: action.ieBoolean
+			}
+
 		case GET_ERRORS:
 			return {
 				...state,
