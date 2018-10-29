@@ -286,8 +286,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       const id = JSON.parse(localStorage.getItem('roomObjId'));
       dispatch({
         type: ROOM_REMOVE_POP,
-        deleteMsg: false
+        deleteMsg: false,
+        result : false
       });
+      removeData(dispatch)
       socket.emit('removeItem', id);
     },
     init: (localele) => {

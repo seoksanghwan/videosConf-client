@@ -192,7 +192,7 @@ export default class Home extends React.Component {
                   />
                 );
               } else {
-                alert('잘못된 접근입니다.');
+                alert('채널 리스트에 없는 채널 이거나, 주최자가 채널을 삭제하였습니다.');
                 return <Redirect to="/rooms" />;
               }
             } else {

@@ -238,7 +238,8 @@ export default function productReducer(state = initialState, action) {
 			return {
 				...state,
 				isroom: removeUpdate,
-				deleteAelrt: action.deleteMsg
+				deleteAelrt: action.deleteMsg,
+				pass : action.result
 			}
 
 		case LOGGIN_POP_OPEN:

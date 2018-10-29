@@ -974,3 +974,29 @@ video {
 .rooms-list dd button:hover {
   background: #1e7dfc;
 }
+
+.delbutton {
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.delbutton li{
+  display: inline-block;
+  width: 150px
+}
+
+.delbutton li:first-child{
+  margin-right: 10px;
+}
+
+.delbutton li:last-child button{
+  background:#fff;
+  color:#3c90ff;
+}
+
+.delbutton li button {
+  display: block;
+  width: 100%;
+  border:1px solid #3c90ff;
+  box-sizing: border-box;
+}

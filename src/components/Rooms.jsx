@@ -14,30 +14,30 @@ const Rooms = ({ gochnanelRoom, deleteAelrt, spinner, roomDelete, roomData, pass
             <em>여기는 채널 리스트입니다.</em>
           </h2>
         </dt>
-        { 
+        {
           (roomData.length) ?
-          uniqWith(roomData, isEqual).map(data => {
-            return (
-              <dd key={data._id}>
-                <h3>
-                  {data.title}
-                  <p> Organiser {data.userName}</p>
-                </h3>
-                <div className="del-enter">
-                  <button onClick={popEvent} data-id={data._id}>
-                    <i className="fas fa-sign-in-alt" data-id={data._id}></i>
-                  </button>
-                  {
-                    (data.userName === items.name) ?
-                      <button onClick={roomDelete} data-mail={data.userMail} data-id={data._id} >
-                        <i className="fas fa-trash" data-mail={data.userMail} data-id={data._id} ></i>
-                      </button> : null
-                  }
-                </div>
-              </dd>
-            );
-          }) :
-          <dd className="no-channel">현재 채널이 없습니다. 생성해주세요.</dd>
+            uniqWith(roomData, isEqual).map(data => {
+              return (
+                <dd key={data._id}>
+                  <h3>
+                    {data.title}
+                    <p> Organiser {data.userName}</p>
+                  </h3>
+                  <div className="del-enter">
+                    <button onClick={popEvent} data-id={data._id}>
+                      <i className="fas fa-sign-in-alt" data-id={data._id}></i>
+                    </button>
+                    {
+                      (data.userName === items.name) ?
+                        <button onClick={roomDelete} data-mail={data.userMail} data-id={data._id} >
+                          <i className="fas fa-trash" data-mail={data.userMail} data-id={data._id} ></i>
+                        </button> : null
+                    }
+                  </div>
+                </dd>
+              );
+            }) :
+            <dd className="no-channel">현재 채널이 없습니다. 생성해주세요.</dd>
         }
       </dl>
       {
@@ -50,9 +50,13 @@ const Rooms = ({ gochnanelRoom, deleteAelrt, spinner, roomDelete, roomData, pass
           <div className="removeAlertBox">
             <div className="loginContent">
               <div className="close-btn">
-                <i className="fas fa-times" onClick={roomDeletePop}></i>
+                <i className="fas fa-times" onClick={popClose} > </i>
               </div>
-              <h2>채널이 삭제 되었습니다.</h2>
+              <h2>채널을 삭제 하시겠습니까?</h2>
+              <ul className="delbutton">
+                <li><button onClick={roomDeletePop}>예</button></li>
+                <li><button onClick={popClose}>아니요</button></li>
+              </ul>
             </div>
           </div> :
           null
