@@ -8,7 +8,7 @@ import Rooms from './Rooms.jsx';
 import RoomsDetails from './RoomsDetails.jsx';
 import Warning from './Warning.jsx';
 
-export default class Home extends React.Component {
+export default class Home extends Component {
   constructor(props) {
     super(props);
     window.onpopstate = e => {
@@ -21,7 +21,7 @@ export default class Home extends React.Component {
     if (!this.props.location.pathname.split('/rooms/')[1]) {
       this.disconnectSet();
     } else {
-      this.props.chatRoomUsing(this.props.isroom, this.props.inroom);
+      this.props.chatRoomUsing(this.props.isroom, this.props.inroom, this.props.peers);
     }
   }
 
@@ -81,7 +81,8 @@ export default class Home extends React.Component {
       delPopClose,
       roomDelete,
       pageGoback,
-      pageReturn } = this.props;
+      pageReturn,
+      validityCheck } = this.props;
     return (
       <div id="app" className="container">
         <Navbar
@@ -169,6 +170,7 @@ export default class Home extends React.Component {
                   roomDeletePop={roomDeletePop}
                   gochnanelRoom={gochnanelRoom}
                   delPopClose={delPopClose}
+                  peers={peers}
                 />
               );
             } else {
@@ -210,6 +212,9 @@ export default class Home extends React.Component {
           <Route path="/warning" render={props => (<Warning {...props} pageGoback={pageGoback} pageReturn={pageReturn} popClose={popClose} />)} />
           <Route render={() => <Redirect to="/" />} />
         </Switch>
+        <footer>
+          <p>COPYRIGHT@VIDEOS. SEOKSANGHWAN</p>
+        </footer>
       </div>
     );
   };

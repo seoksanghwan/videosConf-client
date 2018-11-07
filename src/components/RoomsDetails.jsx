@@ -14,7 +14,7 @@ export default class RoomsDetails extends Component {
   }
 
   componentDidMount() {
-    const { inroom, isroom, pass } = this.props;
+    const { inroom, isroom, pass, peers } = this.props;
     const { room_name } = this.props.match.params;
     this.webrtc = this.props.webrtc;
     this.props.startLoclaVideo(this.localVideo);
@@ -33,21 +33,21 @@ export default class RoomsDetails extends Component {
           </h2>
           <div className="localBox">
             <video id='localVideo' autoPlay={true} ref={(vid) => this.localVideo = vid} />
+            <div className="buttons">
+              <button onClick={handleSelfMute}>
+                {
+                  (mute) ?
+                    <i className="fas fa-volume-up"></i> :
+                    <i className="fas fa-volume-mute"></i>
+                }
+              </button>
+              <button onClick={disconnect}>
+                <i className="fas fa-sign-out-alt"></i>
+              </button>
+            </div>
             <div className="nick">
               <p> {email} </p>
             </div>
-          </div>
-          <div className="buttons">
-            <button onClick={handleSelfMute}>
-              {
-                (mute) ?
-                  <i className="fas fa-volume-up"></i> :
-                  <i className="fas fa-volume-mute"></i>
-              }
-            </button>
-            <button onClick={disconnect}>
-              <i className="fas fa-sign-out-alt"></i>
-            </button>
           </div>
           <div className="remotePeerList">
             <h3><em><i className="far fa-user"></i>{peers.length + 1}</em>Member</h3>

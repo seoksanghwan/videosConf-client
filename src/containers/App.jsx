@@ -7,6 +7,7 @@ import * as firebase from 'firebase';
 import LioWebRTC from 'liowebrtc';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
+import App from "../components/App.jsx";
 
 import {
   IS_LOGIN_USER,
@@ -38,9 +39,8 @@ import {
   IE_CHECK,
   WARNING_CHECK
 } from '../actions';
-import App from "../components/App.jsx";
-import createHistory from 'history/createBrowserHistory';
 
+import createHistory from 'history/createBrowserHistory';
 let rtc;
 const simpLioRTC = 'https://sm1.lio.app:443/';
 const localHostIp = 'https://videos-conf-service.herokuapp.com/';
@@ -109,7 +109,7 @@ const mapStateToProps = state => ({
   pageReturn: state.pageReturn
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     loginUser: (user) => {
       firebase.auth().signInWithPopup(provider).then(result => {
@@ -187,29 +187,41 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     saveFormData: (logedin, items, title, roomPassword, isroom, callback) => {
       removeData(dispatch)
+      const passRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,16}$/;
+      const titleBlank = title.replace(/\s|　/gi, '');
       let titleOverLap = Boolean(isroom.every(roommData => roommData.title !== title));
       if (logedin) {
-        if (title.length > 1 && title.length < 11 && roomPassword.length > 1 && roomPassword.length < 11) {
+        if (title.length > 1 && title.length < 11 ) {
           let data = {
             title,
             roomPassword,
             userName: items.name,
             userMail: items.email
           };
-          dispatch({
-            type: ALERT_WARNING,
-            alert: '패스워드를 입력해주세요.',
-            color: '#3f46ad',
-            resultBoolean: false
-          });
           if (titleOverLap || isroom === []) {
-            socket.emit('addItem', data);
-            dispatch({
-              type: POP_EVENT_CHECK,
-              booelan: true,
-              title
-            })
-            callback(title)
+            if (!passRegex.test(roomPassword)) {
+              dispatch({
+                type: ALERT_WARNING,
+                alert: '패스워드는 숫자, 문자, 특수문자 조합으로 6글자 이상 입력해주세요.',
+                color: '#e30641',
+                resultBoolean: true
+              });
+            } else if ( titleBlank === '') {
+              dispatch({
+                type: ALERT_WARNING,
+                alert: '공백만으로는 제목을 작성 할 수 없습니다.',
+                color: '#e30641',
+                resultBoolean: true
+              });
+            } else {
+              socket.emit('addItem', data);
+              dispatch({
+                type: POP_EVENT_CHECK,
+                booelan: true,
+                title
+              })
+              callback(title)
+            }
           } else {
             dispatch({
               type: ALERT_WARNING,
@@ -221,7 +233,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         } else {
           dispatch({
             type: ALERT_WARNING,
-            alert: '채널 제목 및 패스워드는 2글자 이상 11글자 미만이에요.\n다시 한번 작성해주세요',
+            alert: '제목은 2글자 이상 11글자 미만이에요.',
             color: '#e30641',
             resultBoolean: true
           });
@@ -299,10 +311,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         url: simpLioRTC,
         localVideoEl: '',
         dataOnly: false,
-        network: {
-          maxPeers: 2,
-          minPeers: 1
-        },
         debug: false,
         nick: email
       });
@@ -419,7 +427,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         }
       });
     },
-    chatRoomUsing: (isroomdata, inroom) => {
+    chatRoomUsing: (isroomdata, inroom, peers) => {
       let roomData = JSON.parse(localStorage.getItem('roomPassResults'));
       let roomTitle = history.location.pathname.split('/rooms/')[1];
       if (roomTitle) {
@@ -459,7 +467,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
             type: ROOM_MAINTENANCE,
             data: false,
             roomBoolean: false
-          });  
+          });
         }
       } else {
         dispatch({

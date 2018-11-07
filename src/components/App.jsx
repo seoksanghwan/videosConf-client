@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import axios from 'axios';
 import Home from './Home.jsx';
 import { throws } from 'assert';
@@ -34,7 +34,6 @@ export default class App extends React.Component {
     event.preventDefault();
     const dataId = event.target.dataset.id;
     this.props.roomDelete(dataId);
-    
   }
 
   goingChannel(event) {
@@ -106,8 +105,8 @@ export default class App extends React.Component {
       pageGoback,
       pageReturn } = this.props;
     return (
-      <Router>
-        <Route
+      <Fragment>
+        <Route path="/" 
           render={props => {
             if (ieCehck) {
               return (
@@ -172,7 +171,7 @@ export default class App extends React.Component {
             }
           }}
         />
-      </Router>
+      </Fragment>
     );
   };
 };

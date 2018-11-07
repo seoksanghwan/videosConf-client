@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { uniqWith, isEqual } from "lodash";
 import Alert from './Alert.jsx';
 
-const Rooms = ({ delPopClose, gochnanelRoom, deleteAelrt, spinner, roomDelete, roomData, passCheckRef, passwordCheck, items, popopen, popEvent, popClose, roomDeletePop, pass, focustitle, inputCancel, alertMessage, alertBoxBottom, alertColor }) => {
+const Rooms = ({ peers, delPopClose, gochnanelRoom, deleteAelrt, spinner, roomDelete, roomData, passCheckRef, passwordCheck, items, popopen, popEvent, popClose, roomDeletePop, pass, focustitle, inputCancel, alertMessage, alertBoxBottom, alertColor }) => {
   return (
     <div className="rooms-list">
       <dl>

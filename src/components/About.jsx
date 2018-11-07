@@ -15,9 +15,9 @@ const About = ({ gochnanelRoom, channelAlertMessage, goingRef, goingChannel, pas
 					 </p>
 					<div className="goingChannel">
 						<form>
-							<label htmlFor="going_channel">
-								<input type="text" id="going_channel" name="going_channel" ref={goingRef} placeholder="채널 제목을 입력해주세요!" />
-								<button name="going_channel" onClick={goingChannel} >Go!</button>
+							<label htmlFor="going-channel">
+								<input type="text" id="going-channel" name="going-channel" ref={goingRef} placeholder="채널 제목을 입력해주세요!" />
+								<button name="going-channel" onClick={goingChannel} >Go!</button>
 								{
 									channelAlertMessage ?
 										<p className="goingChannel-Check-Message" style={{ color: alertColor }}>{alertBoxBottom}</p> :

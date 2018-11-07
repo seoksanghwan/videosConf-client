@@ -10,9 +10,9 @@ const Alert = ({ gochnanelRoom, spinner, passCheckRef, passwordCheck, popClose, 
         </div>
         <form>
           <h3>{alertMessage}</h3>
-          <label htmlFor="pass_check">
-            <input type="password" name="pass_check" ref={passCheckRef} placeholder='패스워드' autoFocus />
-            <button name="pass_check" onClick={passwordCheck} >
+          <label htmlFor="pass-check">
+            <input type="password" name="pass-check" ref={passCheckRef} placeholder='패스워드' autoFocus />
+            <button name="pass-check" onClick={passwordCheck} >
               check
               {
                 spinner ?  <i className="fas fa-spinner"></i> : null

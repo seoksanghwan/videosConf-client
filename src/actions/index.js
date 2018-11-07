@@ -1,5 +1,4 @@
 export const IS_LOGIN_USER = 'IS_LOGIN_USER';
-export const FETCH_PRODUCTS_BEGIN = 'FETCH_PRODUCTS_BEGIN';
 export const GET_ERRORS = 'GET_ERRORS';
 export const IS_LOGGED_IN_DATA = 'IS_LOGGED_IN_DATA';
 export const IS_LOGOUT_DATA = 'IS_LOGOUT_DATA';
@@ -29,124 +28,119 @@ export const ROOM_REMOVE_POP = 'ROOM_REMOVE_POP';
 export const IE_CHECK = 'IE_CHECK';
 export const WARNING_CHECK = 'WARNING_CHECK';
 
-export const isLogoutData = () => ({
-  type: IS_LOGOUT_DATA
+export const isLogoutData = userRemove => ({
+  type: IS_LOGOUT_DATA, userRemove
 });
 
-export const isLoggedInData = () => ({
-  type: IS_LOGGED_IN_DATA
+export const isLoggedInData = userData => ({
+  type: IS_LOGGED_IN_DATA, userData
 });
 
-export const fetchProductsBegin = () => ({
-  type: FETCH_PRODUCTS_BEGIN
+export const getErrors = error => ({
+  type: GET_ERRORS, error
 });
 
-export const getErrors = () => ({
-  type: GET_ERRORS
+export const roomdData = roominfo => ({
+  type: ROOMS_DATA, roominfo
 });
 
-export const roomdData = () => ({
-  type: ROOMS_DATA
-});
-
-export const isLoginUser = products => ({
-  type: IS_LOGIN_USER
+export const isLoginUser = loginaction => ({
+  type: IS_LOGIN_USER, loginaction
 });
 
 /* video RTC */
-export const rtcSetting = products => ({
-  type: RTC_SETTING
+export const rtcSetting = rtc => ({
+  type: RTC_SETTING, rtc
 });
 
-export const addMeida = products => ({
-  type: ADD_MEDIA
+export const addMeida = remoteMedia => ({
+  type: ADD_MEDIA, remoteMedia
 });
 
-export const removeVideo = products => ({
-  type: REMOVE_VIDEO
+export const removeVideo = peerOut => ({
+  type: REMOVE_VIDEO, peerOut
 });
 
-export const readyToCall = products => ({
-  type: READY_TO_CALL
+export const readyToCall = getStart => ({
+  type: READY_TO_CALL, getStart
 });
 
-export const localVideo = products => ({
-  type: LOCAL_VIDEO
+export const localVideo = local => ({
+  type: LOCAL_VIDEO, local
 });
 
-export const connectedLocal = products => ({
-  type: CONNECTED_LOCAL
+export const connectedLocal = connect => ({
+  type: CONNECTED_LOCAL, connect
 });
 
-export const disconnectedWebcam = products => ({
-  type: DISCONNECTED_WEBCAM
+export const disconnectedWebcam = chatOut => ({
+  type: DISCONNECTED_WEBCAM, chatOut
 });
 
-export const audioCheck = products => ({
-  type: AUDIO_CHECK
+export const audioCheck = muteOn => ({
+  type: AUDIO_CHECK, muteOn
 });
 
-export const roomAdd = products => ({
-  type: ROOM_ADD
+export const roomAdd = addList => ({
+  type: ROOM_ADD, addList
 });
 
-export const roomRemove = products => ({
-  type: ROOM_REMOVE
+export const roomRemove = delData => ({
+  type: ROOM_REMOVE, delData
 });
 
-export const channelCheck = products => ({
-  type: CHANNEL_CHECK
+export const channelCheck = check => ({
+  type: CHANNEL_CHECK, check
 });
 
-export const passwordCheck = products => ({
-  type: PASSWORD_CHECK
+export const passwordCheck = password => ({
+  type: PASSWORD_CHECK, password
 });
 
-export const popEventCheck = products => ({
-  type: POP_EVENT_CHECK
+export const popEventCheck = popup => ({
+  type: POP_EVENT_CHECK, popup
 });
 
-export const popCloseCheck = products => ({
-  type: POP_ClOSE_CHECK
+export const popCloseCheck = closeBtn => ({
+  type: POP_ClOSE_CHECK, closeBtn
 });
 
-export const roomMaintenance = products => ({
-  type: ROOM_MAINTENANCE
+export const roomMaintenance = roomUsing => ({
+  type: ROOM_MAINTENANCE, roomUsing
 });
 
-export const roomMatchTtile = products => ({
-  type: ROOM_TITLE_MATCH
+export const roomMatchTtile = roomMatch => ({
+  type: ROOM_TITLE_MATCH, roomMatch
 });
 
-export const formatRoomPass = products => ({
-  type: FORMAT_ROOM_PASS
+export const formatRoomPass = passDel => ({
+  type: FORMAT_ROOM_PASS, passDel
 });
 
-export const alertMessageChange = products => ({
-  type: ALERT_MESSAGE_CHANGE
+export const alertMessageChange = alertMsg => ({
+  type: ALERT_MESSAGE_CHANGE, alertMsg
 });
 
-export const spinnerAction = products => ({
-  type: SPINNER_ACTION
+export const spinnerAction = spinner => ({
+  type: SPINNER_ACTION, spinner
 });
 
-export const alertWarning = products => ({
-  type: ALERT_WARNING
+export const alertWarning = warning => ({
+  type: ALERT_WARNING, warning
 });
 
-export const loginPopOpen = products => ({
-  type: LOGGIN_POP_OPEN
+export const loginPopOpen = loginMsg => ({
+  type: LOGGIN_POP_OPEN, loginMsg
 });
 
-export const roomRemovePop = products => ({
-  type: ROOM_REMOVE_POP
+export const roomRemovePop = popDel => ({
+  type: ROOM_REMOVE_POP, popDel
 });
 
-export const ieCheck = products => ({
-  type: IE_CHECK
+export const ieCheck = ieVer => ({
+  type: IE_CHECK, ieVer
 });
 
-export const warningCheck = products => ({
-  type: WARNING_CHECK
+export const warningCheck = warningMsg => ({
+  type: WARNING_CHECK, warningMsg
 });
-

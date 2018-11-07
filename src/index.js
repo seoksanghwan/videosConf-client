@@ -1,24 +1,34 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore, applyMiddleware } from 'redux';
+import { render } from 'react-dom';
+import { Route } from 'react-router-dom';
+import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
+import { connectRouter, routerMiddleware, ConnectedRouter } from 'connected-react-router';
+import { createBrowserHistory } from 'history'
+import * as serviceWorker from './serviceWorker';
 import logger from 'redux-logger';
-import reducer from './reducers'
+import reducer from './reducer'
 import App from './containers/App.jsx';
 import './style.css';
 import './service/firebase';
-import createHistory from 'history/createBrowserHistory';
 
-const history = createHistory({ forceRefresh: true });
+const history = createBrowserHistory();
 
 const store = createStore(
-  reducer,
-  applyMiddleware(logger)
+  connectRouter(history)(reducer),
+  compose(
+    applyMiddleware(
+      routerMiddleware(history),
+      logger
+    )
+  )
 );
 
-ReactDOM.render(
-  <Provider store={store}>	
-    <App history={history}/>
-  </Provider>,
+render(
+    <Provider store={store}>
+      <ConnectedRouter history={history} >
+        <Route render={ props => <App {...props} history={history}/> } />
+      </ConnectedRouter>
+    </Provider>,
   document.getElementById('root')
 );
