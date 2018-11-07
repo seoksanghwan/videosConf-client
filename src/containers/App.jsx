@@ -219,7 +219,11 @@ const mapDispatchToProps = (dispatch) => {
                 type: POP_EVENT_CHECK,
                 booelan: true,
                 title
-              })
+              });
+              dispatch({
+                type: ALERT_WARNING,
+                resultBoolean: false
+              });
               callback(title)
             }
           } else {
