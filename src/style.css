@@ -1033,6 +1033,7 @@ video {
 }
 
 .warning-page {
+  height: calc(100% - 81px - 62px - 50px);
   text-align: center;
   margin-top: 50px;
 }
