@@ -213,7 +213,7 @@ export default class Home extends Component {
           <Route render={() => <Redirect to="/" />} />
         </Switch>
         <footer>
-          <p>COPYRIGHT@VIDEOS. SEOKSANGHWAN</p>
+          <p>COPYRIGHT@VIDEOS.SEOKSANGHWAN ALL RIGHTS RESERVED.</p>
         </footer>
       </div>
     );

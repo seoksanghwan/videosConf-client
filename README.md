@@ -52,6 +52,25 @@ yarn start
 - 서버는 node.js, express, mongoose를 사용하여 구현 하였습니다.
 - liowebRtc라는 webrtc기반에 라이브러리를 사용하여, 화상회의 기능을 구현 하였습니다.
 
+### Client-Side Specification
+
+- ES2015
+- React
+- Redux
+- React Router
+- Firebase Authentication
+- Sokcet.io-client
+- lioWebRtc
+
+### Server-Side Specification
+
+- Node.js
+- Express
+- JSON Web Token Authentication
+- MongoDB, mlab
+- socket.io
+- Heroku를 통한 배포
+
 ## Deployment
 - client는 netlify를 이용하여 github repository를 배포하였습니다.
 - server는 heroku를 이용하여 배포 하였습니다.
