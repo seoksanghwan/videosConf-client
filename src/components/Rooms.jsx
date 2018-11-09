@@ -7,6 +7,7 @@ import Alert from './Alert.jsx';
 const Rooms = ({ peers, delPopClose, gochnanelRoom, deleteAelrt, spinner, roomDelete, roomData, passCheckRef, passwordCheck, items, popopen, popEvent, popClose, roomDeletePop, pass, focustitle, inputCancel, alertMessage, alertBoxBottom, alertColor }) => {
   return (
     <div className="rooms-list">
+      
       <dl>
         <dt>
           <h2 className="title">

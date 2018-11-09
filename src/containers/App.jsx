@@ -185,13 +185,15 @@ const mapDispatchToProps = (dispatch) => {
         });
       });
     },
-    saveFormData: (logedin, items, title, roomPassword, isroom, callback) => {
+    saveFormData: (logedin, items, titleRef, roomPasswordRef, isroom, callback) => {
       removeData(dispatch)
+      const title = titleRef.value
+      const roomPassword = roomPasswordRef.value
       const passRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,16}$/;
       const titleBlank = title.replace(/\s|　/gi, '');
       let titleOverLap = Boolean(isroom.every(roommData => roommData.title !== title));
       if (logedin) {
-        if (title.length > 1 && title.length < 11 ) {
+        if (title.length > 1 && title.length < 11) {
           let data = {
             title,
             roomPassword,
@@ -200,13 +202,15 @@ const mapDispatchToProps = (dispatch) => {
           };
           if (titleOverLap || isroom === []) {
             if (!passRegex.test(roomPassword)) {
+              roomPasswordRef.value = '';
               dispatch({
                 type: ALERT_WARNING,
                 alert: '패스워드는 숫자, 문자, 특수문자 조합으로 6글자 이상 입력해주세요.',
                 color: '#e30641',
                 resultBoolean: true
               });
-            } else if ( titleBlank === '') {
+            } else if (titleBlank === '') {
+              titleRef.value = '';
               dispatch({
                 type: ALERT_WARNING,
                 alert: '공백만으로는 제목을 작성 할 수 없습니다.',
@@ -215,6 +219,8 @@ const mapDispatchToProps = (dispatch) => {
               });
             } else {
               socket.emit('addItem', data);
+              roomPasswordRef.value = '';
+              titleRef.value = '';
               dispatch({
                 type: POP_EVENT_CHECK,
                 booelan: true,
@@ -224,9 +230,11 @@ const mapDispatchToProps = (dispatch) => {
                 type: ALERT_WARNING,
                 resultBoolean: false
               });
+
               callback(title)
             }
           } else {
+            titleRef.value = '';
             dispatch({
               type: ALERT_WARNING,
               alert: '중복된 채널이 있습니다.',
@@ -235,6 +243,7 @@ const mapDispatchToProps = (dispatch) => {
             });
           }
         } else {
+          titleRef.value = '';
           dispatch({
             type: ALERT_WARNING,
             alert: '제목은 2글자 이상 11글자 미만이에요.',
@@ -243,6 +252,8 @@ const mapDispatchToProps = (dispatch) => {
           });
         }
       } else {
+        roomPasswordRef.value = '';
+        titleRef.value = '';
         dispatch({
           type: ALERT_WARNING,
           alert: '로그인을 해주셔야, 채널을 생성 하실 수 있습니다.',
@@ -251,7 +262,8 @@ const mapDispatchToProps = (dispatch) => {
         });
       }
     },
-    goingChannels: (isLoggedIn, channelTitle, isroom, titleEqualCheck, callback) => {
+    goingChannels: (isLoggedIn, channelTitleRef, isroom, titleEqualCheck, callback) => {
+      const channelTitle = channelTitleRef.value;
       removeData(dispatch)
       if (isLoggedIn) {
         if (channelTitle.length > 1 && channelTitle.length < 11) {
@@ -289,6 +301,7 @@ const mapDispatchToProps = (dispatch) => {
           resultBoolean: true
         });
       }
+      channelTitleRef.value = '';
     },
     goMoveChannel: (channelName) => {
       history.push(`/rooms/${channelName}`)

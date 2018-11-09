@@ -22,12 +22,8 @@ export default class App extends React.Component {
   saveFormDatas(event) {
     event.preventDefault();
     const { isLoggedIn, items, isroom } = this.props;
-    const channelTitle = this.inputNode.value
-    const channelPassword = this.passNode.value
-    this.props.saveFormData(isLoggedIn, items, channelTitle, channelPassword, isroom, this.props.aboutPopEvent);
+    this.props.saveFormData(isLoggedIn, items, this.inputNode, this.passNode, isroom, this.props.aboutPopEvent);
     this.props.MainAlertMessageChange();
-    this.inputNode.value = '';
-    this.passNode.value = '';
   }
 
   roomDeletes(event) {
@@ -38,12 +34,10 @@ export default class App extends React.Component {
 
   goingChannel(event) {
     event.preventDefault();
-    const channelTitle = this.gochannel.value;
     const { isLoggedIn, isroom } = this.props;
-    const titleEqualCheck = isroom.filter(data => data.title === channelTitle)[0]
-    this.props.goingChannels(isLoggedIn, channelTitle, isroom, titleEqualCheck, this.props.aboutPopEvent)
+    const titleEqualCheck = isroom.filter(data => data.title === this.gochannel.value)[0]
+    this.props.goingChannels(isLoggedIn, this.gochannel, isroom, titleEqualCheck, this.props.aboutPopEvent)
     this.props.aboutAlertMessageChange();
-    this.gochannel.value = '';
   }
 
   passwordCheck(event) {
