@@ -178,14 +178,13 @@ export default class Home extends Component {
             }
           }} />
           <Route exact path="/rooms/:room_name" render={props => {
-            let email = items.name ? items.name : 'null';
             if (isLoggedIn) {
               if (inroom) {
                 return (
                   <RoomsDetails
                     {...props}
                     init={init}
-                    email={email}
+                    email={items.name}
                     url={items.url}
                     peers={peers}
                     webrtc={webrtc}
