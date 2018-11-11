@@ -34,33 +34,7 @@ import {
   loginPopOpen,
   roomRemovePop,
   ieChecker,
-  warningCheck/* ,
-  IS_LOGIN_USER,
-  IS_LOGGED_IN_DATA,
-  IS_LOGOUT_DATA,
-  GET_ERRORS,
-  ROOMS_DATA,
-  LOCAL_VIDEO,
-  RTC_SETTING,
-  ADD_MEDIA,
-  REMOVE_VIDEO,
-  READY_TO_CALL,
-  AUDIO_CHECK,
-  ROOM_ADD,
-  ROOM_REMOVE,
-  CHANNEL_CHECK,
-  PASSWORD_CHECK,
-  POP_EVENT_CHECK,
-  POP_ClOSE_CHECK,
-  ROOM_MAINTENANCE,
-  FORMAT_ROOM_PASS,
-  ALERT_MESSAGE_CHANGE,
-  SPINNER_ACTION,
-  ALERT_WARNING,
-  LOGGIN_POP_OPEN,
-  ROOM_REMOVE_POP,
-  IE_CHECK,
-  WARNING_CHECK */
+  warningCheck
 } from '../actions';
 
 import createHistory from 'history/createBrowserHistory';
@@ -165,6 +139,7 @@ const mapDispatchToProps = (dispatch) => {
         message = '패스워드를 입력해주세요.';
         dispatch(isLogoutData(userRemove));
         dispatch(alertWarning(message, '#3f46ad', false));
+        removeData(dispatch);
       }).catch(error => {
         dispatch(getErrors(error, {}, false));
       });
@@ -181,7 +156,7 @@ const mapDispatchToProps = (dispatch) => {
       });
     },
     saveFormData: (logedin, items, titleRef, roomPasswordRef, isroom, callback) => {
-      removeData(dispatch)
+      removeData(dispatch);
       const title = titleRef.value
       const roomPassword = roomPasswordRef.value
       const passRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,16}$/;
@@ -231,7 +206,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     goingChannels: (isLoggedIn, channelTitleRef, isroom, titleEqualCheck, callback) => {
       const channelTitle = channelTitleRef.value;
-      removeData(dispatch)
+      removeData(dispatch);
       if (isLoggedIn) {
         if (channelTitle.length > 1 && channelTitle.length < 11) {
           if (titleEqualCheck !== undefined) {
@@ -387,14 +362,14 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(popEventCheck(true, targetTitle));
     },
     popClose: () => {
-      removeData(dispatch)
+      removeData(dispatch);
       dispatch(popCloseCheck(false, false, false));
       message = '';
       dispatch(alertWarning(message, '#3f46ad', false));
       dispatch(spinnerAction(false));
     },
     delPopClose: () => {
-      removeData(dispatch)
+      removeData(dispatch);
       dispatch(popCloseCheck(false, false, false));
     },
     inputCancel: () => {
