@@ -18,8 +18,7 @@ const store = createStore(
   connectRouter(history)(reducer),
   compose(
     applyMiddleware(
-      routerMiddleware(history),
-      logger
+      routerMiddleware(history)
     )
   )
 );

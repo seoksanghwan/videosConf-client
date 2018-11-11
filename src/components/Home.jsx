@@ -205,7 +205,7 @@ export default class Home extends Component {
                 return <Redirect to="/warning" />;
               }
             } else {
-              return <span>Loading...</span>;
+              return <Redirect to="/" />;
             }
 
           }} />
