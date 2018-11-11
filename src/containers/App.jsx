@@ -34,7 +34,33 @@ import {
   loginPopOpen,
   roomRemovePop,
   ieChecker,
-  warningCheck
+  warningCheck/* ,
+  IS_LOGIN_USER,
+  IS_LOGGED_IN_DATA,
+  IS_LOGOUT_DATA,
+  GET_ERRORS,
+  ROOMS_DATA,
+  LOCAL_VIDEO,
+  RTC_SETTING,
+  ADD_MEDIA,
+  REMOVE_VIDEO,
+  READY_TO_CALL,
+  AUDIO_CHECK,
+  ROOM_ADD,
+  ROOM_REMOVE,
+  CHANNEL_CHECK,
+  PASSWORD_CHECK,
+  POP_EVENT_CHECK,
+  POP_ClOSE_CHECK,
+  ROOM_MAINTENANCE,
+  FORMAT_ROOM_PASS,
+  ALERT_MESSAGE_CHANGE,
+  SPINNER_ACTION,
+  ALERT_WARNING,
+  LOGGIN_POP_OPEN,
+  ROOM_REMOVE_POP,
+  IE_CHECK,
+  WARNING_CHECK */
 } from '../actions';
 
 import createHistory from 'history/createBrowserHistory';
@@ -75,7 +101,7 @@ const get_version_of_IE = () => {
 const removeData = (dispatch) => {
   let roomDataRmove = localStorage.removeItem('roomPassResults');
   let roomNull = roomDataRmove === null ? false : null
-  dispatch(roomMaintenance(false, false));
+  dispatch(roomMaintenance(roomNull));
 }
 
 const mapStateToProps = state => ({
@@ -92,6 +118,7 @@ const mapStateToProps = state => ({
   focusid: state.focusid,
   pass: state.pass,
   focustitle: state.focustitle,
+  aboutValueTitle: state.aboutValueTitle,
   alertMessage: state.alertMessage,
   spinner: state.spinner,
   alertBoxBottom: state.alertBoxBottom,
@@ -103,7 +130,7 @@ const mapStateToProps = state => ({
   pageReturn: state.pageReturn
 });
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     loginUser: (user) => {
       firebase.auth().signInWithPopup(provider).then(result => {
@@ -135,8 +162,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     userlogout: () => {
       let userRemove = localStorage.removeItem('user');
       firebase.auth().signOut().then(() => {
+        message = '패스워드를 입력해주세요.';
         dispatch(isLogoutData(userRemove));
-        dispatch(alertWarning('패스워드를 입력해주세요.', '#3f46ad', false));
+        dispatch(alertWarning(message, '#3f46ad', false));
       }).catch(error => {
         dispatch(getErrors(error, {}, false));
       });
@@ -146,7 +174,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         dispatch(roomdData(data));
       });
       socket.on('itemAdded', (data) => {
-        console.log(data)
         dispatch(roomAdd(data));
       });
       socket.on('itemRemove', (data) => {
@@ -179,11 +206,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
               dispatch(alertWarning(message, '#e30641', true));
             } else {
               socket.emit('addItem', data);
-              roomPasswordRef.value = '';
-              titleRef.value = '';
+              callback(title);
               dispatch(popEventCheck(true, title));
               dispatch(alertWarning('', '#e30641', false));
-              callback(title)
+              roomPasswordRef.value = '';
+              titleRef.value = '';
             }
           } else {
             titleRef.value = '';
@@ -277,9 +304,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         }
       });
     },
-    handleSelfMute: () => {
-      dispatch(audioCheck(ownProps.mute));
-      //(state.mute) ? action.func.unmute() : action.func.mute();
+    handleSelfMute: (e) => {
+      dispatch(audioCheck());
     },
     passpostCheck: (password, roomid, isroom, dataTite, event) => {
       event.preventDefault();
@@ -305,11 +331,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
                   localStorage.setItem('roomPassResults', JSON.stringify(roomObj));
                   message = '패스워드를 입력해주세요.';
                   dispatch(alertWarning(message, '#3f46ad', false));
+                  dispatch(spinnerAction(false));
                 } else {
                   localStorage.setItem('roomPassResults', JSON.stringify(roomObj));
-                  dispatch(spinnerAction(false));
                   message = '패스워드를 잘못 입력하셨습니다.';
                   dispatch(alertWarning(message, '#e30641', true));
+                  dispatch(spinnerAction(false));
                 }
               })
               .catch(error => {
@@ -350,20 +377,21 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       }
     },
     popEvent: (event) => {
-      const title = event.target.dataset.id;
-      dispatch(popEventCheck(true, title));
+      const dataId = event.target.dataset.id;
+      message = '채널 패스워드를 입력해주세요.';
+      dispatch(popEventCheck(true, dataId));
       dispatch(alertMessageChange('채널 패스워드를 입력해주세요.'));
-      message = '패스워드가 입력되지 않았습니다.';
       dispatch(alertWarning(message, '#3f46ad', false));
     },
-    aboutPopEvent: (title) => {
-      dispatch(popEventCheck(true, title));
+    aboutPopEvent: (targetTitle) => {
+      dispatch(popEventCheck(true, targetTitle));
     },
     popClose: () => {
-      removeData(dispatch);
+      removeData(dispatch)
       dispatch(popCloseCheck(false, false, false));
-      message = '패스워드가 입력되지 않았습니다.';
+      message = '';
       dispatch(alertWarning(message, '#3f46ad', false));
+      dispatch(spinnerAction(false));
     },
     delPopClose: () => {
       removeData(dispatch)

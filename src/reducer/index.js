@@ -108,10 +108,16 @@ const reducer = (state = initialState, action) => {
 				deleteAelrt: action.delData
 			}
 
+		case ROOM_REMOVE:
+			return {
+				...state,
+				deleteAelrt: action.deleteMsg
+			}
+
 		case RTC_SETTING:
 			return {
 				...state,
-				webrtc: action.rtc
+				webrtc: action.payload
 			};
 
 		case ADD_MEDIA:
@@ -155,7 +161,8 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				popopen: action.shouldPop,
-				focusid: action.title
+				focusid: action.title,
+				aboutValueTitle: action.title
 			}
 
 		case FORMAT_ROOM_PASS:
@@ -167,7 +174,7 @@ const reducer = (state = initialState, action) => {
 		case POP_ClOSE_CHECK:
 			return {
 				...state,
-				popopen: action.closeBtn,
+				popopen: action.booelan,
 				loggedPopUp: action.popBoolean,
 				deleteAelrt: action.deleteMsg
 			}
@@ -175,8 +182,8 @@ const reducer = (state = initialState, action) => {
 		case ROOM_MAINTENANCE:
 			return {
 				...state,
-				pass: action.data,
-				inroom: action.roomBoolean
+				inroom: action.booelan,
+				pass: action.data
 			}
 
 		case ALERT_MESSAGE_CHANGE:
@@ -211,7 +218,7 @@ const reducer = (state = initialState, action) => {
 				ieCehck: action.ieBoolean
 			}
 
-		case WARNING_CHECK:
+			case WARNING_CHECK:
 			return {
 				...state,
 				pageReturn: action.warningSould

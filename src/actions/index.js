@@ -45,8 +45,8 @@ export const roomdData = roominfo => ({
 });
 
 /* video RTC */
-export const rtcSetting = rtc => ({
-  type: RTC_SETTING, rtc
+export const rtcSetting = payload => ({
+  type: RTC_SETTING, payload
 });
 
 export const addMeida = peer => ({
@@ -85,12 +85,12 @@ export const popEventCheck = (shouldPop, title) => ({
   type: POP_EVENT_CHECK, shouldPop, title
 });
 
-export const popCloseCheck = (closeBtn, popBoolean, deleteMsg) => ({
-  type: POP_ClOSE_CHECK, closeBtn, popBoolean, deleteMsg
+export const popCloseCheck = (booelan, popBoolean, deleteMsg) => ({
+  type: POP_ClOSE_CHECK, booelan, popBoolean, deleteMsg
 });
 
-export const roomMaintenance = (data, roomBoolean) => ({
-  type: ROOM_MAINTENANCE, data, roomBoolean
+export const roomMaintenance = (booelan, data) => ({
+  type: ROOM_MAINTENANCE, booelan, data
 });
 
 export const formatRoomPass = (data, pass) => ({

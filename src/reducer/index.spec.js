@@ -346,13 +346,15 @@ describe('reducer', () => {
       const { stateBefore, stateAfter, action } = setup(
         {
           popopen: false,
-				  focusid: ''
+          focusid: '',
+          aboutValueTitle: ''
         },
         {
           popopen: true,
-				  focusid: 'dataidORtitle',
+          focusid: 'dataidORtitle',
+          aboutValueTitle: 'dataidORtitle'
         },
-        popEventCheck(true,'dataidORtitle')
+        popEventCheck(true,'dataidORtitle','dataidORtitle')
       );
       expect(reducer(stateBefore, action)).toEqual(stateAfter);
     });
