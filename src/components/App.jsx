@@ -75,7 +75,6 @@ export default class App extends React.Component {
       popClose,
       passpostCheck,
       focustitle,
-      roomMatch,
       alertHide,
       inputCancel,
       formatRoomPassword,
@@ -142,7 +141,6 @@ export default class App extends React.Component {
                     peers={peers}
                     inroom={inroom}
                     pass={pass}
-                    roomMatch={roomMatch}
                     channelAlertMessage={channelAlertMessage}
                     startLoclaVideo={startLoclaVideo}
                     AddpeerVideo={AddpeerVideo}

@@ -10,38 +10,36 @@ import jwt_decode from 'jwt-decode';
 import App from "../components/App.jsx";
 
 import {
-  IS_LOGIN_USER,
-  IS_LOGGED_IN_DATA,
-  IS_LOGOUT_DATA,
-  GET_ERRORS,
-  ROOMS_DATA,
-  CONNECTED_LOCAL,
-  LOCAL_VIDEO,
-  RTC_SETTING,
-  ADD_MEDIA,
-  REMOVE_VIDEO,
-  READY_TO_CALL,
-  AUDIO_CHECK,
-  ROOM_ADD,
-  ROOM_REMOVE,
-  CHANNEL_CHECK,
-  PASSWORD_CHECK,
-  POP_EVENT_CHECK,
-  POP_ClOSE_CHECK,
-  ROOM_MAINTENANCE,
-  ROOM_TITLE_MATCH,
-  FORMAT_ROOM_PASS,
-  ALERT_MESSAGE_CHANGE,
-  SPINNER_ACTION,
-  ALERT_WARNING,
-  LOGGIN_POP_OPEN,
-  ROOM_REMOVE_POP,
-  IE_CHECK,
-  WARNING_CHECK
+  isLoginUser,
+  isLoggedInData,
+  isLogoutData,
+  getErrors,
+  roomdData,
+  localVideo,
+  rtcSetting,
+  addMeida,
+  removeVideo,
+  readyToCall,
+  audioCheck,
+  roomAdd,
+  roomRemove,
+  passwordCheck,
+  popEventCheck,
+  popCloseCheck,
+  roomMaintenance,
+  formatRoomPass,
+  alertMessageChange,
+  spinnerAction,
+  alertWarning,
+  loginPopOpen,
+  roomRemovePop,
+  ieChecker,
+  warningCheck
 } from '../actions';
 
 import createHistory from 'history/createBrowserHistory';
 let rtc;
+let message;
 const simpLioRTC = 'https://sm1.lio.app:443/';
 const localHostIp = 'https://videos-conf-service.herokuapp.com/';
 const localHostIpApi = `${localHostIp}api/auth/`;
@@ -77,10 +75,7 @@ const get_version_of_IE = () => {
 const removeData = (dispatch) => {
   let roomDataRmove = localStorage.removeItem('roomPassResults');
   let roomNull = roomDataRmove === null ? false : null
-  dispatch({
-    type: ROOM_MAINTENANCE,
-    data: roomNull
-  });
+  dispatch(roomMaintenance(false, false));
 }
 
 const mapStateToProps = state => ({
@@ -97,7 +92,6 @@ const mapStateToProps = state => ({
   focusid: state.focusid,
   pass: state.pass,
   focustitle: state.focustitle,
-  aboutValueTitle: state.aboutValueTitle,
   alertMessage: state.alertMessage,
   spinner: state.spinner,
   alertBoxBottom: state.alertBoxBottom,
@@ -109,7 +103,7 @@ const mapStateToProps = state => ({
   pageReturn: state.pageReturn
 });
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     loginUser: (user) => {
       firebase.auth().signInWithPopup(provider).then(result => {
@@ -125,64 +119,38 @@ const mapDispatchToProps = (dispatch) => {
           const { token } = res.data;
           setAuthToken(token);
           const decoded = jwt_decode(token);
-          dispatch({
-            type: IS_LOGIN_USER,
-            data: decoded
-          });
+          dispatch(isLoginUser(decoded, true));
           localStorage.setItem('user', JSON.stringify(decoded));
         });
-        dispatch({
-          type: ALERT_WARNING,
-          alert: '패스워드를 입력해주세요.',
-          color: '#3f46ad',
-          resultBoolean: false
-        });
+        dispatch(alertWarning('패스워드를 입력해주세요.', '#3f46ad', false));
       }).catch(error => {
-        dispatch({ type: GET_ERRORS, error });
+        dispatch(getErrors(error, {}, false));
       });
     },
     usingUserData: () => {
       let user = JSON.parse(localStorage.getItem('user'));
-      dispatch({
-        type: IS_LOGGED_IN_DATA,
-        data: user
-      });
+      let loggedTrue = user !== null ? true : false;
+      dispatch(isLoggedInData(user, loggedTrue));
     },
     userlogout: () => {
       let userRemove = localStorage.removeItem('user');
       firebase.auth().signOut().then(() => {
-        dispatch({
-          type: IS_LOGOUT_DATA,
-          data: userRemove
-        });
-        dispatch({
-          type: ALERT_WARNING,
-          alert: '패스워드를 입력해주세요.',
-          color: '#3f46ad',
-          resultBoolean: false
-        });
+        dispatch(isLogoutData(userRemove));
+        dispatch(alertWarning('패스워드를 입력해주세요.', '#3f46ad', false));
       }).catch(error => {
-        dispatch({ type: GET_ERRORS, error });
+        dispatch(getErrors(error, {}, false));
       });
     },
     channelData: () => {
       socket.on('initialList', (data) => {
-        dispatch({
-          type: ROOMS_DATA,
-          data
-        });
+        dispatch(roomdData(data));
       });
       socket.on('itemAdded', (data) => {
-        dispatch({
-          type: ROOM_ADD,
-          data
-        });
+        console.log(data)
+        dispatch(roomAdd(data));
       });
       socket.on('itemRemove', (data) => {
-        dispatch({
-          type: ROOM_REMOVE_POP,
-          data
-        });
+        dispatch(roomRemovePop(data));
       });
     },
     saveFormData: (logedin, items, titleRef, roomPasswordRef, isroom, callback) => {
@@ -203,63 +171,35 @@ const mapDispatchToProps = (dispatch) => {
           if (titleOverLap || isroom === []) {
             if (!passRegex.test(roomPassword)) {
               roomPasswordRef.value = '';
-              dispatch({
-                type: ALERT_WARNING,
-                alert: '패스워드는 숫자, 문자, 특수문자 조합으로 6글자 이상 입력해주세요.',
-                color: '#e30641',
-                resultBoolean: true
-              });
+              message = '패스워드는 숫자, 문자, 특수문자 조합으로 6글자 이상 입력해주세요.';
+              dispatch(alertWarning(message, '#e30641', true));
             } else if (titleBlank === '') {
               titleRef.value = '';
-              dispatch({
-                type: ALERT_WARNING,
-                alert: '공백만으로는 제목을 작성 할 수 없습니다.',
-                color: '#e30641',
-                resultBoolean: true
-              });
+              message = '공백만으로는 제목을 작성 할 수 없습니다.';
+              dispatch(alertWarning(message, '#e30641', true));
             } else {
               socket.emit('addItem', data);
               roomPasswordRef.value = '';
               titleRef.value = '';
-              dispatch({
-                type: POP_EVENT_CHECK,
-                booelan: true,
-                title
-              });
-              dispatch({
-                type: ALERT_WARNING,
-                resultBoolean: false
-              });
-
+              dispatch(popEventCheck(true, title));
+              dispatch(alertWarning('', '#e30641', false));
               callback(title)
             }
           } else {
             titleRef.value = '';
-            dispatch({
-              type: ALERT_WARNING,
-              alert: '중복된 채널이 있습니다.',
-              color: '#e30641',
-              resultBoolean: true
-            });
+            message = '중복된 채널이 있습니다.';
+            dispatch(alertWarning(message, '#e30641', true));
           }
         } else {
           titleRef.value = '';
-          dispatch({
-            type: ALERT_WARNING,
-            alert: '제목은 2글자 이상 11글자 미만이에요.',
-            color: '#e30641',
-            resultBoolean: true
-          });
+          message = '제목은 2글자 이상 11글자 미만이에요.';
+          dispatch(alertWarning(message, '#e30641', true));
         }
       } else {
         roomPasswordRef.value = '';
         titleRef.value = '';
-        dispatch({
-          type: ALERT_WARNING,
-          alert: '로그인을 해주셔야, 채널을 생성 하실 수 있습니다.',
-          color: '#e30641',
-          resultBoolean: true
-        });
+        message = '로그인을 해주셔야, 채널을 생성 하실 수 있습니다.';
+        dispatch(alertWarning(message, '#e30641', true));
       }
     },
     goingChannels: (isLoggedIn, channelTitleRef, isroom, titleEqualCheck, callback) => {
@@ -270,36 +210,20 @@ const mapDispatchToProps = (dispatch) => {
           if (titleEqualCheck !== undefined) {
             if (titleEqualCheck.title === channelTitle) {
               callback(channelTitle);
-              dispatch({
-                type: ALERT_WARNING,
-                alert: '패스워드를 입력해주세요.',
-                color: '#3f46ad',
-                resultBoolean: false
-              });
+              message = '패스워드를 입력해주세요.';
+              dispatch(alertWarning(message, '#3f46ad', false));
             }
           } else {
-            dispatch({
-              type: ALERT_WARNING,
-              alert: '채널 목록에 없는 채널입니다.',
-              color: '#e30641',
-              resultBoolean: true
-            });
+            message = '채널 목록에 없는 채널입니다.';
+            dispatch(alertWarning(message, '#e30641', true));
           }
         } else {
-          dispatch({
-            type: ALERT_WARNING,
-            alert: '채널 제목은 2글자 미만이거나, 11글자 이상 일 수 없습니다.',
-            color: '#e30641',
-            resultBoolean: true
-          });
+          message = '채널 제목은 2글자 미만이거나, 11글자 이상 일 수 없습니다.';
+          dispatch(alertWarning(message, '#e30641', true));
         }
       } else {
-        dispatch({
-          type: ALERT_WARNING,
-          alert: '로그인을 해주셔야, 채널에 입장 하실 수 있습니다.',
-          color: '#e30641',
-          resultBoolean: true
-        });
+        message = '로그인을 해주셔야, 채널에 입장 하실 수 있습니다.';
+        dispatch(alertWarning(message, '#e30641', true));
       }
       channelTitleRef.value = '';
     },
@@ -308,20 +232,14 @@ const mapDispatchToProps = (dispatch) => {
     },
     roomDelete: (id) => {
       localStorage.setItem('roomObjId', JSON.stringify(id));
-      dispatch({
-        type: ROOM_REMOVE,
-        deleteMsg: true
-      });
+      dispatch(roomRemove(true));
     },
     roomDeletePop: () => {
       const id = JSON.parse(localStorage.getItem('roomObjId'));
-      dispatch({
-        type: ROOM_REMOVE_POP,
-        deleteMsg: false
-      });
+      dispatch(roomRemove(false));
       socket.emit('removeItem', id);
     },
-    init: (localele) => {
+    init: () => {
       let user = JSON.parse(localStorage.getItem('user'));
       let email = (user !== null) ? `${user.name},${user.url}` : 'Not user';
       rtc = new LioWebRTC({
@@ -331,23 +249,13 @@ const mapDispatchToProps = (dispatch) => {
         debug: false,
         nick: email
       });
-      rtc
-        .on('connectionReady', (sessionId) => {
-          dispatch({
-            type: CONNECTED_LOCAL,
-            sessionId
-          });
-        })
-        .on('videoRemoved', (peer) => {
-          dispatch({
-            type: REMOVE_VIDEO,
-            peer
-          });
-        });
-      dispatch({ type: RTC_SETTING, payload: rtc });
+      rtc.on('videoRemoved', (peer) => {
+        dispatch(removeVideo(peer));
+      });
+      dispatch(rtcSetting(rtc));
     },
     startLoclaVideo: (localvideo) => {
-      dispatch({ type: LOCAL_VIDEO, start: rtc.startLocalVideo() });
+      dispatch(localVideo(rtc.startLocalVideo()));
       if (localvideo) {
         rtc.config.localVideoEl = localvideo;
       } else {
@@ -357,11 +265,7 @@ const mapDispatchToProps = (dispatch) => {
     AddpeerVideo: (targetremote) => {
       rtc.on('videoAdded', (stream, peer) => {
         if (targetremote) {
-          dispatch({
-            type: ADD_MEDIA,
-            peer,
-            rtc
-          });
+          dispatch(addMeida(peer));
           rtc.attachStream(stream, targetremote[peer.id], { autoplay: true });
         }
       })
@@ -369,25 +273,17 @@ const mapDispatchToProps = (dispatch) => {
     joinChat: (roomname, inroom) => {
       rtc.on('readyToCall', () => {
         if (roomname !== undefined && inroom) {
-          dispatch({
-            type: READY_TO_CALL,
-            joinroom: rtc.joinRoom(roomname)
-          });
+          dispatch(readyToCall(rtc.joinRoom(roomname)));
         }
       });
     },
-    handleSelfMute: (e) => {
-      dispatch({
-        type: AUDIO_CHECK,
-        func: rtc
-      });
+    handleSelfMute: () => {
+      dispatch(audioCheck(ownProps.mute));
+      //(state.mute) ? action.func.unmute() : action.func.mute();
     },
     passpostCheck: (password, roomid, isroom, dataTite, event) => {
       event.preventDefault();
-      dispatch({
-        type: SPINNER_ACTION,
-        check: true
-      });
+      dispatch(spinnerAction(true));
       isroom.filter(item => {
         if (item._id === roomid || item.title === dataTite) {
           if (password.length >= 1) {
@@ -398,48 +294,31 @@ const mapDispatchToProps = (dispatch) => {
             axios.post(`${localHostIp}passcheck`, inputdata)
               .then(data => {
                 const shouldCheck = data.data.message;
-                dispatch({
-                  type: PASSWORD_CHECK,
-                  result: shouldCheck,
-                  title: item.title
-                })
+                let result = shouldCheck;
+                const title = item.title;
+                dispatch(passwordCheck(result, title));
                 const roomObj = {
                   item,
                   shouldCheck
                 }
                 if (shouldCheck === true) {
                   localStorage.setItem('roomPassResults', JSON.stringify(roomObj));
-                  dispatch({
-                    type: ALERT_WARNING,
-                    alert: '패스워드를 입력해주세요.',
-                    color: '#3f46ad'
-                  });
+                  message = '패스워드를 입력해주세요.';
+                  dispatch(alertWarning(message, '#3f46ad', false));
                 } else {
                   localStorage.setItem('roomPassResults', JSON.stringify(roomObj));
-                  dispatch({
-                    type: SPINNER_ACTION,
-                    check: false
-                  });
-                  dispatch({
-                    type: ALERT_WARNING,
-                    alert: '패스워드를 잘못 입력하셨습니다.',
-                    color: '#e30641'
-                  });
+                  dispatch(spinnerAction(false));
+                  message = '패스워드를 잘못 입력하셨습니다.';
+                  dispatch(alertWarning(message, '#e30641', true));
                 }
               })
               .catch(error => {
-                dispatch({ type: GET_ERRORS, error });
+                dispatch(getErrors(error, {}, false));
               });
           } else {
-            dispatch({
-              type: SPINNER_ACTION,
-              check: false
-            });
-            dispatch({
-              type: ALERT_WARNING,
-              alert: '패스워드가 입력되지 않았습니다.',
-              color: '#e30641'
-            });
+            dispatch(spinnerAction(false));
+            message = '패스워드가 입력되지 않았습니다.';
+            dispatch(alertWarning(message, '#e30641', true));
           }
         }
       });
@@ -453,173 +332,76 @@ const mapDispatchToProps = (dispatch) => {
           let isRoomValid = title.some(item => item === roomTitle);
           if (isRoomValid && roomData !== null) {
             if (roomTitle === roomData.item.title && roomData.shouldCheck && isRoomValid) {
-              dispatch({
-                type: ROOM_MAINTENANCE,
-                data: roomData.shouldCheck,
-                roomBoolean: true
-              });
+              dispatch(roomMaintenance(roomData.shouldCheck, true));
             } else {
-              dispatch({
-                type: ROOM_MAINTENANCE,
-                data: false,
-                roomBoolean: false
-              });
+              dispatch(roomMaintenance(false, false));
             }
           } else {
-            dispatch({
-              type: ROOM_MAINTENANCE,
-              data: false,
-              roomBoolean: false
-            });
+            dispatch(roomMaintenance(false, false));
             if (isroomdata.length === 0) {
-              dispatch({
-                type: ROOM_MAINTENANCE,
-                data: false,
-                roomBoolean: false
-              });
+              dispatch(roomMaintenance(false, false));
             }
           }
         } else {
-          dispatch({
-            type: ROOM_MAINTENANCE,
-            data: false,
-            roomBoolean: false
-          });
+          dispatch(roomMaintenance(false, false));
         }
       } else {
-        dispatch({
-          type: ROOM_MAINTENANCE,
-          data: false,
-          roomBoolean: false
-        });
+        dispatch(roomMaintenance(false, false));
       }
     },
     popEvent: (event) => {
-      const dataId = event.target.dataset.id;
-      dispatch({
-        type: POP_EVENT_CHECK,
-        booelan: true,
-        dataId
-      });
-      dispatch({
-        type: ALERT_MESSAGE_CHANGE,
-        message: `채널 패스워드를 입력해주세요.`
-      });
-      dispatch({
-        type: ALERT_WARNING,
-        alert: '채널 패스워드를 입력해주세요.',
-        color: '#3f46ad'
-      });
+      const title = event.target.dataset.id;
+      dispatch(popEventCheck(true, title));
+      dispatch(alertMessageChange('채널 패스워드를 입력해주세요.'));
+      message = '패스워드가 입력되지 않았습니다.';
+      dispatch(alertWarning(message, '#3f46ad', false));
     },
-    aboutPopEvent: (targetTitle) => {
-      dispatch({
-        type: POP_EVENT_CHECK,
-        booelan: true,
-        targetTitle
-      });
+    aboutPopEvent: (title) => {
+      dispatch(popEventCheck(true, title));
     },
     popClose: () => {
-      removeData(dispatch)
-      dispatch({
-        type: POP_ClOSE_CHECK,
-        booelan: false,
-        popBoolean: false,
-        deleteMsg: false
-      });
-      dispatch({
-        type: ALERT_WARNING,
-        alert: '패스워드를 입력해주세요.',
-        color: '#3f46ad',
-        resultBoolean: false
-      });
+      removeData(dispatch);
+      dispatch(popCloseCheck(false, false, false));
+      message = '패스워드가 입력되지 않았습니다.';
+      dispatch(alertWarning(message, '#3f46ad', false));
     },
     delPopClose: () => {
       removeData(dispatch)
-      dispatch({
-        type: POP_ClOSE_CHECK,
-        deleteMsg: false
-      });
+      dispatch(popCloseCheck(false, false, false));
     },
     inputCancel: () => {
-      dispatch({
-        type: POP_ClOSE_CHECK,
-        booelan: false
-      });
+      dispatch(popCloseCheck(false, false, false));
     },
     formatRoomPassword: () => {
       let roomDataRmove = localStorage.removeItem('roomPassResults');
       if (history.location.pathname.split('/rooms/')[1]) {
-        dispatch({
-          type: FORMAT_ROOM_PASS,
-          data: null,
-          pass: true
-        });
-      }
-    },
-    roomMatch: (isroomdata) => {
-      let roomTitleUrl = history.location.pathname.split('/rooms/')[1];
-      if (history.location.pathname.split('/rooms/')[1]) {
-        let title = isroomdata.map(data => data.title);
-        let isRoomValid = title.some(item => item === roomTitleUrl);
-        if (isRoomValid) {
-          dispatch({
-            type: ROOM_TITLE_MATCH,
-            roomBoolean: true
-          });
-        } else {
-          dispatch({
-            type: ROOM_TITLE_MATCH,
-            roomBoolean: false
-          });
-        }
+        dispatch(formatRoomPass(null, true));
       }
     },
     MainAlertMessageChange: () => {
-      dispatch({
-        type: ALERT_MESSAGE_CHANGE,
-        message: '채널이 생성되었습니다.\n지금 바로 입장하실려면 패스워드를 입력해주세요.'
-      });
+      dispatch(alertMessageChange('채널이 생성되었습니다.\n지금 바로 입장하실려면 패스워드를 입력해주세요.'));
     },
     aboutAlertMessageChange: () => {
-      dispatch({
-        type: ALERT_MESSAGE_CHANGE,
-        message: `채널 패스워드를 입력해주세요.`
-      });
+      dispatch(alertMessageChange('채널 패스워드를 입력해주세요.'));
     },
     alertMessageFormat: () => {
-      dispatch({
-        type: ALERT_WARNING,
-        alert: '패스워드를 입력해주세요.',
-        color: '#3f46ad',
-        resultBoolean: false
-      });
+      message = '패스워드가 입력되지 않았습니다.';
+      dispatch(alertWarning(message, '#3f46ad', false));
     },
     loginpopEvent: () => {
-      dispatch({
-        type: LOGGIN_POP_OPEN,
-        popBoolean: true
-      })
+      dispatch(loginPopOpen(true));
     },
     getVersionOfIE: () => {
       let checkVer = get_version_of_IE();
       if (checkVer == -1) {
-        dispatch({
-          type: IE_CHECK,
-          ieBoolean: true
-        })
+        dispatch(ieChecker(true));
       }
       else {
-        dispatch({
-          type: IE_CHECK,
-          ieBoolean: false
-        })
+        dispatch(ieChecker(false));
       }
     },
     pageGoback: debounce(() => {
-      dispatch({
-        type: WARNING_CHECK,
-        warningSould: true
-      })
+      dispatch(warningCheck(true));
     }, 3000)
   };
 };

@@ -6,21 +6,17 @@ import {
 	GET_ERRORS,
 	ROOMS_DATA,
 	RTC_SETTING,
-	CONNECTED_LOCAL,
 	LOCAL_VIDEO,
 	ADD_MEDIA,
 	REMOVE_VIDEO,
 	READY_TO_CALL,
-	DISCONNECTED_WEBCAM,
 	AUDIO_CHECK,
 	ROOM_ADD,
 	ROOM_REMOVE,
-	CHANNEL_CHECK,
 	PASSWORD_CHECK,
 	POP_EVENT_CHECK,
 	POP_ClOSE_CHECK,
 	ROOM_MAINTENANCE,
-	ROOM_TITLE_MATCH,
 	FORMAT_ROOM_PASS,
 	ALERT_MESSAGE_CHANGE,
 	SPINNER_ACTION,
@@ -60,17 +56,17 @@ export const initialState = {
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
-		
+
 		case IS_LOGIN_USER:
 			return {
 				...state,
 				isLoggedIn: true,
-				items: action.data
+				items: action.loginAction
 			};
 
 		case IS_LOGGED_IN_DATA:
-			let user = Boolean(action.data) ? action.data : {};
-			let loggedTrue = Boolean(action.data) ? true : false;
+			let user = Boolean(action.userData) ? action.userData : {};
+			let loggedTrue = Boolean(action.userBoolean) ? true : false;
 			return {
 				...state,
 				isLoggedIn: loggedTrue,
@@ -81,18 +77,17 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				isLoggedIn: false,
-				items: {}
+				items: action.userRemove
 			}
 
 		case ROOMS_DATA:
-			let roomCopy = [...action.data, ...state.isroom];
 			return {
 				...state,
-				isroom: roomCopy
+				isroom: action.roominfo
 			}
 
 		case ROOM_ADD:
-			const dataroom = [...state.isroom, action.data];
+			const dataroom = [...state.isroom, action.addList];
 			return {
 				...state,
 				isroom: dataroom
@@ -100,24 +95,23 @@ const reducer = (state = initialState, action) => {
 
 		case ROOM_REMOVE_POP:
 			const removeRoom = state.isroom;
-			const roomId = action.data;
+			const roomId = action.roomId;
 			const removeUpdate = removeRoom.filter((data) => roomId !== data._id);
 			return {
 				...state,
-				isroom: removeUpdate,
-				deleteAelrt: action.deleteMsg
+				isroom: removeUpdate
 			}
 
 		case ROOM_REMOVE:
 			return {
 				...state,
-				deleteAelrt: action.deleteMsg
+				deleteAelrt: action.delData
 			}
 
 		case RTC_SETTING:
 			return {
 				...state,
-				webrtc: action.payload
+				webrtc: action.rtc
 			};
 
 		case ADD_MEDIA:
@@ -143,27 +137,11 @@ const reducer = (state = initialState, action) => {
 				...state
 			};
 
-		case CONNECTED_LOCAL:
-			return {
-				...state
-			};
-
-		case DISCONNECTED_WEBCAM:
-			return {
-				...state
-			};
-
 		case AUDIO_CHECK:
-			(state.mute) ? action.func.unmute() : action.func.mute();
 			return {
 				...state,
 				mute: !state.mute
 			};
-
-		case CHANNEL_CHECK:
-			return {
-				...state
-			}
 
 		case PASSWORD_CHECK:
 			return {
@@ -176,9 +154,8 @@ const reducer = (state = initialState, action) => {
 		case POP_EVENT_CHECK:
 			return {
 				...state,
-				popopen: action.booelan,
-				focusid: action.dataId,
-				aboutValueTitle: action.targetTitle
+				popopen: action.shouldPop,
+				focusid: action.title
 			}
 
 		case FORMAT_ROOM_PASS:
@@ -190,7 +167,7 @@ const reducer = (state = initialState, action) => {
 		case POP_ClOSE_CHECK:
 			return {
 				...state,
-				popopen: action.booelan,
+				popopen: action.closeBtn,
 				loggedPopUp: action.popBoolean,
 				deleteAelrt: action.deleteMsg
 			}
@@ -199,12 +176,6 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				pass: action.data,
-				inroom: action.roomBoolean
-			}
-
-		case ROOM_TITLE_MATCH:
-			return {
-				...state,
 				inroom: action.roomBoolean
 			}
 

@@ -9,7 +9,6 @@ export default class RoomsDetails extends Component {
   }
 
   componentDidUpdate() {
-
     this.pass = this.props.pass
   }
 
@@ -20,6 +19,12 @@ export default class RoomsDetails extends Component {
     this.props.startLoclaVideo(this.localVideo);
     this.props.AddpeerVideo(this.remoteVideos);
     this.props.joinChat(room_name, isroom);
+  }
+
+  handleSelfMutes() {
+    const {mute, handleSelfMute} = this.props;
+    handleSelfMute();
+    (mute) ? this.webrtc.unmute() : this.webrtc.mute();
   }
 
   render() {
@@ -34,7 +39,7 @@ export default class RoomsDetails extends Component {
           <div className="localBox">
             <video id='localVideo' autoPlay={true} ref={(vid) => this.localVideo = vid} />
             <div className="buttons">
-              <button onClick={handleSelfMute}>
+              <button onClick={this.handleSelfMutes.bind(this)}>
                 {
                   (mute) ?
                     <i className="fas fa-volume-up"></i> :
