@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { uniqWith, isEqual } from "lodash";
 import Alert from './Alert.jsx';
 
-const Rooms = ({ peers, delPopClose, gochnanelRoom, deleteAelrt, spinner, roomDelete, roomData, passCheckRef, passwordCheck, items, popopen, popEvent, popClose, roomDeletePop, pass, focustitle, inputCancel, alertMessage, alertBoxBottom, alertColor }) => {
+const Rooms = ({ delPopClose, gochnanelRoom, deleteAelrt, spinner, roomDelete, isroom, passCheckRef, passwordCheck, items, popopen, popEvent, popClose, roomDeletePop, pass, focustitle, inputCancel, alertMessage, alertBoxBottom, alertColor }) => {
   return (
     <div className="rooms-list">
       
@@ -16,8 +16,8 @@ const Rooms = ({ peers, delPopClose, gochnanelRoom, deleteAelrt, spinner, roomDe
           </h2>
         </dt>
         {
-          (roomData.length) ?
-            uniqWith(roomData, isEqual).map(data => {
+          (isroom.length) ?
+            uniqWith(isroom, isEqual).map(data => {
               return (
                 <dd key={data._id}>
                   <h3>
@@ -25,12 +25,12 @@ const Rooms = ({ peers, delPopClose, gochnanelRoom, deleteAelrt, spinner, roomDe
                     <p> Organiser {data.userName}</p>
                   </h3>
                   <div className="del-enter">
-                    <button onClick={popEvent} data-id={data._id}>
+                    <button className="channelEnter" onClick={popEvent} data-id={data._id}>
                       <i className="fas fa-sign-in-alt" data-id={data._id}></i>
                     </button>
                     {
                       (data.userName === items.name) ?
-                        <button onClick={roomDelete} data-mail={data.userMail} data-id={data._id} >
+                        <button className="channelRemove" onClick={roomDelete} data-mail={data.userMail} data-id={data._id} >
                           <i className="fas fa-trash" onClick={roomDelete} data-mail={data.userMail} data-id={data._id} ></i>
                         </button> : null
                     }
@@ -55,8 +55,8 @@ const Rooms = ({ peers, delPopClose, gochnanelRoom, deleteAelrt, spinner, roomDe
               </div>
               <h2>채널을 삭제 하시겠습니까?</h2>
               <ul className="delbutton">
-                <li><button onClick={roomDeletePop}>예</button></li>
-                <li><button onClick={delPopClose}>아니요</button></li>
+                <li><button className="yesButton" onClick={roomDeletePop}>예</button></li>
+                <li><button className="noButton" onClick={delPopClose}>아니요</button></li>
               </ul>
             </div>
           </div> :

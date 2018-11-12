@@ -156,7 +156,7 @@ export default class Home extends Component {
                   popopen={popopen}
                   pass={pass}
                   items={items}
-                  roomData={isroom}
+                  isroom={isroom}
                   roomDelete={roomDelete}
                   passCheckRef={passCheckRef}
                   passwordCheck={passwordCheck}
@@ -170,7 +170,6 @@ export default class Home extends Component {
                   roomDeletePop={roomDeletePop}
                   gochnanelRoom={gochnanelRoom}
                   delPopClose={delPopClose}
-                  peers={peers}
                 />
               );
             } else {
