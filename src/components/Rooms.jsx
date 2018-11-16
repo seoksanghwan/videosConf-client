@@ -17,7 +17,7 @@ const Rooms = ({ delPopClose, gochnanelRoom, deleteAelrt, spinner, roomDelete, i
         </dt>
         {
           (isroom.length) ?
-            uniqWith(isroom, isEqual).map(data => {
+          isroom.map(data => {
               return (
                 <dd key={data._id}>
                   <h3>

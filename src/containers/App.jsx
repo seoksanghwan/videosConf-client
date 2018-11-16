@@ -100,7 +100,8 @@ const mapStateToProps = state => ({
   loggedPopUp: state.loggedPopUp,
   deleteAelrt: state.deleteAelrt,
   ieCehck: state.ieCehck,
-  pageReturn: state.pageReturn
+  pageReturn: state.pageReturn,
+  fail : state.fail
 });
 
 const mapDispatchToProps = (dispatch) => {
