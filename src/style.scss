@@ -1092,6 +1092,7 @@ video {
   position: relative;
   .three-cogs {
     position: relative;
+    width: 100%;
     >.fa:nth-child(1) {
       animation-duration: 4s;
     }
@@ -1099,7 +1100,7 @@ video {
     >.fa:nth-child(3) {
       position: absolute;
       top: -0.2em;
-      right: 12.40em;
+      right: 18.15em;
       animation-direction: reverse;
       animation-duration: 2s;
     }
