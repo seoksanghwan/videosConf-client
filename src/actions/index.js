@@ -23,6 +23,7 @@ export const LOGGIN_POP_OPEN = 'LOGGIN_POP_OPEN';
 export const ROOM_REMOVE_POP = 'ROOM_REMOVE_POP';
 export const IE_CHECK = 'IE_CHECK';
 export const WARNING_CHECK = 'WARNING_CHECK';
+export const ISROOM_CHECKER = 'ISROOM_CHECKER';
 
 export const isLogoutData = userRemove => ({
   type: IS_LOGOUT_DATA, userRemove
@@ -123,4 +124,8 @@ export const ieChecker = ieBoolean => ({
 
 export const warningCheck = warningSould => ({
   type: WARNING_CHECK, warningSould
+});
+
+export const isroomChecker = checkLength => ({
+  type: ISROOM_CHECKER, checkLength
 });

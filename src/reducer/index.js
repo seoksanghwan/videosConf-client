@@ -24,7 +24,8 @@ import {
 	LOGGIN_POP_OPEN,
 	ROOM_REMOVE_POP,
 	IE_CHECK,
-	WARNING_CHECK
+	WARNING_CHECK,
+	ISROOM_CHECKER
 } from '../actions';
 
 export const initialState = {
@@ -51,7 +52,8 @@ export const initialState = {
 	loggedPopUp: false,
 	deleteAelrt: false,
 	ieCehck: '',
-	pageReturn: false
+	pageReturn: false,
+	checker : true
 };
 
 const reducer = (state = initialState, action) => {
@@ -79,7 +81,13 @@ const reducer = (state = initialState, action) => {
 				isLoggedIn: false,
 				items: action.userRemove
 			}
-
+		
+		case ISROOM_CHECKER:
+			return {
+				...state,
+				checker : action.checkLength
+			}
+			
 		case ROOMS_DATA:
 			return {
 				...state,

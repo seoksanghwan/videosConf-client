@@ -9,7 +9,7 @@ import * as serviceWorker from './serviceWorker';
 import logger from 'redux-logger';
 import reducer from './reducer'
 import App from './containers/App.jsx';
-import './style.css';
+import './style.scss';
 import './service/firebase';
 
 const history = createBrowserHistory();

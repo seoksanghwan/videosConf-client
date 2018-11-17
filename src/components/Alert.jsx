@@ -15,7 +15,7 @@ const Alert = ({ gochnanelRoom, spinner, passCheckRef, passwordCheck, popClose, 
             <button name="pass-check" onClick={passwordCheck} >
               check
               {
-                spinner ?  <i className="fas fa-spinner"></i> : null
+                spinner ? <i className="fas fa-spin fa-cog"></i> : null
               }
             </button>
           </label>
@@ -23,7 +23,7 @@ const Alert = ({ gochnanelRoom, spinner, passCheckRef, passwordCheck, popClose, 
         <div className="pass-check">
           {
             pass ?
-              <p className="sucess-password" onClick={gochnanelRoom}>패스워드가 일치합니다. 참여하실려면 클릭해주세요.</p> : <p style={{ color : alertColor }}>{alertBoxBottom}</p>
+              <p className="sucess-password" onClick={gochnanelRoom}>패스워드가 일치합니다. 참여하실려면 클릭해주세요.</p> : <p style={{ color: alertColor }}>{alertBoxBottom}</p>
           }
         </div>
       </div>

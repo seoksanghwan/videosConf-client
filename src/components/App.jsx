@@ -6,7 +6,7 @@ import Home from './Home.jsx';
 import { throws } from 'assert';
 import NotSupport from './NotSupport.jsx'
 
-export default class App extends React.Component {
+export default class App extends Component {
 
   constructor(props) {
     super(props);
@@ -50,7 +50,7 @@ export default class App extends React.Component {
   }
 
   gochnanelRoom() {
-    const {focustitle} = this.props;
+    const { focustitle } = this.props;
     this.props.goMoveChannel(focustitle);
   }
 
@@ -96,19 +96,21 @@ export default class App extends React.Component {
       delPopClose,
       chatRoomUsing,
       pageGoback,
-      pageReturn } = this.props;
+      pageReturn,
+      checker } = this.props;
     return (
       <Fragment>
-        <Route path="/" 
+        <Route path="/"
           render={props => {
             if (ieCehck) {
               return (
-                (webrtc !== null && Boolean(isroom)) ?
+                (webrtc !== null) ?
                   <Home
                     {...props}
                     isLoggedIn={isLoggedIn}
                     items={items}
                     isroom={isroom}
+                    checker={checker}
                     channelcheck={channelcheck}
                     chatRoomUsing={chatRoomUsing}
                     alertMessageFormat={alertMessageFormat}

@@ -82,7 +82,8 @@ export default class Home extends Component {
       roomDelete,
       pageGoback,
       pageReturn,
-      validityCheck } = this.props;
+      validityCheck,
+      checker } = this.props;
     return (
       <div id="app" className="container">
         <Navbar
@@ -151,12 +152,13 @@ export default class Home extends Component {
             if (isLoggedIn) {
               return (
                 <Rooms
+                  checker={checker}
                   spinner={spinner}
                   popClose={popClose}
                   popopen={popopen}
                   pass={pass}
                   items={items}
-                  roomData={isroom}
+                  isroom={isroom}
                   roomDelete={roomDelete}
                   passCheckRef={passCheckRef}
                   passwordCheck={passwordCheck}
@@ -170,7 +172,6 @@ export default class Home extends Component {
                   roomDeletePop={roomDeletePop}
                   gochnanelRoom={gochnanelRoom}
                   delPopClose={delPopClose}
-                  peers={peers}
                 />
               );
             } else {

@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import io from 'socket.io-client';
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'redux';
 import React, { Component } from 'react';
 import { debounce } from "lodash";
 import * as firebase from 'firebase';
@@ -8,7 +8,6 @@ import LioWebRTC from 'liowebrtc';
 import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 import App from "../components/App.jsx";
-
 import {
   isLoginUser,
   isLoggedInData,
@@ -34,7 +33,8 @@ import {
   loginPopOpen,
   roomRemovePop,
   ieChecker,
-  warningCheck
+  warningCheck,
+  isroomChecker
 } from '../actions';
 
 import createHistory from 'history/createBrowserHistory';
@@ -101,7 +101,8 @@ const mapStateToProps = state => ({
   loggedPopUp: state.loggedPopUp,
   deleteAelrt: state.deleteAelrt,
   ieCehck: state.ieCehck,
-  pageReturn: state.pageReturn
+  pageReturn: state.pageReturn,
+  checker : state.checker
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -137,6 +138,7 @@ const mapDispatchToProps = (dispatch) => {
       let userRemove = localStorage.removeItem('user');
       firebase.auth().signOut().then(() => {
         message = '패스워드를 입력해주세요.';
+        removeData(dispatch)
         dispatch(isLogoutData(userRemove));
         dispatch(alertWarning(message, '#3f46ad', false));
         removeData(dispatch);
@@ -147,12 +149,17 @@ const mapDispatchToProps = (dispatch) => {
     channelData: () => {
       socket.on('initialList', (data) => {
         dispatch(roomdData(data));
+        if( data.length === 0){
+          dispatch(isroomChecker(false));
+        }
       });
       socket.on('itemAdded', (data) => {
         dispatch(roomAdd(data));
+        dispatch(isroomChecker(true));
       });
       socket.on('itemRemove', (data) => {
         dispatch(roomRemovePop(data));
+        dispatch(isroomChecker(false));
       });
     },
     saveFormData: (logedin, items, titleRef, roomPasswordRef, isroom, callback) => {

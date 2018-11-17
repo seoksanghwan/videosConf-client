@@ -30,7 +30,8 @@ import {
   loginPopOpen,
   roomRemovePop,
   ieChecker,
-  warningCheck
+  warningCheck,
+  isroomChecker
 } from '../actions/index';
 
 const setup = (setupBefore = {}, setupAfter = {}, action = {}) => {
@@ -464,6 +465,21 @@ describe('reducer', () => {
           pageReturn: true
         },
         warningCheck(true)
+      );
+      expect(reducer(stateBefore, action)).toEqual(stateAfter);
+    });
+  });
+
+  describe('isroomChecker action', () => {
+    it('should handle ISROOM_CHECKER action', () => {
+      const { stateBefore, stateAfter, action } = setup(
+        {
+          checker: true
+        },
+        {
+          checker: false
+        },
+        isroomChecker(false)
       );
       expect(reducer(stateBefore, action)).toEqual(stateAfter);
     });

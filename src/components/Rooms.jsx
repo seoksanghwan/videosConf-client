@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Link } from "react-router-dom";
-import { uniqWith, isEqual } from "lodash";
 import Alert from './Alert.jsx';
+import RoomsList from './RoomsList.jsx';
 
-const Rooms = ({ peers, delPopClose, gochnanelRoom, deleteAelrt, spinner, roomDelete, roomData, passCheckRef, passwordCheck, items, popopen, popEvent, popClose, roomDeletePop, pass, focustitle, inputCancel, alertMessage, alertBoxBottom, alertColor }) => {
+const Rooms = ({ checker, delPopClose, gochnanelRoom, deleteAelrt, spinner, roomDelete, isroom, passCheckRef, passwordCheck, items, popopen, popEvent, popClose, roomDeletePop, pass, focustitle, inputCancel, alertMessage, alertBoxBottom, alertColor }) => {
   return (
     <div className="rooms-list">
-      
       <dl>
         <dt>
           <h2 className="title">
@@ -15,31 +14,7 @@ const Rooms = ({ peers, delPopClose, gochnanelRoom, deleteAelrt, spinner, roomDe
             <em>여기는 채널 리스트입니다.</em>
           </h2>
         </dt>
-        {
-          (roomData.length) ?
-            uniqWith(roomData, isEqual).map(data => {
-              return (
-                <dd key={data._id}>
-                  <h3>
-                    {data.title}
-                    <p> Organiser {data.userName}</p>
-                  </h3>
-                  <div className="del-enter">
-                    <button onClick={popEvent} data-id={data._id}>
-                      <i className="fas fa-sign-in-alt" data-id={data._id}></i>
-                    </button>
-                    {
-                      (data.userName === items.name) ?
-                        <button onClick={roomDelete} data-mail={data.userMail} data-id={data._id} >
-                          <i className="fas fa-trash" onClick={roomDelete} data-mail={data.userMail} data-id={data._id} ></i>
-                        </button> : null
-                    }
-                  </div>
-                </dd>
-              );
-            }) :
-            <dd className="no-channel">현재 채널이 없습니다. 생성해주세요.</dd>
-        }
+        <RoomsList checker={checker} isroom={isroom} items={items} popEvent={popEvent} roomDelete={roomDelete} />
       </dl>
       {
         (popopen) ?
@@ -55,8 +30,8 @@ const Rooms = ({ peers, delPopClose, gochnanelRoom, deleteAelrt, spinner, roomDe
               </div>
               <h2>채널을 삭제 하시겠습니까?</h2>
               <ul className="delbutton">
-                <li><button onClick={roomDeletePop}>예</button></li>
-                <li><button onClick={delPopClose}>아니요</button></li>
+                <li><button className="yesButton" onClick={roomDeletePop}>예</button></li>
+                <li><button className="noButton" onClick={delPopClose}>아니요</button></li>
               </ul>
             </div>
           </div> :

@@ -5,7 +5,34 @@ html {
   height: 100%;
 }
 
-body, div, p, ul, li, ol, dl, dt, dd, h1, h2, h3, h4, h5, h6, table, td, th, header, article, footer, nav, section, input, select, a, button, video {
+body,
+div,
+p,
+ul,
+li,
+ol,
+dl,
+dt,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+table,
+td,
+th,
+header,
+article,
+footer,
+nav,
+section,
+input,
+select,
+a,
+button,
+video {
   margin: 0;
   padding: 0;
   border: 0;
@@ -15,7 +42,29 @@ body, div, p, ul, li, ol, dl, dt, dd, h1, h2, h3, h4, h5, h6, table, td, th, hea
   line-height: 160%;
 }
 
-div, p, ul, li, ol, dl, dt, dd, h1, h2, h3, h4, h5, h6, span, header, article, footer, nav, section, img, a, video {
+div,
+p,
+ul,
+li,
+ol,
+dl,
+dt,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+span,
+header,
+article,
+footer,
+nav,
+section,
+img,
+a,
+video {
   position: relative;
   *zoom: 1;
 }
@@ -24,7 +73,8 @@ html {
   overflow-y: scroll;
 }
 
-ul, li {
+ul,
+li {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -120,7 +170,16 @@ label {
   font-weight: bold;
 }
 
-div:after, li:after, ul:after, dl:after, dd:after, div:before, li:before, dl:before, ul:before, dd:before {
+div:after,
+li:after,
+ul:after,
+dl:after,
+dd:after,
+div:before,
+li:before,
+dl:before,
+ul:before,
+dd:before {
   clear: both;
   content: "";
   display: block;
@@ -133,7 +192,8 @@ body {
   height: 100%;
 }
 
-body>#root, body>#root>#app {
+body>#root,
+body>#root>#app {
   width: 100%;
   height: 100%;
   position: relative;
@@ -169,7 +229,8 @@ video {
   margin-right: 30px !important;
 }
 
-.container .navbar-start .nav-content .nav-menu dl dt, .container .navbar-start .nav-content .nav-menu dl dd {
+.container .navbar-start .nav-content .nav-menu dl dt,
+.container .navbar-start .nav-content .nav-menu dl dd {
   display: inline-block;
   vertical-align: middle;
 }
@@ -204,7 +265,8 @@ video {
   right: 0;
 }
 
-.container .navbar-start .nav-content .nav-menu dl dd p, .container .navbar-start .nav-content .nav-menu dl dd a {
+.container .navbar-start .nav-content .nav-menu dl dd p,
+.container .navbar-start .nav-content .nav-menu dl dd a {
   display: block;
   font-size: 20px;
   font-family: 'Roboto', sans-serif;
@@ -213,7 +275,8 @@ video {
   transition: 0.2s color ease-in;
 }
 
-.container .navbar-start .nav-content .nav-menu dl dd p:hover, .container .navbar-start .nav-content .nav-menu dl dd a:hover {
+.container .navbar-start .nav-content .nav-menu dl dd p:hover,
+.container .navbar-start .nav-content .nav-menu dl dd a:hover {
   color: #3290cf;
 }
 
@@ -322,6 +385,46 @@ video {
 
 .rooms-list dd:hover {
   background: #e6e6e6;
+}
+
+.rooms-list dd.roomsList-loader:hover {
+  background: none;
+}
+
+.rooms-list dd.roomsList-loader {
+  margin: 0;
+  width: 100%;
+  box-shadow: none;
+  position: relative;
+  p {
+    position: absolute;
+    width: 100%;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 2;
+    top: 30px;
+  }
+  .three-cogs {
+      position: relative;
+      z-index: 1;
+      opacity: .2;
+    >.fa:nth-child(1) {
+      animation-duration: 4s;
+    }
+    >.fa:nth-child(2),
+    >.fa:nth-child(3) {
+      position: absolute;
+      top: -0.2em;
+      right: 12.40em;
+      animation-direction: reverse;
+      animation-duration: 2s;
+    }
+    >.fa:nth-child(3) {
+      top: auto;
+      bottom: -0.2em;
+    }
+  }
 }
 
 .rooms-list dd h3 {
@@ -940,7 +1043,8 @@ video {
   color: #3c29aa;
 }
 
-.pass-check .sucess-password, .pass-check a {
+.pass-check .sucess-password,
+.pass-check a {
   font-size: 15px;
   font-weight: bold;
   padding: 5px 7px;
@@ -956,7 +1060,6 @@ video {
 }
 
 .fa-spinner {
-  animation: spinner infinite 3s linear;
   margin-left: 4px;
 }
 
@@ -983,26 +1086,33 @@ video {
 }
 
 .loadspin {
-  background: url('https://community.thunkable.com/uploads/default/original/1X/a8c639f5bd67f6eecf3b7f2209c7e7fada621f9c.png') no-repeat center center;
   width: 100%;
   height: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  animation: spinner infinite 3s linear;
-  opacity: .5;
+  margin-top: 20px;
+  position: relative;
+  .three-cogs {
+    position: relative;
+    >.fa:nth-child(1) {
+      animation-duration: 4s;
+    }
+    >.fa:nth-child(2),
+    >.fa:nth-child(3) {
+      position: absolute;
+      top: -0.2em;
+      right: 12.40em;
+      animation-direction: reverse;
+      animation-duration: 2s;
+    }
+    >.fa:nth-child(3) {
+      top: auto;
+      bottom: -0.2em;
+    }
+  }
 }
 
-@keyframes spinner {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.goingChannel button:hover, .meeting-room-create button:hover, .rooms-list dd button:hover {
+.goingChannel button:hover,
+.meeting-room-create button:hover,
+.rooms-list dd button:hover {
   background: #1e7dfc;
 }
 
