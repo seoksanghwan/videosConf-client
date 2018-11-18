@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import { Switch, Route, Redirect } from "react-router-dom";
 import Main from './Main.jsx';
@@ -85,137 +85,139 @@ export default class Home extends Component {
       validityCheck,
       checker } = this.props;
     return (
-      <div id="app" className="container">
-        <Navbar
-          items={items}
-          loginpopEvent={loginpopEvent}
-          loggedPopUp={loggedPopUp}
-          isLoggedIn={isLoggedIn}
-          signAlert={signAlert}
-          onLoginButtonClick={onLoginButtonClick}
-          onLogoutButtonClick={onLogoutButtonClick}
-          alertMessageFormat={alertMessageFormat}
-          alertBoxBottom={alertBoxBottom}
-          popEvent={popEvent}
-          popClose={popClose}
-          popopen={popopen}
-        />
-        <Switch>
-          <Route exact path="/" render={props => {
-            return (
-              <Main
-                {...props}
-                spinner={spinner}
-                isLoggedIn={isLoggedIn}
-                saveFormData={saveFormData}
-                inputRef={inputRef}
-                passRef={passRef}
-                pass={pass}
-                popEvent={popEvent}
-                popClose={popClose}
-                popopen={popopen}
-                passwordCheck={passwordCheck}
-                passCheckRef={passCheckRef}
-                focustitle={focustitle}
-                alertMessage={alertMessage}
-                alertBoxBottom={alertBoxBottom}
-                alertColor={alertColor}
-                channelAlertMessage={channelAlertMessage}
-                gochnanelRoom={gochnanelRoom}
-              />
-            );
-          }} />
-          <Route exact path="/about" render={props => {
-            return (
-              <About
-                {...props}
-                spinner={spinner}
-                goingRef={goingRef}
-                goingChannel={goingChannel}
-                pass={pass}
-                channelAlertMessage={channelAlertMessage}
-                popEvent={popEvent}
-                popClose={popClose}
-                popopen={popopen}
-                passwordCheck={passwordCheck}
-                passCheckRef={passCheckRef}
-                focustitle={focustitle}
-                inputCancel={inputCancel}
-                alertMessage={alertMessage}
-                alertBoxBottom={alertBoxBottom}
-                alertColor={alertColor}
-                gochnanelRoom={gochnanelRoom}
-              />
-            );
-          }} />
-          <Route exact path="/rooms" render={props => {
-            if (isLoggedIn) {
+      <Fragment>
+        <div id="app" className="container">
+          <Navbar
+            items={items}
+            loginpopEvent={loginpopEvent}
+            loggedPopUp={loggedPopUp}
+            isLoggedIn={isLoggedIn}
+            signAlert={signAlert}
+            onLoginButtonClick={onLoginButtonClick}
+            onLogoutButtonClick={onLogoutButtonClick}
+            alertMessageFormat={alertMessageFormat}
+            alertBoxBottom={alertBoxBottom}
+            popEvent={popEvent}
+            popClose={popClose}
+            popopen={popopen}
+          />
+          <Switch>
+            <Route exact path="/" render={props => {
               return (
-                <Rooms
-                  checker={checker}
+                <Main
+                  {...props}
                   spinner={spinner}
+                  isLoggedIn={isLoggedIn}
+                  saveFormData={saveFormData}
+                  inputRef={inputRef}
+                  passRef={passRef}
+                  pass={pass}
+                  popEvent={popEvent}
                   popClose={popClose}
                   popopen={popopen}
-                  pass={pass}
-                  items={items}
-                  isroom={isroom}
-                  roomDelete={roomDelete}
-                  passCheckRef={passCheckRef}
                   passwordCheck={passwordCheck}
+                  passCheckRef={passCheckRef}
+                  focustitle={focustitle}
+                  alertMessage={alertMessage}
+                  alertBoxBottom={alertBoxBottom}
+                  alertColor={alertColor}
+                  channelAlertMessage={channelAlertMessage}
+                  gochnanelRoom={gochnanelRoom}
+                />
+              );
+            }} />
+            <Route exact path="/about" render={props => {
+              return (
+                <About
+                  {...props}
+                  spinner={spinner}
+                  goingRef={goingRef}
+                  goingChannel={goingChannel}
+                  pass={pass}
+                  channelAlertMessage={channelAlertMessage}
                   popEvent={popEvent}
+                  popClose={popClose}
+                  popopen={popopen}
+                  passwordCheck={passwordCheck}
+                  passCheckRef={passCheckRef}
                   focustitle={focustitle}
                   inputCancel={inputCancel}
                   alertMessage={alertMessage}
                   alertBoxBottom={alertBoxBottom}
                   alertColor={alertColor}
-                  deleteAelrt={deleteAelrt}
-                  roomDeletePop={roomDeletePop}
                   gochnanelRoom={gochnanelRoom}
-                  delPopClose={delPopClose}
                 />
               );
-            } else {
-              return <Redirect to="/" />;
-            }
-          }} />
-          <Route exact path="/rooms/:room_name" render={props => {
-            if (isLoggedIn) {
-              if (inroom) {
+            }} />
+            <Route exact path="/rooms" render={props => {
+              if (isLoggedIn) {
                 return (
-                  <RoomsDetails
-                    {...props}
-                    init={init}
-                    email={items.name}
-                    url={items.url}
-                    peers={peers}
-                    webrtc={webrtc}
-                    inroom={inroom}
-                    isroom={isroom}
-                    startLoclaVideo={startLoclaVideo}
-                    AddpeerVideo={AddpeerVideo}
-                    joinChat={joinChat}
-                    mute={mute}
+                  <Rooms
+                    checker={checker}
+                    spinner={spinner}
+                    popClose={popClose}
+                    popopen={popopen}
                     pass={pass}
-                    disconnect={this.disconnect.bind(this)}
-                    handleSelfMute={handleSelfMute}
-                    localref={(vid) => this.localVideo = vid}
+                    items={items}
+                    isroom={isroom}
+                    roomDelete={roomDelete}
+                    passCheckRef={passCheckRef}
+                    passwordCheck={passwordCheck}
+                    popEvent={popEvent}
+                    focustitle={focustitle}
+                    inputCancel={inputCancel}
+                    alertMessage={alertMessage}
+                    alertBoxBottom={alertBoxBottom}
+                    alertColor={alertColor}
+                    deleteAelrt={deleteAelrt}
+                    roomDeletePop={roomDeletePop}
+                    gochnanelRoom={gochnanelRoom}
+                    delPopClose={delPopClose}
                   />
                 );
               } else {
-                return <Redirect to="/warning" />;
+                return <Redirect to="/" />;
               }
-            } else {
-              return <Redirect to="/" />;
-            }
+            }} />
+            <Route exact path="/rooms/:room_name" render={props => {
+              if (isLoggedIn) {
+                if (inroom) {
+                  return (
+                    <RoomsDetails
+                      {...props}
+                      init={init}
+                      email={items.name}
+                      url={items.url}
+                      peers={peers}
+                      webrtc={webrtc}
+                      inroom={inroom}
+                      isroom={isroom}
+                      startLoclaVideo={startLoclaVideo}
+                      AddpeerVideo={AddpeerVideo}
+                      joinChat={joinChat}
+                      mute={mute}
+                      pass={pass}
+                      disconnect={this.disconnect.bind(this)}
+                      handleSelfMute={handleSelfMute}
+                      localref={(vid) => this.localVideo = vid}
+                    />
+                  );
+                } else {
+                  return <Redirect to="/warning" />;
+                }
+              } else {
+                return <Redirect to="/" />;
+              }
 
-          }} />
-          <Route path="/warning" render={props => (<Warning {...props} pageGoback={pageGoback} pageReturn={pageReturn} popClose={popClose} />)} />
-          <Route render={() => <Redirect to="/" />} />
-        </Switch>
+            }} />
+            <Route path="/warning" render={props => (<Warning {...props} pageGoback={pageGoback} pageReturn={pageReturn} popClose={popClose} />)} />
+            <Route render={() => <Redirect to="/" />} />
+          </Switch>
+        </div>
         <footer>
           <p>COPYRIGHT@VIDEOS.SEOKSANGHWAN ALL RIGHTS RESERVED.</p>
         </footer>
-      </div>
+      </Fragment>
     );
   };
 };
