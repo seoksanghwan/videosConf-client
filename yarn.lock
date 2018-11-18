@@ -8801,6 +8801,11 @@ react-error-overlay@^5.1.0:
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-5.1.0.tgz#c516995a5652e7bfbed8b497910d5280df74a7e8"
   integrity sha512-akMy/BQT5m1J3iJIHkSb4qycq2wzllWsmmolaaFVnb+LPV9cIJ/nTud40ZsiiT0H3P+/wXIdbjx2fzF61OaeOQ==
 
+react-infinite-scroll-component@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/react-infinite-scroll-component/-/react-infinite-scroll-component-4.2.0.tgz#605227dd213987c8d785157a87178acc26d465e1"
+  integrity sha512-pseyMJ8Ljk9Xr1nkWMg6VRSY7JgszCvf9lndStFovBvsVjQOYm8gFlPE1v+O/GUMUNvNk/9pbvFdPeHPz1AQ3A==
+
 react-infinite-scroller@^1.2.2:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/react-infinite-scroller/-/react-infinite-scroller-1.2.2.tgz#1d13b8167476dfe64c401983293dabc6a8a8ecf3"
@@ -9032,6 +9037,11 @@ redent@^1.0.0:
   dependencies:
     indent-string "^2.1.0"
     strip-indent "^1.0.1"
+
+redux-lazy-scroll@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/redux-lazy-scroll/-/redux-lazy-scroll-0.1.1.tgz#12ee4324cc94011e0332b6ae65d81b6635b5b870"
+  integrity sha512-sFMw8dUV8Vdj8/9Rl2c6F+W7+Hq2d/oMW4JgZ4OwRhj645SaDXPTk/D2U6sSb7hZi0nk3YuwlSOzMjwWwRQVFw==
 
 redux-logger@^3.0.6:
   version "3.0.6"
