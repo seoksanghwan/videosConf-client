@@ -140,7 +140,7 @@ const mapDispatchToProps = (dispatch) => {
         message = '패스워드를 입력해주세요.';
         removeData(dispatch)
         dispatch(isLogoutData(userRemove));
-        dispatch(alertWarning(message, '#3f46ad', false));
+        dispatch(alertWarning(message, '#3f46ad', false, false));
         removeData(dispatch);
       }).catch(error => {
         dispatch(getErrors(error, {}, false));
@@ -181,34 +181,34 @@ const mapDispatchToProps = (dispatch) => {
             if (!passRegex.test(roomPassword)) {
               roomPasswordRef.value = '';
               message = '패스워드는 숫자, 문자, 특수문자 조합으로 6글자 이상 입력해주세요.';
-              dispatch(alertWarning(message, '#e30641', true));
+              dispatch(alertWarning(message, '#e30641', true, false));
             } else if (titleBlank === '') {
               titleRef.value = '';
               message = '공백만으로는 제목을 작성 할 수 없습니다.';
-              dispatch(alertWarning(message, '#e30641', true));
+              dispatch(alertWarning(message, '#e30641', true, false));
             } else {
               socket.emit('addItem', data);
               callback(title);
               dispatch(popEventCheck(true, title));
-              dispatch(alertWarning('', '#e30641', false));
+              dispatch(alertWarning('', '#e30641', false, false));
               roomPasswordRef.value = '';
               titleRef.value = '';
             }
           } else {
             titleRef.value = '';
             message = '중복된 채널이 있습니다.';
-            dispatch(alertWarning(message, '#e30641', true));
+            dispatch(alertWarning(message, '#e30641', true, false));
           }
         } else {
           titleRef.value = '';
           message = '제목은 2글자 이상 11글자 미만이에요.';
-          dispatch(alertWarning(message, '#e30641', true));
+          dispatch(alertWarning(message, '#e30641', true, false));
         }
       } else {
         roomPasswordRef.value = '';
         titleRef.value = '';
         message = '로그인을 해주셔야, 채널을 생성 하실 수 있습니다.';
-        dispatch(alertWarning(message, '#e30641', true));
+        dispatch(alertWarning(message, '#e30641', true, false));
       }
     },
     goingChannels: (isLoggedIn, channelTitleRef, isroom, titleEqualCheck, callback) => {
@@ -220,19 +220,19 @@ const mapDispatchToProps = (dispatch) => {
             if (titleEqualCheck.title === channelTitle) {
               callback(channelTitle);
               message = '패스워드를 입력해주세요.';
-              dispatch(alertWarning(message, '#3f46ad', false));
+              dispatch(alertWarning(message, '#3f46ad', false, false));
             }
           } else {
             message = '채널 목록에 없는 채널입니다.';
-            dispatch(alertWarning(message, '#e30641', true));
+            dispatch(alertWarning(message, '#e30641', true, false));
           }
         } else {
           message = '채널 제목은 2글자 미만이거나, 11글자 이상 일 수 없습니다.';
-          dispatch(alertWarning(message, '#e30641', true));
+          dispatch(alertWarning(message, '#e30641', true, false));
         }
       } else {
         message = '로그인을 해주셔야, 채널에 입장 하실 수 있습니다.';
-        dispatch(alertWarning(message, '#e30641', true));
+        dispatch(alertWarning(message, '#e30641', true, false));
       }
       channelTitleRef.value = '';
     },
@@ -312,12 +312,12 @@ const mapDispatchToProps = (dispatch) => {
                 if (shouldCheck === true) {
                   localStorage.setItem('roomPassResults', JSON.stringify(roomObj));
                   message = '패스워드를 입력해주세요.';
-                  dispatch(alertWarning(message, '#3f46ad', false));
+                  dispatch(alertWarning(message, '#3f46ad', false, true));
                   dispatch(spinnerAction(false));
                 } else {
                   localStorage.setItem('roomPassResults', JSON.stringify(roomObj));
                   message = '패스워드를 잘못 입력하셨습니다.';
-                  dispatch(alertWarning(message, '#e30641', true));
+                  dispatch(alertWarning(message, '#e30641', true, false));
                   dispatch(spinnerAction(false));
                 }
               })
@@ -327,7 +327,7 @@ const mapDispatchToProps = (dispatch) => {
           } else {
             dispatch(spinnerAction(false));
             message = '패스워드가 입력되지 않았습니다.';
-            dispatch(alertWarning(message, '#e30641', true));
+            dispatch(alertWarning(message, '#e30641', true, false));
           }
         }
       });
@@ -363,7 +363,7 @@ const mapDispatchToProps = (dispatch) => {
       message = '채널 패스워드를 입력해주세요.';
       dispatch(popEventCheck(true, dataId));
       dispatch(alertMessageChange('채널 패스워드를 입력해주세요.'));
-      dispatch(alertWarning(message, '#3f46ad', false));
+      dispatch(alertWarning(message, '#3f46ad', false, false));
     },
     aboutPopEvent: (targetTitle) => {
       dispatch(popEventCheck(true, targetTitle));
@@ -372,7 +372,7 @@ const mapDispatchToProps = (dispatch) => {
       removeData(dispatch);
       dispatch(popCloseCheck(false, false, false));
       message = '';
-      dispatch(alertWarning(message, '#3f46ad', false));
+      dispatch(alertWarning(message, '#3f46ad', false, false));
       dispatch(spinnerAction(false));
     },
     delPopClose: () => {
@@ -396,7 +396,7 @@ const mapDispatchToProps = (dispatch) => {
     },
     alertMessageFormat: () => {
       message = '패스워드가 입력되지 않았습니다.';
-      dispatch(alertWarning(message, '#3f46ad', false));
+      dispatch(alertWarning(message, '#3f46ad', false, false));
     },
     loginpopEvent: () => {
       dispatch(loginPopOpen(true));

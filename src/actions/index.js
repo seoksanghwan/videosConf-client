@@ -106,8 +106,8 @@ export const spinnerAction = check => ({
   type: SPINNER_ACTION, check
 });
 
-export const alertWarning = (alert, color, resultBoolean) => ({
-  type: ALERT_WARNING, alert, color, resultBoolean
+export const alertWarning = (alert, color, resultBoolean, passBoolaen) => ({
+  type: ALERT_WARNING, alert, color, resultBoolean, passBoolaen
 });
 
 export const loginPopOpen = popBoolean => ({

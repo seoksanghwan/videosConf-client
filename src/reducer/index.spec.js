@@ -221,14 +221,16 @@ describe('reducer', () => {
         {
           alertBoxBottom: '',
           alertColor: '#3c29aa',
-          channelAlertMessage: false
+          channelAlertMessage: false,
+          pass : false
         },
         { 
           alertBoxBottom: 'string',
           alertColor: 'color',
-          channelAlertMessage: true
+          channelAlertMessage: true,
+          pass : false
         },
-        alertWarning('string','color',true)
+        alertWarning('string','color',true, false)
       );
       expect(reducer(stateBefore, action)).toEqual(stateAfter);
     });

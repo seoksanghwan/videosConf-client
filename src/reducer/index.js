@@ -211,7 +211,8 @@ const reducer = (state = initialState, action) => {
 				...state,
 				alertBoxBottom: action.alert,
 				alertColor: action.color,
-				channelAlertMessage: action.resultBoolean
+				channelAlertMessage: action.resultBoolean,
+				pass : action.passBoolaen
 			}
 
 		case LOGGIN_POP_OPEN:
