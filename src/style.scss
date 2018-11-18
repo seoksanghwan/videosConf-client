@@ -487,6 +487,7 @@ video {
 
 .meeting-room-create {
   height: calc(100% - 81px - 62px);
+  min-height: 500px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -796,6 +797,7 @@ video {
 
 .about {
   height: calc(100% - 81px - 62px);
+  min-height: 500px;
   width: 100%;
   display: flex;
   justify-content: center;
