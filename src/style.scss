@@ -537,6 +537,10 @@ video {
       border-radius: 7px;
       transition: 0.2s background ease-in;
     }
+    .goingChannel-Check-Message {
+      text-align: center;
+      font-size: 14px !important;
+    }
   }
   h1 {
     color: #555;
@@ -856,6 +860,10 @@ video {
           border-radius: 5px;
           vertical-align: middle;
           transition: 0.2s background ease-in;
+        }
+        .goingChannel-Check-Message {
+          text-align: center;
+          font-size: 14px !important;
         }
       }
     }
