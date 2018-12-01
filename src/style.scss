@@ -253,7 +253,7 @@ video {
         a:hover {
           color: #3290cf;
         }
-        &:after{
+        &:after {
           content: '';
           display: block;
           height: 20px;
@@ -405,9 +405,9 @@ video {
         top: 30px;
       }
       .three-cogs {
-          position: relative;
-          z-index: 1;
-          opacity: .2;
+        position: relative;
+        z-index: 1;
+        opacity: .2;
         >.fa:nth-child(1) {
           animation-duration: 4s;
         }
@@ -903,7 +903,7 @@ video {
   }
   h3 {
     font-size: 24px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     white-space: pre-line;
   }
   input {
@@ -938,6 +938,19 @@ video {
     border-radius: 5px;
     vertical-align: middle;
   }
+  .sucess-button {
+    width: 40%;
+    background:#fff;
+    border:2px solid #3c90ff;
+    color:#3c90ff;
+    font-weight: bold;
+    box-sizing: content-box;
+    transition: 0.2s background ease-in, 0.2s color ease-in;
+    &:hover {
+      background:#3c90ff;
+      color:#fff;
+    }
+  }
   .pass-check {
     margin-top: 15px;
     p {
@@ -949,15 +962,12 @@ video {
     a {
       font-size: 15px;
       font-weight: bold;
-      padding: 5px 7px;
-      color: #fff;
-      background: #15bc32;
+      color: #4479cb;
       -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
       -webkit-transform: rotate(0.000001deg);
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
       border-radius: 5px;
-      cursor: pointer;
       display: inline;
     }
     .fa-spinner {
