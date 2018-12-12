@@ -12,9 +12,7 @@ const Alert = ({ gochnanelRoom, spinner, passCheckRef, passwordCheck, popClose, 
           <h3>{alertMessage}</h3>
           {
             pass ?
-              <label htmlFor="pass-check">
-                <button name="pass-check" onClick={gochnanelRoom} className="sucess-button">GO!</button>
-              </label> :
+              <div onClick={gochnanelRoom} className="sucess-button">GO!</div>:
               <label htmlFor="pass-check">
                 <input type="password" name="pass-check" ref={passCheckRef} placeholder='패스워드' autoFocus />
                 <button name="pass-check" onClick={passwordCheck} >

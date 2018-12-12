@@ -922,6 +922,30 @@ video {
     border-radius: 5px;
     vertical-align: middle;
   }
+  .sucess-button {
+    width: 40%;
+    font-size: 22px;
+    cursor: pointer;
+    height: 60px;
+    line-height: 60px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    background: #fff;
+    border: 2px solid #3c90ff;
+    color: #3c90ff;
+    font-weight: bold;
+    box-sizing: content-box;
+    transition: 0.2s background ease-in, 0.2s color ease-in;
+    -webkit-mask-image: -webkit-radial-gradient(circle, white 100%, black 100%);
+    -webkit-transform: rotate(0.000001deg);
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    &:hover {
+      background: #3c90ff;
+      color: #fff;
+    }
+  }
   button {
     width: 25%;
     font-size: 22px;
@@ -937,19 +961,6 @@ video {
     -moz-border-radius: 5px;
     border-radius: 5px;
     vertical-align: middle;
-  }
-  .sucess-button {
-    width: 40%;
-    background:#fff;
-    border:2px solid #3c90ff;
-    color:#3c90ff;
-    font-weight: bold;
-    box-sizing: content-box;
-    transition: 0.2s background ease-in, 0.2s color ease-in;
-    &:hover {
-      background:#3c90ff;
-      color:#fff;
-    }
   }
   .pass-check {
     margin-top: 15px;
