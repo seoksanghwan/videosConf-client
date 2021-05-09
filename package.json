@@ -10,7 +10,7 @@
     "history": "^4.7.2",
     "jwt-decode": "^2.2.0",
     "liowebrtc": "^0.1.14",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.21",
     "node-sass": "^4.10.0",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
